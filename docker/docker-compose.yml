@@ -1,0 +1,36 @@
+networks:
+  ros2-net:
+    #external: true
+
+services:
+  xsens:
+    build:
+     context: .
+     dockerfile: xsens/xsens-jetson.Dockerfile
+    container_name: xsens
+    privileged: true
+    networks:
+      - ros2-net
+    volumes:
+      - /dev/:/dev/
+      - ../ros2_ws/xsens-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/xsens/mtdevice.py:/root/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtdevice.py:rw
+      - ../sensor_configs/xsens/mtnode.py:/root/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtnode.py:rw
+      - ../sensor_configs/xsens/xsens_driver.launch.xml:/root/ros2_ws/src/norlab_xsens_driver/launch/xsens_driver.launch.xml:rw
+    command: /root/shared_folder/xsens-launch.sh
+
+  hesai:
+    build:
+     context: .
+     dockerfile: hesai/hesai-jetson.Dockerfile
+    container_name: hesai
+    privileged: true
+    networks:
+      - ros2-net
+    volumes:
+      - /dev/:/dev/
+      - ../ros2_ws/hesai-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/hesai/config.yaml:/root/ros2_ws/src/hesai_ros_driver/config/config.yaml:rw
+    command: /root/shared_folder/hesai-launch.sh
