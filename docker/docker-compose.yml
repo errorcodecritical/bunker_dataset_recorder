@@ -28,9 +28,86 @@ services:
     privileged: true
     networks:
       - ros2-net
+    ports:
+      - "2368:2368/udp"
     volumes:
       - /dev/:/dev/
       - ../ros2_ws/hesai-build:/root/ros2_ws/build
       - ../shared_folder/:/root/shared_folder/
       - ../sensor_configs/hesai/config.yaml:/root/ros2_ws/src/hesai_ros_driver/config/config.yaml:rw
     command: /root/shared_folder/hesai-launch.sh
+
+  atlas:
+    build:
+     context: .
+     dockerfile: atlas/atlas-jetson.Dockerfile
+    container_name: atlas
+    privileged: true
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    networks:
+      - ros2-net
+    ports:
+      - "2368:2368/udp"
+    volumes:
+      - /dev/:/dev/
+      - ../ros2_ws/atlas-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../shared_folder/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
+      - ../shared_folder/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
+      #- ../sensor_configs/atlas/config.yaml:/root/ros2_ws/src/hesai_ros_driver/config/config.yaml:rw
+    command: /root/shared_folder/atlas-launch.sh
+
+  recorder:
+    build:
+      context: .
+      dockerfile: recorder/recorder-jetson.Dockerfile
+    container_name: recorder
+    privileged: true
+    networks:
+      - ros2-net
+    volumes:
+      - /dev/:/dev/
+      - ../../rosbags/:/root/rosbags/
+      - ../ros2_ws/recorder-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../shared_folder/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
+      - ../shared_folder/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
+    command: /root/shared_folder/recorder-launch.sh
+
+  foxglove:
+    build:
+      context: .
+      dockerfile: foxglove/foxglove-jetson.Dockerfile
+    container_name: foxglove
+    privileged: true
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    ports:
+      - "9092:9092"
+    networks:
+      - ros2-net
+    volumes:
+      - /dev/:/dev/
+      - ../../rosbags/rosbags/:/root/rosbags/
+      - ../ros2_ws/foxglove-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../shared_folder/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
+      - ../shared_folder/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
+      #- ../ros2_ws/bunker_description:/root/ros2_ws/src/bunker_description
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=$DISPLAY
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    command: /root/shared_folder/foxglove-launch.sh
