@@ -13,12 +13,5 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 # Source ROS2 Jazzy
 source /opt/ros/jazzy/setup.bash
 
-#Build workspace only with the packages descriminated on docker compose file
-cd /root/ros2_ws/
-colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
-
-# Source ROS2 Workspace
-source /root/ros2_ws/install/setup.bash
-
 #Launch nmea serial driver
-ros2 run nmea_navsat_driver nmea_serial_driver
+ros2 launch depthai_ros_driver camera.launch.py

@@ -20,6 +20,38 @@ services:
       - ../sensor_configs/xsens/xsens_driver.launch.xml:/root/ros2_ws/src/norlab_xsens_driver/launch/xsens_driver.launch.xml:rw
     command: /root/shared_folder/xsens-launch.sh
 
+  emlid:
+    build:
+      context: .
+      dockerfile: emlid/emlid-jetson.Dockerfile
+    container_name: emlid
+    privileged: true
+    networks:
+      - ros2-net
+    volumes:
+      - /dev/:/dev/
+      - ../ros2_ws/emlid-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/emlid/nmea_serial_driver.py:/root/ros2_ws/src/nmea_navsat_driver/src/libnmea_navsat_driver/nodes/nmea_serial_driver.py:rw
+      - ../sensor_configs/emlid/nmea_serial_driver.yaml:/root/ros2_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml:rw
+    command: /root/shared_folder/emlid-launch.sh
+
+  oakd:
+    build:
+      context: .
+      dockerfile: oakd/oakd-jetson.Dockerfile
+    container_name: oakd
+    privileged: true
+    networks:
+      - ros2-net
+    volumes:
+      - /dev/:/dev/
+      - ../ros2_ws/oakd-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/oakd/depthai_ros_driver/config/:/opt/ros/jazzy/share/depthai_ros_driver/config/
+      - ../sensor_configs/oakd/depthai_ros_driver/launch/:/opt/ros/jazzy/share/depthai_ros_driver/launch/
+    command: /root/shared_folder/oakd-launch.sh
+
   hesai:
     build:
      context: .
@@ -43,13 +75,6 @@ services:
      dockerfile: atlas/atlas-jetson.Dockerfile
     container_name: atlas
     privileged: true
-    runtime: nvidia
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [gpu]
     networks:
       - ros2-net
     ports:
@@ -60,7 +85,6 @@ services:
       - ../shared_folder/:/root/shared_folder/
       - ../shared_folder/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
       - ../shared_folder/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
-      #- ../sensor_configs/atlas/config.yaml:/root/ros2_ws/src/hesai_ros_driver/config/config.yaml:rw
     command: /root/shared_folder/atlas-launch.sh
 
   recorder:

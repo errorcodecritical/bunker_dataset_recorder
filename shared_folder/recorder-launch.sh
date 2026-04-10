@@ -13,6 +13,11 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 # Source ROS2 Jazzy
 source /opt/ros/jazzy/setup.bash
 
+# Install Atlas Eava ROS2 API
+cd /root/shared_folder/atlas/
+dpkg -i Atlas_AevaCLI_4_0_0_GA_aarch64.deb
+dpkg --force-architecture -i Atlas_AevaAPI_4_0_0_GA_aarch64.deb
+
 #Build workspace only with the packages descriminated on docker compose file
 cd /root/ros2_ws/
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
@@ -41,7 +46,7 @@ fi
 BAG_NAME="$(date +%Y_%m_%d_%H_%M_%S)__${label}_"
 
 #Topics to record
-TOPICS="/aeva/ATLAS/point_cloud_compensated /aeva/ATLAS/imu /aeva/ATLAS/odometry /aeva/ATLAS/point_cloud_metadata"
+TOPICS="/aeva/ATLAS/point_cloud_compensated /aeva/ATLAS/imu /aeva/ATLAS/odometry /aeva/ATLAS/point_cloud_metadata /lidar_packets /oak/rgb/image_raw /oak/rgb/camera_info /oak/rgb/image_rect /oak/stereo/image_raw /oak/stereo/camera_info /oak/imu/data /imu/data /imu/mag /heading /fix /tf /tf_static"
 
 mkdir -p "$BAG_DIR"
 
