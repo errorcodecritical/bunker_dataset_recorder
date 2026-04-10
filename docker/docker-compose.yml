@@ -77,8 +77,6 @@ services:
     privileged: true
     networks:
       - ros2-net
-    ports:
-      - "2368:2368/udp"
     volumes:
       - /dev/:/dev/
       - ../ros2_ws/atlas-build:/root/ros2_ws/build
@@ -86,6 +84,26 @@ services:
       - ../shared_folder/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
       - ../shared_folder/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
     command: /root/shared_folder/atlas-launch.sh
+
+  hugin:
+    build:
+     context: ..
+     dockerfile: docker/hugin/hugin-jetson.Dockerfile
+    container_name: hugin
+    privileged: true
+    networks:
+      - ros2-net
+    ports:
+      - "6001:6001/udp"
+      - "6003:6003/udp"
+      - "6007:6007/udp"
+      - "6010:6010/udp"
+    volumes:
+      - /dev/:/dev/
+      - ../ros2_ws/hugin-build:/opt/ros/overlay_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/hugin/sensrad_params_1.yaml:/opt/ros/overlay_ws/install/yggdrasil/share/yggdrasil/config/sensrad_params_1.yaml:rw
+    command: /root/shared_folder/hugin-launch.sh
 
   recorder:
     build:

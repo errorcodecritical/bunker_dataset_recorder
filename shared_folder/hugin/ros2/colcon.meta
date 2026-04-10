@@ -1,0 +1,7 @@
+
+# Copyright (c) Sensrad 2025
+
+names:
+  "*":
+    cmake-args:
+      - -DCMAKE_BUILD_TYPE=Release

@@ -1,0 +1,44 @@
+* OdenMqttBridge
+
+This is an ROS2 node that subscribes to:
+
+- =oden_interfaces::msg::MultiObjectTracking=
+- =raf2_interfaces::msg::MetaData=
+
+encodes them as JSON publishes via MQTT.
+
+** Building
+
+#+begin_src bash
+  colcon build --packages-select oden_mqtt_bridge
+#+end_src
+
+** Running
+
+#+begin_src bash
+  # Check options in launch.py
+  ros2 launch oden_mqtt_bridge launch.py broker_uri:="tcp://127.0.0.1:1883" client_id:="oden_mqtt_bridge"
+#+end_src
+
+** MQTT
+
+You can run a local MQTT broker like this:
+
+#+begin_src bash
+  # Running a local broker via Docker
+  docker run -it -p 1883:1883 -p 9001:9001 eclipse-mosquitto:latest mosquitto -c /mosquitto-no-auth.conf
+#+end_src
+
+#+begin_src bash
+  # For debugging it's useful to have the mosquitto client installed
+  sudo apt install mosquitto-clients
+#+end_src
+
+#+begin_src bash
+  # Subscribe
+  mosquitto_sub -h 127.0.0.1 -p 1883 -t oden_mqtt_bridge/#
+#+end_src
+
+* Footer
+
+Copyright (c) Sensrad 2025

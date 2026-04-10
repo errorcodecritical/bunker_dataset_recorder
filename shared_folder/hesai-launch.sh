@@ -20,5 +20,5 @@ colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 # Source ROS2 Workspace
 source /root/ros2_ws/install/setup.bash
 
-#Run xsens driver
+#Run Hesai driver
 ros2 run hesai_ros_driver hesai_ros_driver_node

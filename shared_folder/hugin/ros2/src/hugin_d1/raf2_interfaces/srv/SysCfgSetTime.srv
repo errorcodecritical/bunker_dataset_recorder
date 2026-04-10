@@ -1,0 +1,6 @@
+# Copyright (c) Sensrad 2024
+bool   use_ros2_time
+uint64 time_ms # optional
+---
+bool success
+string message
