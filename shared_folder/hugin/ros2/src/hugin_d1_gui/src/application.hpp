@@ -76,7 +76,7 @@ public:
     g_assert(window_);
     add_window(*window_);
     // Show window
-    window_->present();
+    //window_->present();
 
     // Quit application when window is closed
     window_->signal_delete_event().connect(

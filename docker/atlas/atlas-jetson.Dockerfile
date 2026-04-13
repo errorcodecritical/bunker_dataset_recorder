@@ -34,8 +34,8 @@ RUN apt update \
 ENV CATKIN_WS=/root/ros2_ws
 RUN mkdir -p $CATKIN_WS/src
 
-RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
-RUN echo "source /root/ros2_ws/install/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
+RUN echo "source /root/ros2_ws/install/setup.bash" >> /root/.bashrc
 
 # Clean-up
 WORKDIR /root

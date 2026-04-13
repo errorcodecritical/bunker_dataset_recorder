@@ -91,6 +91,13 @@ services:
      dockerfile: docker/hugin/hugin-jetson.Dockerfile
     container_name: hugin
     privileged: true
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
     networks:
       - ros2-net
     ports:
@@ -102,7 +109,12 @@ services:
       - /dev/:/dev/
       - ../ros2_ws/hugin-build:/opt/ros/overlay_ws/build
       - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/hugin/sensrad_params_1.yaml:/opt/ros/overlay_ws/install/yggdrasil/share/yggdrasil/config/sensrad_params_1.yaml:rw
+      - ../shared_folder/hugin/ros2/src/:/opt/ros/overlay_ws/src/
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=$DISPLAY
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
     command: /root/shared_folder/hugin-launch.sh
 
   recorder:

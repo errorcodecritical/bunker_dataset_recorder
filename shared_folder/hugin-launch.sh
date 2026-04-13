@@ -14,7 +14,7 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 source /opt/ros/jazzy/setup.bash
 
 #Build workspace only with the packages descriminated on docker compose file
-cd /opt/ros/overlay_ws/src
+cd /opt/ros/overlay_ws/
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 # Source ROS2 Workspace

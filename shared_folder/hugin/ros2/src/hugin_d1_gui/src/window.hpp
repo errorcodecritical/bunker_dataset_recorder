@@ -871,6 +871,14 @@ public:
     auto screen = Gdk::Screen::get_default();
     Gtk::StyleContext::add_provider_for_screen(
         screen, css_provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
+    
+    // AUTO-START TX: Start radar transmission automatically when GUI launches
+    Glib::signal_idle().connect([this]() {
+        if (!radar_active_) {
+            toggle_tx();  // Automatically start transmission
+        }
+        return false;  // Execute only once
+    });
   }
 
   virtual ~Window() {

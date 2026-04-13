@@ -3,7 +3,8 @@
 # Exit if any command fails
 set -e
 
-xhost +
+# To use GUI uncomment the following line
+#xhost +
 
 # Function to cleanup: move can0 back to host and rename to can2
 cleanup() {
