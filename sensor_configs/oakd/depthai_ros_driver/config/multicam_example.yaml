@@ -5,7 +5,7 @@
     pipeline_gen:
       i_nn_type: rgb
     nn:
-      i_nn_model: depthai_ros_driver/yolo
+      i_nn_model: depthai_ros_driver_v3/yolo
 /oak_d_w:
   ros__parameters:
     driver:

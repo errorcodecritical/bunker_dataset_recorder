@@ -13,7 +13,7 @@ from launch.conditions import IfCondition
 
 def launch_setup(context, *args, **kwargs):
     params_file = LaunchConfiguration("params_file")
-    depthai_prefix = get_package_share_directory("depthai_ros_driver")
+    depthai_prefix = get_package_share_directory("depthai_ros_driver_v3")
 
     name = LaunchConfiguration('name').perform(context)
     return [
@@ -36,7 +36,7 @@ def launch_setup(context, *args, **kwargs):
 
 
 def generate_launch_description():
-    depthai_prefix = get_package_share_directory("depthai_ros_driver")
+    depthai_prefix = get_package_share_directory("depthai_ros_driver_v3")
     declared_arguments = [
         DeclareLaunchArgument("name", default_value="oak"),
         DeclareLaunchArgument("camera_model", default_value="OAK-D-SR-POE"),

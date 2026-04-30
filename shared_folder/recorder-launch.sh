@@ -46,7 +46,8 @@ fi
 BAG_NAME="$(date +%Y_%m_%d_%H_%M_%S)__${label}_"
 
 #Topics to record
-TOPICS="/aeva/ATLAS/point_cloud_compensated /aeva/ATLAS/imu /aeva/ATLAS/odometry /aeva/ATLAS/point_cloud_metadata /lidar_packets /oak/rgb/image_raw /oak/rgb/camera_info /oak/rgb/image_rect /oak/stereo/image_raw /oak/stereo/camera_info /oak/imu/data /imu/data /imu/mag /heading /fix /tf /tf_static"
+#OAK: /oak/rgb/image_rect /oak/stereo/image_raw /oak/stereo/camera_info
+TOPICS="/aeva/ATLAS/point_cloud_compensated /aeva/ATLAS/imu /aeva/ATLAS/odometry /aeva/ATLAS/point_cloud_metadata /hesai/lidar_packets /sensrad/radar_1/radar_data /oak/rgb/image_raw /oak/rgb/camera_info /oak/imu/data /imu/data /imu/mag /heading /fix /tf /tf_static"
 
 mkdir -p "$BAG_DIR"
 

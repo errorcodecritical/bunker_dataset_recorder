@@ -13,7 +13,7 @@ from launch_ros.actions import Node
 
 def launch_setup(context, *args, **kwargs):
 
-    depthai_prefix = get_package_share_directory("depthai_ros_driver")
+    depthai_prefix = get_package_share_directory("depthai_ros_driver_v3")
     params_file = os.path.join(depthai_prefix, "config", "multicam_example.yaml")
     cams = ["oak_d_w", "oak_d_lite"]
     nodes = []
@@ -45,7 +45,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     obj_det = Node(
-        package="depthai_ros_driver",
+        package="depthai_ros_driver_v3",
         executable="obj_pub.py",
         remappings=[
             ("/oak/nn/detections", "/oak_d_pro/nn/detections"),

@@ -13,7 +13,7 @@ from launch_ros.actions import Node
 
 
 def launch_setup(context, *args, **kwargs):
-    depthai_prefix = get_package_share_directory("depthai_ros_driver")
+    depthai_prefix = get_package_share_directory("depthai_ros_driver_v3")
     params_file = LaunchConfiguration("params_file")
     name = LaunchConfiguration("name").perform(context)
     type = LaunchConfiguration("type").perform(context)
@@ -78,7 +78,7 @@ def launch_setup(context, *args, **kwargs):
 
 
 def generate_launch_description():
-    depthai_prefix = get_package_share_directory("depthai_ros_driver")
+    depthai_prefix = get_package_share_directory("depthai_ros_driver_v3")
     declared_arguments = [
         DeclareLaunchArgument("name", default_value="oak"),
         DeclareLaunchArgument("size", default_value="8x6"),

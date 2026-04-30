@@ -14,7 +14,7 @@ from launch.substitutions import LaunchConfiguration
 
 def launch_setup(context, *args, **kwargs):
     name = LaunchConfiguration("name").perform(context)
-    depthai_prefix = get_package_share_directory("depthai_ros_driver")
+    depthai_prefix = get_package_share_directory("depthai_ros_driver_v3")
     rosbag_path = LaunchConfiguration("rosbag_path").perform(context)
     rviz_config = os.path.join(depthai_prefix, "config", "rviz", "rgbd.rviz")
 
@@ -39,7 +39,7 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
     print("This functionality is still under development!")
     return LaunchDescription()
-    depthai_prefix = get_package_share_directory("depthai_ros_driver")
+    depthai_prefix = get_package_share_directory("depthai_ros_driver_v3")
     declared_arguments = [
         DeclareLaunchArgument("name", default_value="oak"),
         DeclareLaunchArgument(
