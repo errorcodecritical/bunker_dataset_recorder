@@ -20,8 +20,16 @@ setup(
         (os.path.join('share', package_name, 'config'), glob(os.path.join('config', '*.yaml'))),
         # Meshes
         (os.path.join('share', package_name, 'meshes'), glob(os.path.join('meshes', '*.STL'))),
+        (os.path.join('share', package_name, 'meshes'), glob(os.path.join('meshes', '*.stl'))),
         (os.path.join('share', package_name, 'meshes'), glob(os.path.join('meshes', '*.obj'))),
         (os.path.join('share', package_name, 'meshes'), glob(os.path.join('meshes', '*.mtl'))),
+        (os.path.join('share', package_name, 'meshes'), glob(os.path.join('meshes', '*.gltf'))),
+        # Sensors Meshes
+        (os.path.join('share', package_name, 'meshes/sensors'), glob(os.path.join('meshes/sensors', '*.STL'))),
+        (os.path.join('share', package_name, 'meshes/sensors'), glob(os.path.join('meshes/sensors', '*.stl'))),
+        (os.path.join('share', package_name, 'meshes/sensors'), glob(os.path.join('meshes/sensors', '*.obj'))),
+        (os.path.join('share', package_name, 'meshes/sensors'), glob(os.path.join('meshes/sensors', '*.mtl'))),
+        (os.path.join('share', package_name, 'meshes/sensors'), glob(os.path.join('meshes/sensors', '*.gltf'))),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

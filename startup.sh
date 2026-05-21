@@ -4,7 +4,7 @@
 set -e
 
 # To use GUI uncomment the following line
-#xhost +
+xhost +
 
 # Function to cleanup: move can0 back to host and rename to can2
 cleanup() {

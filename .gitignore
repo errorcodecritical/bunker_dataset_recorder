@@ -3,3 +3,5 @@ ros2_ws/*-build/**
 
 # Re-include only files with a dot at the beginning
 !ros2_ws/*-build/**/.*
+
+__pycache__
