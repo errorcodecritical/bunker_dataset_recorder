@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
     <link name="20220058_耐落十字盘头螺钉_m2_6">
         <inertial>
             <mass value="2.60063e-08" />
@@ -81,7 +82,7 @@
             </material>
         </visual>
     </link>
-    <link name="25085490_qt128光罩_v2_0a0">
+    <link name="hesai_lidar">
         <inertial>
             <mass value="3.54543e-05" />
             <origin xyz="3.60929e-17 0.0325377 -8.29378e-18" rpy="0 -0 0" />
@@ -113,7 +114,7 @@
             </material>
         </visual>
     </link>
-    <link name="502_mfp0044">
+    <link name="radar_1">
         <inertial>
             <mass value="2.93529e-05" />
             <origin xyz="1.71499e-10 -1.6419e-10 0.00273817" rpy="0 -0 0" />
@@ -421,7 +422,7 @@
             </material>
         </visual>
     </link>
-    <link name="atlas_pre_dv_no_fov_110524">
+    <link name="aeva/vehicle">
         <inertial>
             <mass value="0.000581481" />
             <origin xyz="-0.0674424 0.0208309 -0.0463801" rpy="0 -0 0" />
@@ -565,7 +566,7 @@
             </material>
         </visual>
     </link>
-    <link name="d_pro_w_glass_lens_1">
+    <link name="oak_parent_frame">
         <inertial>
             <mass value="1.52404e-06" />
             <origin xyz="0.0444301 -0.0118015 0.00963482" rpy="0 -0 0" />
@@ -581,7 +582,7 @@
             </material>
         </visual>
     </link>
-    <link name="d_pro_w_lens_adhesive_1">
+    <link name="oak">
         <inertial>
             <mass value="3.51525e-07" />
             <origin xyz="0.0423449 -0.0137533 0.0092009" rpy="0 -0 0" />
@@ -1188,7 +1189,7 @@
             </material>
         </visual>
     </link>
-    <link name="sma_to_mcx_adapter_shell_aliner_20180924">
+    <link name="gps">
         <inertial>
             <mass value="2.81898e-07" />
             <origin xyz="-1.66175e-06 -0.00505381 -1.42671e-05" rpy="0 -0 0" />
@@ -1284,7 +1285,7 @@
             </material>
         </visual>
     </link>
-    <link name="top_housing_mti_630r_casted_3_mti_630r_mti_6x0r_simple_2__mti_6x0r_simple">
+    <link name="imu">
         <inertial>
             <mass value="1.1973e-05" />
             <origin xyz="0.00056724 0.0180717 0.000627391" rpy="0 -0 0" />
@@ -1362,7 +1363,7 @@
         <origin xyz="-0.066512 0.4015 0.026" rpy="1.5708 4.44089e-16 3.14159" />
         <axis xyz="0 -1 0" />
         <parent link="part_5" />
-        <child link="atlas_pre_dv_no_fov_110524" />
+        <child link="aeva/vehicle" />
     </joint>
     <joint name="fastened_4" type="fixed">
         <origin xyz="-0.075 0.027 0.051" rpy="-3.14159 -8.75812e-47 -2.73691e-48" />
@@ -1398,7 +1399,7 @@
         <origin xyz="0.0375 0.0375 0.033" rpy="0 -0 0" />
         <axis xyz="0 0 1" />
         <parent link="502_mfm0572" />
-        <child link="502_mfp0044" />
+        <child link="radar_1" />
     </joint>
     <joint name="group_1_fastened_joint_1" type="fixed">
         <origin xyz="-0.0344455 -0.0438212 0" rpy="0 -0 0" />
@@ -1488,7 +1489,7 @@
         <origin xyz="-5.55112e-17 0 0" rpy="3.14159 -7.41768e-15 3.14159" />
         <axis xyz="0 0 1" />
         <parent link="_mti_6x0r_simple_2__mti_6x0r_simple_5" />
-        <child link="top_housing_mti_630r_casted_3_mti_630r_mti_6x0r_simple_2__mti_6x0r_simple" />
+        <child link="imu" />
     </joint>
     <joint name="group_1_fastened_joint_23" type="fixed">
         <origin xyz="-1.38778e-17 0.0354729 -0.00138627" rpy="0.017949 1.02536e-17 6.13087e-18" />
@@ -1662,7 +1663,7 @@
         <origin xyz="0 0 0" rpy="0 -0 0" />
         <axis xyz="0 0 1" />
         <parent link="m2_5_insert_for_helix_family" />
-        <child link="sma_to_mcx_adapter_shell_aliner_20180924" />
+        <child link="gps" />
     </joint>
     <joint name="group_1_fastened_joint_5" type="fixed">
         <origin xyz="-0.0051 0.0703 -0.0427475" rpy="0 -1.5708 -2.58127e-15" />
@@ -1686,7 +1687,7 @@
         <origin xyz="0 0 0" rpy="0 -0 0" />
         <axis xyz="0 0 1" />
         <parent link="cable_spacer" />
-        <child link="d_pro_w_glass_lens_1" />
+        <child link="oak_parent_frame" />
     </joint>
     <joint name="group_1_fastened_joint_53" type="fixed">
         <origin xyz="0 0 0" rpy="0 -0 0" />
@@ -1748,12 +1749,77 @@
         <parent link="602_00007_1_2" />
         <child link="602_00007_1_1" />
     </joint>
+    
+    <!--OAK-D-W Camera-->
     <joint name="group_1_fastened_joint_62" type="fixed">
-        <origin xyz="0 0 0" rpy="0 -0 0" />
+        <origin xyz="0 0 0" rpy="0 0 1.57" />
         <axis xyz="0 0 1" />
-        <parent link="d_pro_w_glass_lens_1" />
-        <child link="d_pro_w_lens_adhesive_1" />
+        <parent link="oak_parent_frame" />
+        <child link="oak" />
     </joint>
+    <link name="oak_model_origin" />
+    <joint name="oak_model_origin_joint" type="fixed">
+        <parent link="oak" />
+        <child link="oak_model_origin" />
+        <origin xyz="0 0 0" rpy="1.5708 0 1.5708" />
+    </joint>
+    <link name="oak_imu_frame" />
+    <joint name="oak_imu_joint" type="fixed">
+        <parent link="oak" />
+        <child link="oak_imu_frame" />
+        <origin xyz="0.0 -0.015 -0.013662"
+            rpy="0.0 1.57 0.0" />
+    </joint>
+
+    <!-- RGB Camera -->
+    <link name="oak_rgb_camera_frame" />
+
+    <joint name="oak_rgb_camera_joint" type="fixed">
+        <parent link="oak" />
+        <child link="oak_rgb_camera_frame" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+    <link name="oak_rgb_camera_optical_frame" />
+
+    <joint name="oak_rgb_camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.57 0.0 -1.57" />
+        <parent link="oak_rgb_camera_frame" />
+        <child link="oak_rgb_camera_optical_frame" />
+    </joint>
+    <!-- Left Camera -->
+    <link name="oak_left_camera_frame" />
+
+    <joint name="oak_left_camera_joint" type="fixed">
+        <parent link="oak" />
+        <child link="oak_left_camera_frame" />
+        <origin xyz="0 0.0375 0" rpy="0 0 0" />
+    </joint>
+
+    <link name="oak_left_camera_optical_frame" />
+
+    <joint name="oak_left_camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.57 0.0 -1.57" />
+        <parent link="oak_left_camera_frame" />
+        <child link="oak_left_camera_optical_frame" />
+    </joint>
+
+    <!-- right Camera -->
+    <link name="oak_right_camera_frame" />
+
+    <joint name="oak_right_camera_joint" type="fixed">
+        <parent link="oak" />
+        <child link="oak_right_camera_frame" />
+        <origin xyz="0 -0.0375 0" rpy="0 0 0" />
+    </joint>
+
+    <link name="oak_right_camera_optical_frame" />
+
+    <joint name="oak_right_camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.57 0.0 -1.57" />
+        <parent link="oak_right_camera_frame" />
+        <child link="oak_right_camera_optical_frame" />
+    </joint>
+
     <joint name="group_1_fastened_joint_63" type="fixed">
         <origin xyz="0 0 0" rpy="0 -0 0" />
         <axis xyz="0 0 1" />
@@ -1776,7 +1842,7 @@
         <origin xyz="-1.57427e-08 0.0273 1.3773e-09" rpy="1.76983e-33 0.000181639 -1.23258e-32" />
         <axis xyz="0 0 1" />
         <parent link="210000722" />
-        <child link="25085490_qt128光罩_v2_0a0" />
+        <child link="hesai_lidar" />
     </joint>
     <joint name="group_1_fastened_joint_8" type="fixed">
         <origin xyz="0.0092 -0.0025 -0.01161" rpy="0 1.5708 1.5708" />

@@ -30,3 +30,10 @@ source /root/ros2_ws/install/setup.bash
 
 # Run Rviz with sensors layout
 rviz2 -d /root/shared_folder/isr.rviz
+
+# Run Camera Calibrator
+#ros2 run camera_calibration cameracalibrator --size 10x7 --square 0.025 --ros-args -r image:=/oak/rgb/image_raw
+
+# ros2_calib -> Calibration Software to LiDAR <-> Camera or LiDAR <-> LiDAR
+#source /root/.venv/bin/activate
+#ros2_calib
