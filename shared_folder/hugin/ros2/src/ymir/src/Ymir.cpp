@@ -167,7 +167,6 @@ void Ymir::odometryCallback(
                                     sensor_to_baselink_tf)) {
     return;
   }
-
   // Compute the odom -> base_link transform from this radar's measurement
   tf2::Transform measured_odom_baselink_tf =
       ego_motion_tf * sensor_to_baselink_tf;
@@ -223,12 +222,23 @@ void Ymir::publishOdometry(const rclcpp::Time &timestamp) {
 
   last_published_time_ = publish_time;
 
+  // [ISR CHANGE] Apply 180-degree rotation to the odom frame
+  tf2::Quaternion rotation_offset;
+  rotation_offset.setRPY(0.0, M_PI, -M_PI/2);
+
   // Broadcast TF transform
   geometry_msgs::msg::TransformStamped tf_out;
   tf_out.header.stamp = publish_time;
   tf_out.header.frame_id = odom_frame_id_;
   tf_out.child_frame_id = baselink_frame_id_;
   tf_out.transform = tf2::toMsg(current_odom_baselink_tf_);
+
+  // [ISR CHANGE] Convert to tf2::Quaternion, multiply, and convert back
+  tf2::Quaternion q_original;
+  tf2::fromMsg(tf_out.transform.rotation, q_original);
+  tf2::Quaternion q_rotated = rotation_offset * q_original;
+  tf_out.transform.rotation = tf2::toMsg(q_rotated);
+
   tf_broadcaster_->sendTransform(tf_out);
 
   // Add to trajectory path

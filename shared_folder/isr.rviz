@@ -4,9 +4,10 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /OAK-D-W1
+        - /TF1/Frames1
         - /OAK-D-W1/Topic1
-      Splitter Ratio: 0.5
+        - /OAK-D-W - LiDAR1/Visibility1
+      Splitter Ratio: 0.6911764740943909
     Tree Height: 725
   - Class: rviz_common/Selection
     Name: Selection
@@ -60,457 +61,11 @@ Visualization Manager:
         Value: /robot_description
       Enabled: true
       Links:
-        20220058_耐落十字盘头螺钉_m2_6:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        20220058_耐落十字盘头螺钉_m2_6_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        20220058_耐落十字盘头螺钉_m2_6_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        20220058_耐落十字盘头螺钉_m2_6_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        210000722:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        502_mfm0572:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        600_13737_0000_a01:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        602_00007_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        602_00007_1_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        602_00007_1_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        602_00007_1_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        606_00013_02_6:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        606_00014_02_5:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        611_00016_20:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        611_00018_9:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        611_00020_16_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        611_00020_16__1_:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        612_00002_6:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        612_00003_6:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        _mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        _mti_6x0r_simple_2__mti_6x0r_simple_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        _mti_6x0r_simple_2__mti_6x0r_simple_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        _mti_6x0r_simple_2__mti_6x0r_simple_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        _mti_6x0r_simple_2__mti_6x0r_simple_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        _mti_6x0r_simple_2__mti_6x0r_simple_5:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        aeva/vehicle:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        base_t1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        bottom_housing_casted_3_mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        cable_spacer:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        copy__2__of__mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        copy__3__of__mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        copy__4__of__mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        cs2_62x_o_ring_20190509:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        customized_model_for_l1l2_helix_20190529_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        decorative_nut_odu_amc_size0_mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        fan_cover_concord_collapsible:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        foot_concord:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        foot_concord_button_rubber:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        foot_rubber_concord:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        foot_rubber_concord_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        gc0wxm_p12um00_000l_mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        gps:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        heatsink_concord:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        hesai_lidar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        imu:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        m2_5_insert_for_helix_family:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        membrane_ve90510_mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        o_ring_mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        oak:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        oak_imu_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_left_camera_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_left_camera_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_model_origin:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_parent_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        oak_rgb_camera_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_rgb_camera_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_right_camera_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_right_camera_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        part_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_10:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_11:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_11_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_12:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_13:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_15:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_1_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_1_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_1_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_2_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_4_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_5:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_6:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        part_7:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pcie_cover_concord:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        radar_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rosenberger___mps113_400xx_z_210201_lv_info:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        sensor_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        snapclip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        snapclip_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        switch:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        te1021:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        technica:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        黑色喷漆顶盖:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Mass Properties:
         Inertia: false
         Mass: false
@@ -520,312 +75,53 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz_default_plugins/TF
-      Enabled: true
+      Enabled: false
       Filter (blacklist): ""
       Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
-        20220058_耐落十字盘头螺钉_m2_6:
-          Value: false
-        20220058_耐落十字盘头螺钉_m2_6_1:
-          Value: false
-        20220058_耐落十字盘头螺钉_m2_6_2:
-          Value: false
-        20220058_耐落十字盘头螺钉_m2_6_3:
-          Value: false
-        210000722:
-          Value: false
-        502_mfm0572:
-          Value: false
-        600_13737_0000_a01:
-          Value: false
-        602_00007_1:
-          Value: false
-        602_00007_1_1:
-          Value: false
-        602_00007_1_2:
-          Value: false
-        602_00007_1_3:
-          Value: false
-        606_00013_02_6:
-          Value: false
-        606_00014_02_5:
-          Value: false
-        611_00016_20:
-          Value: false
-        611_00018_9:
-          Value: false
-        611_00020_16_1:
-          Value: false
-        611_00020_16__1_:
-          Value: false
-        612_00002_6:
-          Value: false
-        612_00003_6:
-          Value: false
         All Enabled: false
-        _mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        _mti_6x0r_simple_2__mti_6x0r_simple_1:
-          Value: false
-        _mti_6x0r_simple_2__mti_6x0r_simple_2:
-          Value: false
-        _mti_6x0r_simple_2__mti_6x0r_simple_3:
-          Value: false
-        _mti_6x0r_simple_2__mti_6x0r_simple_4:
-          Value: false
-        _mti_6x0r_simple_2__mti_6x0r_simple_5:
-          Value: false
-        aeva/vehicle:
-          Value: true
-        base_link:
-          Value: true
-        base_t1:
-          Value: false
-        bottom_housing_casted_3_mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        cable_spacer:
-          Value: false
-        copy__2__of__mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        copy__3__of__mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        copy__4__of__mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        cs2_62x_o_ring_20190509:
-          Value: false
-        customized_model_for_l1l2_helix_20190529_1:
-          Value: false
-        decorative_nut_odu_amc_size0_mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        fan_cover_concord_collapsible:
-          Value: false
-        foot_concord:
-          Value: false
-        foot_concord_button_rubber:
-          Value: false
-        foot_rubber_concord:
-          Value: false
-        foot_rubber_concord_2:
-          Value: false
-        gc0wxm_p12um00_000l_mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        gps:
-          Value: true
-        heatsink_concord:
-          Value: false
-        hesai_lidar:
-          Value: true
-        imu:
-          Value: true
-        m2_5_insert_for_helix_family:
-          Value: false
-        membrane_ve90510_mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        o_ring_mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        oak:
-          Value: true
-        oak_imu_frame:
-          Value: true
-        oak_left_camera_frame:
-          Value: true
-        oak_left_camera_optical_frame:
-          Value: true
-        oak_model_origin:
-          Value: true
-        oak_parent_frame:
-          Value: false
-        oak_rgb_camera_frame:
-          Value: true
-        oak_rgb_camera_optical_frame:
-          Value: true
-        oak_right_camera_frame:
-          Value: true
-        oak_right_camera_optical_frame:
-          Value: true
-        part_1:
-          Value: false
-        part_10:
-          Value: false
-        part_11:
-          Value: false
-        part_11_1:
-          Value: false
-        part_12:
-          Value: false
-        part_13:
-          Value: false
-        part_15:
-          Value: false
-        part_1_1:
-          Value: false
-        part_1_2:
-          Value: false
-        part_1_3:
-          Value: false
-        part_2:
-          Value: false
-        part_2_1:
-          Value: false
-        part_3:
-          Value: false
-        part_4:
-          Value: false
-        part_4_1:
-          Value: false
-        part_5:
-          Value: false
-        part_6:
-          Value: false
-        part_7:
-          Value: false
-        pcie_cover_concord:
-          Value: false
-        radar_1:
-          Value: true
-        rosenberger___mps113_400xx_z_210201_lv_info:
-          Value: false
-        sensor_link:
-          Value: false
-        slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple:
-          Value: false
-        slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple_1:
-          Value: false
-        slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple_2:
-          Value: false
-        slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple_3:
-          Value: false
-        snapclip:
-          Value: false
-        snapclip_1:
-          Value: false
-        switch:
-          Value: false
-        te1021:
-          Value: false
-        technica:
-          Value: false
-        黑色喷漆顶盖:
-          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        base_link:
-          sensor_link:
-            20220058_耐落十字盘头螺钉_m2_6:
-              20220058_耐落十字盘头螺钉_m2_6_1:
-                20220058_耐落十字盘头螺钉_m2_6_3:
-                  rosenberger___mps113_400xx_z_210201_lv_info:
-                    黑色喷漆顶盖:
-                      210000722:
-                        hesai_lidar:
-                          {}
-                        part_1_3:
-                          502_mfm0572:
-                            radar_1:
-                              {}
-                          part_4_1:
-                            part_3:
-                              part_2_1:
-                                part_1_2:
-                                  {}
-                            part_5:
-                              aeva/vehicle:
-                                {}
-                              part_6:
-                                part_11_1:
-                                  snapclip:
-                                    snapclip_1:
-                                      pcie_cover_concord:
-                                        heatsink_concord:
-                                          foot_rubber_concord_2:
-                                            foot_rubber_concord:
-                                              foot_concord_button_rubber:
-                                                foot_concord:
-                                                  fan_cover_concord_collapsible:
-                                                    600_13737_0000_a01:
-                                                      {}
-                                part_4:
-                                  base_t1:
-                                    technica:
-                                      {}
-                                part_7:
-                                  part_10:
-                                    customized_model_for_l1l2_helix_20190529_1:
-                                      cs2_62x_o_ring_20190509:
-                                        {}
-                                      m2_5_insert_for_helix_family:
-                                        gps:
-                                          {}
-                                    part_12:
-                                      part_1:
-                                        {}
-                                      part_13:
-                                        part_15:
-                                          switch:
-                                            {}
-                                    part_1_1:
-                                      part_2:
-                                        {}
-                                    te1021:
-                                      {}
-              20220058_耐落十字盘头螺钉_m2_6_2:
-                {}
-            slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple:
-              slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple_1:
-                membrane_ve90510_mti_6x0r_simple_2__mti_6x0r_simple:
-                  copy__2__of__mti_6x0r_simple_2__mti_6x0r_simple:
-                    gc0wxm_p12um00_000l_mti_6x0r_simple_2__mti_6x0r_simple:
-                      copy__3__of__mti_6x0r_simple_2__mti_6x0r_simple:
-                        copy__4__of__mti_6x0r_simple_2__mti_6x0r_simple:
-                          bottom_housing_casted_3_mti_6x0r_simple_2__mti_6x0r_simple:
-                            part_11:
-                              606_00014_02_5:
-                                606_00013_02_6:
-                                  602_00007_1_3:
-                                    602_00007_1_2:
-                                      602_00007_1_1:
-                                        602_00007_1:
-                                          {}
-                                611_00016_20:
-                                  611_00018_9:
-                                    611_00020_16__1_:
-                                      611_00020_16_1:
-                                        612_00002_6:
-                                          612_00003_6:
-                                            cable_spacer:
-                                              oak_parent_frame:
-                                                oak:
-                                                  oak_model_origin:
-                                                    {}
-                                                  oak_rgb_camera_frame:
-                                                    oak_imu_frame:
-                                                      {}
-                                                    oak_rgb_camera_optical_frame:
-                                                      {}
-                                                    oak_right_camera_frame:
-                                                      oak_left_camera_frame:
-                                                        oak_left_camera_optical_frame:
-                                                          {}
-                                                      oak_right_camera_optical_frame:
-                                                        {}
-              slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple_2:
-                slotted_countersunk_flat_head_screw_iso_iso_2009___m2_5_x_16___16n_mti_6x0r_simple_2__mti_6x0r_simple_3:
-                  decorative_nut_odu_amc_size0_mti_6x0r_simple_2__mti_6x0r_simple:
-                    o_ring_mti_6x0r_simple_2__mti_6x0r_simple:
-                      _mti_6x0r_simple_2__mti_6x0r_simple_3:
-                        _mti_6x0r_simple_2__mti_6x0r_simple_2:
-                          _mti_6x0r_simple_2__mti_6x0r_simple_1:
-                            _mti_6x0r_simple_2__mti_6x0r_simple_4:
-                              _mti_6x0r_simple_2__mti_6x0r_simple:
-                                _mti_6x0r_simple_2__mti_6x0r_simple_5:
-                                  imu:
-                                    {}
+        {}
       Update Interval: 0
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 205
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: Hesai QT128
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /hesai/points
+      Use Fixed Frame: true
+      Use rainbow: true
       Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -842,10 +138,10 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 191
+      Max Intensity: -29.27347183227539
       Min Color: 0; 0; 0
-      Min Intensity: 1
-      Name: Hesai QT128
+      Min Intensity: -69.33172607421875
+      Name: Aeva Atlas
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
@@ -856,7 +152,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /rslidar_points
+        Value: /aeva/ATLAS/point_cloud_compensated
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -870,40 +166,7 @@ Visualization Manager:
       Channel Name: intensity
       Class: rviz_default_plugins/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: ""
-      Decay Time: 0
-      Enabled: true
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: Aeva Atlas
-      Position Transformer: ""
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: ""
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: true
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz_default_plugins/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: ""
+      Color Transformer: Intensity
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -912,7 +175,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: Hugin D1
-      Position Transformer: ""
+      Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -922,7 +185,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: ""
+        Value: /sensrad/radar_1/radar_data
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -940,6 +203,29 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /oak/rgb/image_raw
       Value: true
+    - Class: rviz_default_plugins/Camera
+      Enabled: false
+      Far Plane Distance: 100
+      Image Rendering: background and overlay
+      Name: OAK-D-W - LiDAR
+      Overlay Alpha: 0.5
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /oak/rgb/image_rect
+      Value: false
+      Visibility:
+        Aeva Atlas: true
+        Grid: false
+        Hesai QT128: true
+        Hugin D1: false
+        OAK-D-W: false
+        RobotModel: false
+        TF: false
+        Value: true
+      Zoom Factor: 1
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -986,25 +272,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 3.2378437519073486
+      Distance: 2.877972364425659
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.035841889679431915
-        Y: 0.03215314447879791
-        Z: 0.5113084316253662
+        X: -0.014101993292570114
+        Y: -0.19523999094963074
+        Z: 0.23446576297283173
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.05539829283952713
+      Pitch: 0.1053985208272934
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1435835361480713
+      Yaw: 3.0635883808135986
     Saved: ~
 Window Geometry:
   Displays:
@@ -1014,7 +300,9 @@ Window Geometry:
   Hide Right Dock: true
   OAK-D-W:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000001560000035efc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073000000003b0000035e000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000e004f0041004b002d0044002d0057030000058f00000245000001d30000017bfb0000000a0049006d00610067006500000002d1000000c80000000000000000000000010000010f0000035efc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003b0000035e000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007460000003efc0100000002fb0000000800540069006d00650100000000000007460000025300fffffffb0000000800540069006d00650100000000000004500000000000000000000007460000035e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  OAK-D-W - LiDAR:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000400000000000001e90000035efc020000000cfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073000000003b0000035e000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000e004f0041004b002d0044002d0057030000058f00000245000001d30000017bfb0000000a0049006d00610067006500000002d1000000c80000000000000000fb0000001e004f0041004b002d0044002d00570020002d0020004c0069004400410052020000023e00000111000003c60000026bfb0000000c00430061006d00650072006100000002d1000000c80000000000000000000000010000010f0000035efc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003b0000035e000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007460000003efc0100000002fb0000000800540069006d00650100000000000007460000025300fffffffb0000000800540069006d00650100000000000004500000000000000000000007460000035e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:

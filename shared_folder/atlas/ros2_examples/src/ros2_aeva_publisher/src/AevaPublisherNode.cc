@@ -171,7 +171,7 @@ void AevaPublisherNode::PublishPointCloudMetadata(const aeva_msgs::msg::PointClo
 void AevaPublisherNode::PublishTransform(const tf2_msgs::msg::TFMessage& message,
                                          const std::string& sensor_id) {
   if (sensor_id == sensor_id_ && publish_ros_topics_) {
-    tf_pub_->publish(message);
+    //tf_pub_->publish(message);
   }
 }
 

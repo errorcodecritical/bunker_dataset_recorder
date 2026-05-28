@@ -75,17 +75,17 @@ def generate_launch_description():
 
         nodes = []
         #  # Launch static TFs
-        nodes.append(
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    [PathJoinSubstitution([yggdrasil_pkg, "launch", "static_tf.launch.py"])]
-                ),
-                launch_arguments={
-                    "extrinsics_file": extrinsics,
-                    "tf_prefix": "",  # customer bundle never prefixes
-                }.items(),
-            )
-        )
+        # nodes.append(
+        #     IncludeLaunchDescription(
+        #         PythonLaunchDescriptionSource(
+        #             [PathJoinSubstitution([yggdrasil_pkg, "launch", "static_tf.launch.py"])]
+        #         ),
+        #         launch_arguments={
+        #             "extrinsics_file": extrinsics,
+        #             "tf_prefix": "",  # customer bundle never prefixes
+        #         }.items(),
+        #     )
+        # )
 
         # Launch N number of Sensrad groups and build list of radar namespaces
         radar_core_path = PathJoinSubstitution([yggdrasil_pkg, "launch", "sensrad_group.launch.py"])

@@ -14,5 +14,7 @@ export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 source /opt/ros/jazzy/setup.bash
 
 #Launch oakd v3 driver
-ros2 launch depthai_ros_driver_v3 driver.launch.py
-#ros2 launch depthai_ros_driver camera.launch.py
+#ros2 launch depthai_ros_driver_v3 driver.launch.py
+
+#Launch oakd v2 driver
+ros2 launch depthai_ros_driver camera.launch.py

@@ -52,7 +52,7 @@ lidar:
       xt_spot_correction: false             # Set to TRUE when XT S point cloud layering correction is required
       device_udp_src_port: 0                # Filter point clouds for specified source ports in case of multiple lidar, setting >=1024
       device_fault_port: 0                  # Filter fault message for specified source ports in case of multiple lidar, setting >=1024
-      frame_frequency: 0                    # The frequency that point cloud sends.
+      frame_frequency: 10.0                    # The frequency that point cloud sends.
       default_frame_frequency: 10.0         # The default frequency that point cloud sends.
       echo_mode_filter: 0                   # return mode filter
 

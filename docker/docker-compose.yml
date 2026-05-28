@@ -45,8 +45,12 @@ services:
       - /dev/:/dev/
       - ../ros2_ws/oakd-build:/root/ros2_ws/build
       - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/oakd/depthai_ros_driver/config/:/opt/ros/jazzy/share/depthai_ros_driver_v3/config/
-      - ../sensor_configs/oakd/depthai_ros_driver/launch/:/opt/ros/jazzy/share/depthai_ros_driver_v3/launch/
+      #Depthai ROS config
+      - ../sensor_configs/oakd/depthai_ros_driver/config:/opt/ros/jazzy/share/depthai_ros_driver/config
+      - ../sensor_configs/oakd/depthai_ros_driver/launch:/opt/ros/jazzy/share/depthai_ros_driver/launch
+      #Depthai ROS V3 config
+      #- ../sensor_configs/oakd/depthai_ros_driver/config/:/opt/ros/jazzy/share/depthai_ros_driver_v3/config/
+      #- ../sensor_configs/oakd/depthai_ros_driver/launch/:/opt/ros/jazzy/share/depthai_ros_driver_v3/launch/
     environment:
       - ROS_DOMAIN_ID=42
     command: /root/shared_folder/oakd-launch.sh

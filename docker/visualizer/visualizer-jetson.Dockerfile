@@ -36,8 +36,10 @@ RUN apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
     ros-$ROS_DISTRO-rviz2 \
     ros-$ROS_DISTRO-rqt-tf-tree \
     ros-$ROS_DISTRO-vision-msgs \
-    ros-$ROS_DISTRO-depthai-ros-v3 \
+    ros-$ROS_DISTRO-depthai-ros \
     ros-$ROS_DISTRO-camera-calibration
+    #Depthai-V3
+    #ros-$ROS_DISTRO-depthai-ros-v3
 
 
 #Configure catkin workspace
@@ -61,15 +63,19 @@ RUN .venv/bin/pip install ros2_calib matplotlib
 
 # ros2_calib need this fixes to the conditions about camera distortions, without this you can´t run the program
 # Fix 1: Convert numpy.bool to Python bool
-RUN sed -i 's/self.rectify_checkbox.setEnabled(has_distortion)/self.rectify_checkbox.setEnabled(bool(has_distortion))/' /root/.venv/lib/python3.12/site-packages/ros2_calib/calibration_widget.py
+RUN sed -i 's/self.rectify_checkbox.setEnabled(has_distortion)/#self.rectify_checkbox.setEnabled(bool(has_distortion))/' /root/.venv/lib/python3.12/site-packages/ros2_calib/calibration_widget.py
 
 # Fix 2: Handle missing intensity field
-RUN sed -i '735s/.*/        if "intensity" in cloud_arr.dtype.fields:\n            self.intensities = cloud_arr["intensity"]\n        else:\n            self.intensities = None/' /root/.venv/lib/python3.12/site-packages/ros2_calib/calibration_widget.py
-
+#RUN sed -i '735s/.*/        if hasattr(cloud_arr, "intensity"):\n            self.intensities = cloud_arr["intensity"]\n        else:\n            self.intensities = np.array([])/' /root/.venv/lib/python3.12/site-packages/ros2_calib/calibration_widget.py
+RUN sed -i \
+    -e '/if re_read_cloud:/,/self\.intensities = cloud_arr\["intensity"\]/{s/self\.intensities = cloud_arr\["intensity"\]/if "intensity" in cloud_arr.dtype.names:\n                self.intensities = cloud_arr["intensity"]\n            else:\n                self.intensities = np.array([])/}' \
+    -e 's/self\.intensities_valid = self\.intensities\[self\.valid_indices\]/if len(self.intensities) > 0:\n            self.intensities_valid = self.intensities[self.valid_indices]\n        else:\n            self.intensities_valid = np.zeros(len(self.valid_indices))/' \
+    /root/.venv/lib/python3.12/site-packages/ros2_calib/calibration_widget.py
+    
 # Fix 3: Check if intensities is not None before accessing .size
-RUN sed -i '739s/if self.intensities.size > 0:/if self.intensities is not None and self.intensities.size > 0:/' /root/.venv/lib/python3.12/site-packages/ros2_calib/calibration_widget.py
+#RUN sed -i '739s/if self.intensities.size > 0:/if self.intensities is not None and self.intensities.size > 0:/' /root/.venv/lib/python3.12/site-packages/ros2_calib/calibration_widget.py
 
 # Fix 4: Handle subscript access on intensities
-RUN sed -i '767s/self.intensities_valid = self.intensities\[self.valid_indices\]/self.intensities_valid = self.intensities\[self.valid_indices\] if self.intensities is not None else None/' /root/.venv/lib/python3.12/site-packages/ros2_calib/calibration_widget.py
+#RUN sed -i '767s/self.intensities_valid = self.intensities\[self.valid_indices\]/self.intensities_valid = self.intensities\[self.valid_indices\] if self.intensities is not None else None/' /root/.venv/lib/python3.12/site-packages/ros2_calib/calibration_widget.py
 
 CMD ["bash"]
