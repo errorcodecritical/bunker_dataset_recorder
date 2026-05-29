@@ -2,7 +2,7 @@ lidar:
   - driver:
       use_gpu: false
       source_type: 1                                  # The type of data source, 1: real-time lidar connection, 2: pcap, 3: packet rosbag, 4: serial    
-      # Depending on the type of source_type, fill in the corresponding configuration block (lidar_udp_type, pcap_type, serial_type)
+      # Depending on the type of source_type, fill in the corresponding configuration block (lidar_udp_type, rosbag_type, pcap_type, serial_type)
       lidar_udp_type:
         device_ip_address: "192.168.1.201"            # host_ip_address. If empty(""), the source ip of the udp point cloud is used
         udp_port: 2368                                # UDP destination port
@@ -26,7 +26,27 @@ lidar:
         # tcp_ssl use
         certFile: ""                                  # Represents the path of the user's certificate
         privateKeyFile: ""                            # Represents the path of the user's private key 
-        caFile: ""                                    # Represents the path of the CA certificate 
+        caFile: ""                                    # Represents the path of the CA certificate
+
+      rosbag_type:
+        correction_file_path: "/root/ros2_ws/src/HesaiLidar_ROS_2.0/src/driver/HesaiLidar_SDK_2.0/correction/angle_correction/QT128C2X_Angle Correction File.csv" # The path of correction file
+        firetimes_path: "/root/ros2_ws/src/HesaiLidar_ROS_2.0/src/driver/HesaiLidar_SDK_2.0/correction/firetime_correction/QT128C2X_Firetime Correction File.csv" # The path of firetimes file
+
+      pcap_type:
+        pcap_path: "Your pcap file"                         # The path of pcap file
+        correction_file_path: "Your correction file path"   # The path of correction file
+        firetimes_path: "Your firetime file path"           # The path of firetimes file
+
+        pcap_play_synchronization: true                     # pcap play rate synchronize with the host time
+        pcap_play_in_loop: false
+        play_rate_: 1.0                                     # pcap play rate
+
+      serial_type:
+        rs485_com: "Your serial port name for receiving point cloud"  # if using JT16, Port to receive the point cloud
+        rs232_com: "Your serial port name for sending cmd"            # if using JT16, Port to send cmd
+        point_cloud_baudrate: 3125000
+        correction_save_path: ""                                      # turn on when you need to store angle calibration files(from lidar)
+        correction_file_path: "Your correction file path"             # The path of correction file
       
       # public module
       use_timestamp_type: 0                 # 0 use point cloud timestamp; 1 use receive timestamp
