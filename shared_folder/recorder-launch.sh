@@ -56,25 +56,6 @@ TOPICS="/aeva/ATLAS/health \
         /aeva/ATLAS/point_cloud_compensated \
         /aeva/ATLAS/point_cloud_metadata \
         /aeva/ATLAS/twist \
-        /aeva/I000000/metadata \
-        /aeva/I000100/Calibration/calibration \
-        /aeva/I000300/Telemetry/telemetry \
-        /aeva/I000400/Config/config \
-        /aeva/I000500/Log/log \
-        /aeva/I000600/ObjectList/lidar_object_list \
-        /aeva/I000600/ObjectList/sensor_fusion_lidar_object_list \
-        /aeva/I000700/PointCloud/point_cloud_compensated \
-        /aeva/I000b00/RawData/spc_pointgroup \
-        /aeva/I000c00/Health/health \
-        /aeva/I000d00/VelocityEstimate/velocity_estimate \
-        /aeva/I000e00/IMU/imu \
-        /aeva/I001000/VehicleStateEstimate/S3d_vehicle_state_estimate \
-        /aeva/I001000/VehicleStateEstimate/sensor_fusion_3d_vehicle_state_estimate \
-        /aeva/I001100/Reconfig/reconfig_client \
-        /aeva/I001400/RawData/raw_packet \
-        /aeva/I001700/NavigationSolution/navigation_solution \
-        /aeva/I002300/Odometry/sensor_odometry \
-        /aeva/I002d00/AtlasCpcData/raw_cpc_pointgroup \
         /diagnostics \
         /fix \
         /heading \

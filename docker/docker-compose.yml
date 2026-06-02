@@ -8,7 +8,7 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/xsens-build:/root/ros2_ws/build
+      - ../ros2_ws/build/xsens-build:/root/ros2_ws/build
       - ../shared_folder/:/root/shared_folder/
       - ../sensor_configs/xsens/mtdevice.py:/root/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtdevice.py:rw
       - ../sensor_configs/xsens/mtnode.py:/root/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtnode.py:rw
@@ -26,7 +26,7 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/emlid-build:/root/ros2_ws/build
+      - ../ros2_ws/build/emlid-build:/root/ros2_ws/build
       - ../shared_folder/:/root/shared_folder/
       - ../sensor_configs/emlid/nmea_serial_driver.py:/root/ros2_ws/src/nmea_navsat_driver/src/libnmea_navsat_driver/nodes/nmea_serial_driver.py:rw
       - ../sensor_configs/emlid/nmea_serial_driver.yaml:/root/ros2_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml:rw
@@ -43,7 +43,7 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/oakd-build:/root/ros2_ws/build
+      - ../ros2_ws/build/oakd-build:/root/ros2_ws/build
       - ../shared_folder/:/root/shared_folder/
       #Depthai ROS config
       - ../sensor_configs/oakd/depthai_ros_driver/config:/opt/ros/jazzy/share/depthai_ros_driver/config
@@ -66,9 +66,9 @@ services:
     #   - "2368:2368/udp"
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/hesai-build:/root/ros2_ws/build
+      - ../ros2_ws/build/hesai-build:/root/ros2_ws/build
+      - ../ros2_ws/src/HesaiLidar_ROS_2.0/:/root/ros2_ws/src/HesaiLidar_ROS_2.0/
       - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/hesai/config.yaml:/root/ros2_ws/src/HesaiLidar_ROS_2.0/config/config.yaml:rw
     environment:
       - ROS_DOMAIN_ID=42
     command: /root/shared_folder/hesai-launch.sh
@@ -82,10 +82,11 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/atlas-build:/root/ros2_ws/build
+      - ../ros2_ws/build/atlas-build:/root/ros2_ws/build
       - ../shared_folder/:/root/shared_folder/
-      - ../shared_folder/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
-      - ../shared_folder/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
+      - ../ros2_ws/src/atlas:/root/shared_folder/atlas
+      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
+      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
     environment:
       - ROS_DOMAIN_ID=42
     command: /root/shared_folder/atlas-launch.sh
@@ -111,9 +112,9 @@ services:
     #   - "6010:6010/udp"
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/hugin-build:/opt/ros/overlay_ws/build
+      - ../ros2_ws/build/hugin-build:/opt/ros/overlay_ws/build
       - ../shared_folder/:/root/shared_folder/
-      - ../shared_folder/hugin/ros2/src/:/opt/ros/overlay_ws/src/
+      - ../ros2_ws/src/hugin/ros2/src/:/opt/ros/overlay_ws/src/
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
       - DISPLAY=$DISPLAY
@@ -130,8 +131,8 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - ../ros2_ws/bunker-build:/root/ros2_ws/build
-      - ../ros2_ws/bunker_description:/root/ros2_ws/src/bunker_description
+      - ../ros2_ws/build/bunker-build:/root/ros2_ws/build
+      - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
       - ../shared_folder/:/root/shared_folder/
     environment:
       - ROS_DOMAIN_ID=42
@@ -147,10 +148,11 @@ services:
     volumes:
       - /dev/:/dev/
       - ../../rosbags/:/root/rosbags/
-      - ../ros2_ws/recorder-build:/root/ros2_ws/build
+      - ../ros2_ws/build/recorder-build:/root/ros2_ws/build
       - ../shared_folder/:/root/shared_folder/
-      - ../shared_folder/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
-      - ../shared_folder/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
+      - ../ros2_ws/src/atlas:/root/shared_folder/atlas
+      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
+      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
     environment:
       - ROS_DOMAIN_ID=42
     command: /root/shared_folder/recorder-launch.sh
@@ -174,11 +176,12 @@ services:
     volumes:
       - /dev/:/dev/
       - ../../rosbags/:/root/rosbags/
-      - ../ros2_ws/visualizer-build:/root/ros2_ws/build
+      - ../ros2_ws/build/visualizer-build:/root/ros2_ws/build
       - ../shared_folder/:/root/shared_folder/
-      - ../shared_folder/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
-      - ../shared_folder/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
-      - ../ros2_ws/bunker_description:/root/ros2_ws/src/bunker_description
+      - ../ros2_ws/src/atlas:/root/shared_folder/atlas
+      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
+      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
+      - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
       - DISPLAY=$DISPLAY

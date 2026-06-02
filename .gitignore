@@ -1,7 +1,7 @@
 # Exclude everything in *-build directories
-ros2_ws/*-build/**
+ros2_ws/build/*-build/**
 
 # Re-include only files with a dot at the beginning
-!ros2_ws/*-build/**/.*
+!ros2_ws/build/*-build/**/.*
 
 __pycache__
