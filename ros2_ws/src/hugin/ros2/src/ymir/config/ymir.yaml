@@ -26,7 +26,7 @@
     max_path_length: 600
 
     # Path publish rate in Hz (reduces bandwidth vs publishing on every update)
-    path_publish_rate: 5.0
+    path_publish_rate: 10.0
 
     # Historical trajectory marker settings:
     # Publish individual arrow markers for full session history

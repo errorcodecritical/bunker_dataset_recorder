@@ -128,6 +128,21 @@ private:
   // Get sensor frame ID from topic name
   std::string getSensorFrameId(const std::string &topic_name);
 
+  // [ISR CHANGE] Helper function to apply rotation offset
+  tf2::Transform applyRotationOffset(const tf2::Transform& transform) const {
+    tf2::Transform result = transform;
+    tf2::Quaternion rotation_offset;
+    rotation_offset.setRPY(0.0, M_PI, -M_PI/2);  // 180° around Y, -90° around Z
+    
+    // Rotate position
+    result.setOrigin(tf2::quatRotate(rotation_offset, transform.getOrigin()));
+    
+    // Rotate orientation
+    result.setRotation(rotation_offset * transform.getRotation());
+    
+    return result;
+  }
+
 public:
   explicit Ymir(const rclcpp::NodeOptions &options = rclcpp::NodeOptions());
 

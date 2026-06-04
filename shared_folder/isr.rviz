@@ -4,6 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /Global Options1
         - /TF1/Frames1
         - /OAK-D-W1/Topic1
         - /OAK-D-W - LiDAR1/Visibility1
@@ -26,7 +27,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: Hugin D1
 Visualization Manager:
   Class: ""
   Displays:
@@ -59,7 +60,7 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /robot_description
-      Enabled: true
+      Enabled: false
       Links:
         All Links Enabled: true
         Expand Joint Details: false
@@ -72,7 +73,7 @@ Visualization Manager:
       Name: RobotModel
       TF Prefix: ""
       Update Interval: 0
-      Value: true
+      Value: false
       Visual Enabled: true
     - Class: rviz_default_plugins/TF
       Enabled: false
@@ -272,25 +273,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 2.877972364425659
+      Distance: 4.4001617431640625
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.014101993292570114
-        Y: -0.19523999094963074
-        Z: 0.23446576297283173
+        X: 0.3652295470237732
+        Y: -0.22781923413276672
+        Z: 0.1377439647912979
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.1053985208272934
+      Pitch: 0.0753985270857811
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.0635883808135986
+      Yaw: 3.1085901260375977
     Saved: ~
 Window Geometry:
   Displays:

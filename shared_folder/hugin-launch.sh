@@ -27,8 +27,13 @@ sleep 5
 
 ros2 service call /sensrad/radar_1/set_active_seq raf2_interfaces/srv/RdrCtrlSetActiveSeq "{requested_sequence_id: 2}"
 
-sleep 2
+sleep 1
 
 ros2 service call /sensrad/radar_1/start_tx raf2_interfaces/srv/RdrCtrlStartTx
+
+sleep 1
+
+#ros2 service call /sensrad/radar_1/set_thresholds raf2_interfaces/srv/RdrCtrlSetThresholds "{static_threshold: 8.0, dynamic_azimuth: 12.0, dynamic_elevation: 8.0, dynamic_basic: 12.0}"
+ros2 service call /sensrad/radar_1/set_thresholds raf2_interfaces/srv/RdrCtrlSetThresholds "{static_threshold: 10.0, dynamic_azimuth: 15.0, dynamic_elevation: 15.0, dynamic_basic: 15.0}"
 
 wait

@@ -223,30 +223,22 @@ void Ymir::publishOdometry(const rclcpp::Time &timestamp) {
   last_published_time_ = publish_time;
 
   // [ISR CHANGE] Apply 180-degree rotation to the odom frame
-  tf2::Quaternion rotation_offset;
-  rotation_offset.setRPY(0.0, M_PI, -M_PI/2);
+  tf2::Transform rotated_transform = applyRotationOffset(current_odom_baselink_tf_);
 
   // Broadcast TF transform
   geometry_msgs::msg::TransformStamped tf_out;
   tf_out.header.stamp = publish_time;
   tf_out.header.frame_id = odom_frame_id_;
   tf_out.child_frame_id = baselink_frame_id_;
-  tf_out.transform = tf2::toMsg(current_odom_baselink_tf_);
-
-  // [ISR CHANGE] Convert to tf2::Quaternion, multiply, and convert back
-  tf2::Quaternion q_original;
-  tf2::fromMsg(tf_out.transform.rotation, q_original);
-  tf2::Quaternion q_rotated = rotation_offset * q_original;
-  tf_out.transform.rotation = tf2::toMsg(q_rotated);
-
+  tf_out.transform = tf2::toMsg(rotated_transform);
   tf_broadcaster_->sendTransform(tf_out);
 
-  // Add to trajectory path
+  // Add to trajectory path using rotated transform
   geometry_msgs::msg::PoseStamped pose;
   pose.header = tf_out.header;
-  pose.pose.position.x = tf_out.transform.translation.x;
-  pose.pose.position.y = tf_out.transform.translation.y;
-  pose.pose.position.z = tf_out.transform.translation.z;
+  pose.pose.position.x = rotated_transform.getOrigin().x();
+  pose.pose.position.y = rotated_transform.getOrigin().y();
+  pose.pose.position.z = rotated_transform.getOrigin().z();
   pose.pose.orientation = tf_out.transform.rotation;
 
   path_.header.stamp = pose.header.stamp;
@@ -268,9 +260,9 @@ void Ymir::publishOdometry(const rclcpp::Time &timestamp) {
   RCLCPP_DEBUG(
       get_logger(),
       "Updated odometry - position: (%.3f, %.3f, %.3f), path size: %zu",
-      current_odom_baselink_tf_.getOrigin().x(),
-      current_odom_baselink_tf_.getOrigin().y(),
-      current_odom_baselink_tf_.getOrigin().z(), path_.poses.size());
+      rotated_transform.getOrigin().x(),
+      rotated_transform.getOrigin().y(),
+      rotated_transform.getOrigin().z(), path_.poses.size());
 }
 
 void Ymir::pathPublishTimerCallback() {
@@ -288,16 +280,20 @@ void Ymir::publishTrajectoryMarker() {
     return;
   }
 
-  // Get current position
-  tf2::Vector3 current_position = current_odom_baselink_tf_.getOrigin();
+  // [ISR CHANGE] Apply rotation to marker position and orientation
+  tf2::Transform rotated_transform = applyRotationOffset(current_odom_baselink_tf_);
+  
+  // Get rotated position and orientation
+  tf2::Vector3 rotated_position = rotated_transform.getOrigin();
+  tf2::Quaternion rotated_rotation = rotated_transform.getRotation();
 
   // Check if this is the first marker or if we've moved far enough
   if (marker_counter_ == 0) {
     // First marker - always publish
-    last_marker_position_ = current_position;
+    last_marker_position_ = rotated_position;
   } else {
-    // Calculate distance from last marker
-    double distance = (current_position - last_marker_position_).length();
+    // Calculate distance from last marker using rotated positions
+    double distance = (rotated_position - last_marker_position_).length();
 
     if (distance < marker_distance_threshold_) {
       // Haven't moved far enough yet
@@ -305,7 +301,7 @@ void Ymir::publishTrajectoryMarker() {
     }
 
     // Update last marker position
-    last_marker_position_ = current_position;
+    last_marker_position_ = rotated_position;
   }
 
   marker_counter_++;
@@ -320,16 +316,15 @@ void Ymir::publishTrajectoryMarker() {
   marker.type = visualization_msgs::msg::Marker::ARROW;
   marker.action = visualization_msgs::msg::Marker::ADD;
 
-  // Set pose from current odometry
-  marker.pose.position.x = current_position.x();
-  marker.pose.position.y = current_position.y();
-  marker.pose.position.z = current_position.z();
+  // Set pose from rotated odometry
+  marker.pose.position.x = rotated_position.x();
+  marker.pose.position.y = rotated_position.y();
+  marker.pose.position.z = rotated_position.z();
 
-  tf2::Quaternion q = current_odom_baselink_tf_.getRotation();
-  marker.pose.orientation.x = q.x();
-  marker.pose.orientation.y = q.y();
-  marker.pose.orientation.z = q.z();
-  marker.pose.orientation.w = q.w();
+  marker.pose.orientation.x = rotated_rotation.x();
+  marker.pose.orientation.y = rotated_rotation.y();
+  marker.pose.orientation.z = rotated_rotation.z();
+  marker.pose.orientation.w = rotated_rotation.w();
 
   // Set scale (arrow dimensions)
   // Arrow length scales with distance threshold for visual consistency
@@ -353,7 +348,7 @@ void Ymir::publishTrajectoryMarker() {
       get_logger(),
       "Published trajectory marker %d at (%.3f, %.3f), distance: %.2f m",
       marker.id, marker.pose.position.x, marker.pose.position.y,
-      (current_position - last_marker_position_).length());
+      (rotated_position - last_marker_position_).length());
 }
 
 // Auto-discover radar topics and subscribe to them
