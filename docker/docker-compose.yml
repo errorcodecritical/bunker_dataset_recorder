@@ -10,6 +10,7 @@ services:
     init: true
     tty: true
     stdin_open: true
+    privileged: true
     network_mode: host
     restart: unless-stopped
     volumes:
@@ -34,6 +35,7 @@ services:
     init: true
     tty: true
     stdin_open: true
+    privileged: true
     network_mode: host
     restart: unless-stopped
     volumes:
@@ -62,6 +64,7 @@ services:
     init: true
     tty: true
     stdin_open: true
+    privileged: true
     network_mode: host
     restart: unless-stopped
     volumes:
@@ -85,6 +88,7 @@ services:
     init: true
     tty: true
     stdin_open: true
+    privileged: true
     network_mode: host
     restart: unless-stopped
     volumes:
@@ -108,6 +112,7 @@ services:
     init: true
     tty: true
     stdin_open: true
+    privileged: true
     network_mode: host
     restart: unless-stopped
     volumes:
