@@ -23,7 +23,7 @@ services:
         echo "=== Building Hesai ROS Workspace ==="
         catkin build hesai_lidar -j 6 -p 6
         source /catkin_ws/devel/setup.bash
-        roslaunch hesai_lidar hesai_lidar.launch lidar_type:="PandarXT-32" 
+        roslaunch hesai_lidar hesai_lidar.launch lidar_type:="PandarQT" 
         # device_ip:="192.168.1.201"
 
   oakd_driver:
