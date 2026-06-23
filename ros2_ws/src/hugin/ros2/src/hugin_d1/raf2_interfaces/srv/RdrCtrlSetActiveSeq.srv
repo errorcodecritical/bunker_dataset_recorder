@@ -1,5 +1,0 @@
-# Copyright (c) Sensrad 2024
-uint32 requested_sequence_id
----
-bool success
-string message

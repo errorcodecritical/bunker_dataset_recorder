@@ -1,191 +1,121 @@
+version: '3.8'
+
 services:
-  xsens:
+  hesai_driver:
+    image: hesai_lidar_noetic:latest
+    container_name: hesai_lidar_driver
     build:
-     context: .
-     dockerfile: xsens/xsens-jetson.Dockerfile
-    container_name: xsens
-    privileged: true
+      context: ./hesai
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
     network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ../catkin_ws:/catkin_ws
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Building Hesai ROS Workspace ==="
+        catkin_make -DCATKIN_WHITELIST_PACKAGES="hesai_lidar" -DCMAKE_BUILD_TYPE=Release
+        source /catkin_ws/devel/setup.bash
+        roslaunch hesai_lidar hesai_lidar.launch lidar_type:="PandarXT-32" 
+        # device_ip:="192.168.1.201"
+
+  oakd_driver:
+    image: oakd_noetic:latest
+    container_name: oakd_driver
+    build:
+      context: ./oakd
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    network_mode: host
+    restart: unless-stopped
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/xsens-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/xsens/mtdevice.py:/root/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtdevice.py:rw
-      - ../sensor_configs/xsens/mtnode.py:/root/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtnode.py:rw
-      - ../sensor_configs/xsens/xsens_driver.launch.xml:/root/ros2_ws/src/norlab_xsens_driver/launch/xsens_driver.launch.xml:rw
-    environment:
-      - ROS_DOMAIN_ID=42
-    command: /root/shared_folder/xsens-launch.sh
+      - ../catkin_ws:/catkin_ws
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Building OakD ROS Workspace ==="
+        catkin_make -DCATKIN_WHITELIST_PACKAGES="oakd" -DCMAKE_BUILD_TYPE=Release
+        source /catkin_ws/devel/setup.bash
+        roslaunch depthai_ros_driver camera.launch
 
-  emlid:
+
+  xsens_mti_driver:
+    image: xsens_mti_noetic:latest
+    container_name: xsens_mti_driver
     build:
-      context: .
-      dockerfile: emlid/emlid-jetson.Dockerfile
-    container_name: emlid
-    privileged: true
+      context: ./xsens
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
     network_mode: host
+    restart: unless-stopped
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/emlid-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/emlid/nmea_serial_driver.py:/root/ros2_ws/src/nmea_navsat_driver/src/libnmea_navsat_driver/nodes/nmea_serial_driver.py:rw
-      - ../sensor_configs/emlid/nmea_serial_driver.yaml:/root/ros2_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml:rw
-    environment:
-      - ROS_DOMAIN_ID=42
-    command: /root/shared_folder/emlid-launch.sh
+      - ../catkin_ws:/catkin_ws
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Building Xsens MTI ROS Workspace ==="
+        source /catkin_ws/devel/setup.bash
+        roslaunch xsens_mti_driver xsens_mti_node.launch
 
-  oakd:
+  nmea_navsat_driver:
+    image: nmea_navsat_noetic:latest
+    container_name: nmea_navsat_driver
     build:
-      context: .
-      dockerfile: oakd/oakd-jetson.Dockerfile
-    container_name: oakd
-    privileged: true
+      context: ./emlid
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
     network_mode: host
+    restart: unless-stopped
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/oakd-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      #Depthai ROS config
-      - ../sensor_configs/oakd/depthai_ros_driver/config:/opt/ros/jazzy/share/depthai_ros_driver/config
-      - ../sensor_configs/oakd/depthai_ros_driver/launch:/opt/ros/jazzy/share/depthai_ros_driver/launch
-      #Depthai ROS V3 config
-      #- ../sensor_configs/oakd/depthai_ros_driver/config/:/opt/ros/jazzy/share/depthai_ros_driver_v3/config/
-      #- ../sensor_configs/oakd/depthai_ros_driver/launch/:/opt/ros/jazzy/share/depthai_ros_driver_v3/launch/
-    environment:
-      - ROS_DOMAIN_ID=42
-    command: /root/shared_folder/oakd-launch.sh
-
-  hesai:
-    build:
-     context: .
-     dockerfile: hesai/hesai-jetson.Dockerfile
-    container_name: hesai
-    privileged: true
-    network_mode: host
-    # ports:
-    #   - "2368:2368/udp"
-    volumes:
-      - /dev/:/dev/
-      - ../ros2_ws/build/hesai-build:/root/ros2_ws/build
-      - ../ros2_ws/src/HesaiLidar_ROS_2.0/:/root/ros2_ws/src/HesaiLidar_ROS_2.0/
-      - ../shared_folder/:/root/shared_folder/
-    environment:
-      - ROS_DOMAIN_ID=42
-    command: /root/shared_folder/hesai-launch.sh
-
-  atlas:
-    build:
-     context: .
-     dockerfile: atlas/atlas-jetson.Dockerfile
-    container_name: atlas
-    privileged: true
-    network_mode: host
-    volumes:
-      - /dev/:/dev/
-      - ../ros2_ws/build/atlas-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../ros2_ws/src/atlas:/root/shared_folder/atlas
-      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
-      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
-    environment:
-      - ROS_DOMAIN_ID=42
-    command: /root/shared_folder/atlas-launch.sh
-
-  hugin:
-    build:
-     context: ..
-     dockerfile: docker/hugin/hugin-jetson.Dockerfile
-    container_name: hugin
-    privileged: true
-    runtime: nvidia
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [gpu]
-    network_mode: host
-    # ports:
-    #   - "6001:6001/udp"
-    #   - "6003:6003/udp"
-    #   - "6007:6007/udp"
-    #   - "6010:6010/udp"
-    volumes:
-      - /dev/:/dev/
-      - ../ros2_ws/build/hugin-build:/opt/ros/overlay_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../ros2_ws/src/hugin/ros2/src/:/opt/ros/overlay_ws/src/
-      - /tmp/.X11-unix:/tmp/.X11-unix
-    environment:
-      - DISPLAY=$DISPLAY
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=all
-      - ROS_DOMAIN_ID=42
-    command: /root/shared_folder/hugin-launch.sh
-
-  bunker:
-    build:
-      context: .
-      dockerfile: bunker/bunker-jetson.Dockerfile
-    container_name: bunker
-    privileged: true
-    network_mode: host
-    volumes:
-      - ../ros2_ws/build/bunker-build:/root/ros2_ws/build
-      - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
-      - ../shared_folder/:/root/shared_folder/
-    environment:
-      - ROS_DOMAIN_ID=42
-    command: /root/shared_folder/bunker-launch.sh
+      - ../catkin_ws:/catkin_ws
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Building NMEA NavSat ROS Workspace ==="
+        source /catkin_ws/devel/setup.bash
+        roslaunch nmea_navsat_driver nmea_serial_driver.launch
 
   recorder:
-    build:
-      context: .
-      dockerfile: recorder/recorder-jetson.Dockerfile
+    image: ros_noetic_recorder:latest
     container_name: recorder
-    privileged: true
-    network_mode: host
-    volumes:
-      - /dev/:/dev/
-      - ../../rosbags/:/root/rosbags/
-      - ../ros2_ws/build/recorder-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../ros2_ws/src/atlas:/root/shared_folder/atlas
-      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
-      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
-    environment:
-      - ROS_DOMAIN_ID=42
-    command: /root/shared_folder/recorder-launch.sh
-
-  visualizer:
     build:
-      context: .
-      dockerfile: visualizer/visualizer-jetson.Dockerfile
-    container_name: visualizer
-    privileged: true
-    runtime: nvidia
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [gpu]
-    # ports:
-    #   - "9092:9092"
+      context: ./recorder
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
     network_mode: host
+    restart: unless-stopped
     volumes:
       - /dev/:/dev/
-      - ../../rosbags/:/root/rosbags/
-      - ../ros2_ws/build/visualizer-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../ros2_ws/src/atlas:/root/shared_folder/atlas
-      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
-      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
-      - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
-      - /tmp/.X11-unix:/tmp/.X11-unix
-    environment:
-      - DISPLAY=$DISPLAY
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=all
-      - ROS_DOMAIN_ID=42
-    command: /root/shared_folder/visualizer-launch.sh
+      - ../catkin_ws:/catkin_ws
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Building Recorder ROS Workspace ==="
+        source /catkin_ws/devel/setup.bash
+        roslaunch recorder recorder.launch
+  

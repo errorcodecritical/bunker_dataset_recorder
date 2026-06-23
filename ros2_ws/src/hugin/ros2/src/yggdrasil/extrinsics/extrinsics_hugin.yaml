@@ -1,7 +1,0 @@
-# Copyright (c) Sensrad 2025
-
-static_transforms:
-  radar_1:
-    parent: base_link
-    xyz: [ 0.00,  0.00, 0.00]
-    quat: [ 0.00, 0.00, -0.70710678, 0.70710678]

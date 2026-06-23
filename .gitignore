@@ -1,7 +1,7 @@
 # Exclude everything in *-build directories
-ros2_ws/build/*-build/**
+old/
+catkin_ws/*
+catkin_ws/src/CMakeLists.txt
 
 # Re-include only files with a dot at the beginning
-!ros2_ws/build/*-build/**/.*
-
-__pycache__
+!catkin_ws/src/

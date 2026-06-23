@@ -1,0 +1,7 @@
+[submodule "docker/catkin_ws/src/HesaiLidar_General_ROS"]
+	path = docker/catkin_ws/src/HesaiLidar_General_ROS
+	url = https://github.com/HesaiTechnology/HesaiLidar_General_ROS
+[submodule "docker/catkin_ws/src/depthai-ros"]
+	path = docker/catkin_ws/src/depthai-ros
+	url = https://github.com/luxonis/depthai-ros
+	branch = noetic
