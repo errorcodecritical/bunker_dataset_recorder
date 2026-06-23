@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="name" default="oak" />
+    <arg name="namespace" default="" />
+    <arg name="parent_frame" default="oak-d-base-frame" />
+    <arg name="camera_model" default="OAK-D-PRO" />
+    
+    <arg name="cam_pos_x" default="0.0" />
+    <arg name="cam_pos_y" default="0.0" />
+    <arg name="cam_pos_z" default="0.0" />
+    <arg name="cam_roll" default="0.0" />
+    <arg name="cam_pitch" default="0.0" />
+    <arg name="cam_yaw" default="0.0" />
+
+    <arg name="params_file" default="$(find depthai_ros_driver)/config/camera.yaml" />
+    <arg name="publish_tf_from_calibration" default="false" />
+    <arg name="imu_from_descr" default="false" />
+    <arg name="override_cam_model" default="false" />
+    <arg name="rs_compat" default="false" />
+    <arg name="rectify_rgb" default="true" />
+
+    <arg name="pointcloud.enable" default="false" />
+    
+    <arg name="enable_color" default="true" />
+    <arg name="enable_depth" default="true" />
+    <arg name="enable_infra1" default="false" />
+    <arg name="enable_infra2" default="false" />
+    <arg name="depth_module.depth_profile" default="1280,720,30" />
+    <arg name="rgb_camera.color_profile" default="1280,720,30" />
+    <arg name="depth_module.infra_profile" default="1280,720,30" />
+
+    <arg name="use_gdb" default="false" />
+    <arg name="use_valgrind" default="false" />
+    <arg name="use_perf" default="false" />
+
+    <arg name="launch_prefix" value="xterm -e gdb -ex run --args" if="$(arg use_gdb)"/>
+    <arg name="launch_prefix" value="valgrind --tool=callgrind" if="$(arg use_valgrind)"/>
+    <arg name="launch_prefix" value="perf record -g --call-graph dwarf --output=perf.out.node_name.data --" if="$(arg use_perf)"/>
+    <arg name="launch_prefix" value="" unless="$(eval use_gdb or use_valgrind or use_perf)"/>
+
+    <arg name="final_name" value="camera" if="$(arg rs_compat)" />
+    <arg name="final_name" value="$(arg name)" unless="$(arg rs_compat)" />
+
+    <arg name="final_namespace" value="camera" if="$(eval rs_compat and namespace == '')" />
+    <arg name="final_namespace" value="$(arg namespace)" unless="$(eval rs_compat and namespace == '')" />
+
+    <arg name="final_parent_frame" value="$(arg final_name)_link" if="$(eval rs_compat and parent_frame == 'oak-d-base-frame')" />
+    <arg name="final_parent_frame" value="$(arg parent_frame)" unless="$(eval rs_compat and parent_frame == 'oak-d-base-frame')" />
+
+    <arg name="points_topic_name" value="$(arg final_name)/depth/color/points" if="$(arg rs_compat)"/>
+    <arg name="points_topic_name" value="$(arg final_name)/points" unless="$(arg rs_compat)"/>
+
+    <arg name="color_sens_name" value="color" if="$(arg rs_compat)"/>
+    <arg name="color_sens_name" value="rgb" unless="$(arg rs_compat)"/>
+
+    <arg name="stereo_sens_name" value="depth" if="$(arg rs_compat)" />
+    <arg name="stereo_sens_name" value="stereo" unless="$(arg rs_compat)" />
+
+    <arg name="depth_topic_suffix" value="image_rect_raw" if="$(arg rs_compat)"/>
+    <arg name="depth_topic_suffix" value="image_raw" unless="$(arg rs_compat)"/>
+
+    <group ns="$(arg final_namespace)">
+        <rosparam command="load" file="$(arg params_file)" />
+
+        <group if="$(arg pointcloud.enable)">
+            <param name="$(arg final_name)/pipeline_gen_i_enable_sync" value="true" />
+            <param name="$(arg final_name)/rgb_i_synced" value="true" />
+            <param name="$(arg final_name)/stereo_i_synced" value="true" />
+        </group>
+
+        <group if="$(arg rs_compat)">
+            <param name="$(arg final_name)/camera/i_rs_compat" value="true" />
+            <param name="$(arg final_name)/pipeline_gen/i_enable_sync" value="true" />
+            
+            <param name="$(arg final_name)/color/i_publish_topic" value="$(arg enable_color)" />
+            <param name="$(arg final_name)/color/i_synced" value="true" />
+            <param name="$(arg final_name)/color/i_width" value="$(eval int(choice([rgb_camera.color_profile.split(',')[0]])))" />
+            <param name="$(arg final_name)/color/i_height" value="$(eval int(choice([rgb_camera.color_profile.split(',')[1]])))" />
+            <param name="$(arg final_name)/color/i_fps" value="$(eval float(choice([rgb_camera.color_profile.split(',')[2]])))" />
+
+            <param name="$(arg final_name)/depth/i_publish_topic" value="$(arg enable_depth)" />
+            <param name="$(arg final_name)/depth/i_synced" value="true" />
+            <param name="$(arg final_name)/depth/i_width" value="$(eval int(choice([depth_module.depth_profile.split(',')[0]])))" />
+            <param name="$(arg final_name)/depth/i_height" value="$(eval int(choice([depth_module.depth_profile.split(',')[1]])))" />
+            <param name="$(arg final_name)/depth/i_fps" value="$(eval float(choice([depth_module.depth_profile.split(',')[2]])))" />
+
+            <param name="$(arg final_name)/infra1/i_width" value="$(eval int(choice([depth_module.infra_profile.split(',')[0]])))" />
+            <param name="$(arg final_name)/infra1/i_height" value="$(eval int(choice([depth_module.infra_profile.split(',')[1]])))" />
+            <param name="$(arg final_name)/infra1/i_fps" value="$(eval float(choice([depth_module.infra_profile.split(',')[2]])))" />
+
+            <param name="$(arg final_name)/infra2/i_width" value="$(eval int(choice([depth_module.infra_profile.split(',')[0]])))" />
+            <param name="$(arg final_name)/infra2/i_height" value="$(eval int(choice([depth_module.infra_profile.split(',')[1]])))" />
+            <param name="$(arg final_name)/infra2/i_fps" value="$(eval float(choice([depth_module.infra_profile.split(',')[2]])))" />
+
+            <param name="$(arg final_name)/depth/i_left_rect_publish_topic" value="true" />
+            <param name="$(arg final_name)/depth/i_right_rect_publish_topic" value="true" />
+        </group>
+
+        <group if="$(arg publish_tf_from_calibration)">
+            <param name="$(arg final_name)/camera/i_publish_tf_from_calibration" value="true" />
+            <param name="$(arg final_name)/camera/i_tf_tf_prefix" value="$(arg final_name)" />
+            <param name="$(arg final_name)/camera/i_tf_camera_model" value="$(arg camera_model)" if="$(arg override_cam_model)" />
+            <param name="$(arg final_name)/camera/i_tf_camera_model" value="" unless="$(arg override_cam_model)" />
+            <param name="$(arg final_name)/camera/i_tf_base_frame" value="$(arg final_name)" />
+            <param name="$(arg final_name)/camera/i_tf_parent_frame" value="$(arg final_parent_frame)" />
+            <param name="$(arg final_name)/camera/i_tf_cam_pos_x" value="$(arg cam_pos_x)" />
+            <param name="$(arg final_name)/camera/i_tf_cam_pos_y" value="$(arg cam_pos_y)" />
+            <param name="$(arg final_name)/camera/i_tf_cam_pos_z" value="$(arg cam_pos_z)" />
+            <param name="$(arg final_name)/camera/i_tf_cam_roll" value="$(arg cam_roll)" />
+            <param name="$(arg final_name)/camera/i_tf_cam_pitch" value="$(arg cam_pitch)" />
+            <param name="$(arg final_name)/camera/i_tf_cam_yaw" value="$(arg cam_yaw)" />
+            <param name="$(arg final_name)/camera/i_tf_imu_from_descr" value="$(arg imu_from_descr)" />
+        </group>
+
+        <node pkg="rosservice" if="$(optenv DEPTHAI_DEBUG 0)" type="rosservice" name="set_log_level"
+            args="call --wait $(arg final_name)_nodelet_manager/set_logger_level 'ros.depthai_ros_driver' 'debug'" />
+
+        <include unless="$(arg publish_tf_from_calibration)" file="$(find depthai_descriptions)/launch/urdf.launch">
+            <arg name="base_frame" value="$(arg final_name)" />
+            <arg name="parent_frame" value="$(arg final_parent_frame)" />
+            <arg name="camera_model" value="$(arg camera_model)" />
+            <arg name="tf_prefix" value="$(arg final_name)" />
+            <arg name="cam_pos_x" value="$(arg cam_pos_x)" />
+            <arg name="cam_pos_y" value="$(arg cam_pos_y)" />
+            <arg name="cam_pos_z" value="$(arg cam_pos_z)" />
+            <arg name="cam_roll" value="$(arg cam_roll)" />
+            <arg name="cam_pitch" value="$(arg cam_pitch)" />
+            <arg name="cam_yaw" value="$(arg cam_yaw)" />
+            <arg name="rs_compat" value="$(arg rs_compat)" />
+        </include>
+
+        <node pkg="nodelet" type="nodelet" name="$(arg final_name)_nodelet_manager"
+            launch-prefix="$(arg launch_prefix)" args="manager" output="screen">
+            <remap from="/nodelet_manager/load_nodelet" to="$(arg final_name)_nodelet_manager/load_nodelet" />
+            <remap from="/nodelet_manager/unload_nodelet" to="$(arg final_name)_nodelet_manager/unload_nodelet" />
+            <remap from="/nodelet_manager/list" to="$(arg final_name)_nodelet_manager/list" />
+        </node>
+
+        <node name="$(arg final_name)" pkg="nodelet" type="nodelet" output="screen" required="true"
+            args="load depthai_ros_driver/Camera $(arg final_name)_nodelet_manager">
+        </node>
+
+        <node pkg="nodelet" type="nodelet" name="rectify_color"
+            args="load image_proc/rectify $(arg final_name)_nodelet_manager" if="$(arg rectify_rgb)">
+            <remap from="image_mono" to="$(arg final_name)/$(arg color_sens_name)/image_raw" />
+            <remap from="image_rect" to="$(arg final_name)/$(arg color_sens_name)/image_rect" />
+        </node>
+
+        <node pkg="nodelet" type="nodelet" name="depth_image_to_rgb_pointcloud"
+            args="load depth_image_proc/point_cloud_xyzrgb $(arg final_name)_nodelet_manager"
+            if="$(arg pointcloud.enable)">
+            <param name="queue_size" value="10" />
+            <remap from="rgb/camera_info" to="$(arg final_name)/$(arg color_sens_name)/camera_info" />
+            <remap from="rgb/image_rect_color" to="$(arg final_name)/$(arg color_sens_name)/image_rect" if="$(arg rectify_rgb)" />
+            <remap from="rgb/image_rect_color" to="$(arg final_name)/$(arg color_sens_name)/image_raw" unless="$(arg rectify_rgb)" />
+            <remap from="depth_registered/image_rect" to="$(arg final_name)/$(arg stereo_sens_name)/$(arg depth_topic_suffix)" />
+            <remap from="depth_registered/points" to="$(arg points_topic_name)" />
+        </node>
+    </group>
+</launch>
