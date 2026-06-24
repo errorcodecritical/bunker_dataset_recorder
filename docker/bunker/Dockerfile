@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     can-utils \
     iproute2 \
+    libyaml-cpp-dev \
+    python3-catkin-tools \
     ros-noetic-teleop-twist-keyboard \
     && rm -rf /var/lib/apt/lists/*
 
