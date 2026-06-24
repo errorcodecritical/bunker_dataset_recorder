@@ -157,7 +157,7 @@ services:
 
   teleop:
     build:
-      context: .
+      context: ./bunker
       dockerfile: Dockerfile
     init: true
     tty: true
