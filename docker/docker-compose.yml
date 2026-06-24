@@ -130,4 +130,51 @@ services:
         echo "=== Building Recorder ROS Workspace ==="
         source /catkin_ws/devel/setup.bash
         roslaunch recorder recorder.launch
-  
+
+  bunker_driver:
+    image: bunker_driver_noetic:latest
+    container_name: bunker_driver
+    build:
+      context: ./bunker
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - /dev/:/dev/
+      - ../catkin_ws:/catkin_ws
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Building Bunker ROS Workspace ==="
+        source /catkin_ws/devel/setup.bash
+        roslaunch bunker_bringup bunker_robot_base.launch port_name:=can0
+
+  teleop:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - /dev/:/dev/
+      - ../catkin_ws:/catkin_ws
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Building Teleop ROS Workspace ==="
+        source /catkin_ws/devel/setup.bash
+        roslaunch bunker_bringup bunker_teleop_keyboard.launch
+    depends_on:
+      - bunker_driver

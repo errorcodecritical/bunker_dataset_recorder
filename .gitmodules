@@ -5,3 +5,9 @@
 	path = catkin_ws/src/depthai-ros
 	url = https://github.com/luxonis/depthai-ros
 	branch = noetic
+[submodule "catkin_ws/src/bunker_ros"]
+	path = catkin_ws/src/bunker_ros
+	url = https://github.com/agilexrobotics/bunker_ros.git
+[submodule "catkin_ws/src/ugv_sdk"]
+	path = catkin_ws/src/ugv_sdk
+	url = https://github.com/agilexrobotics/ugv_sdk.git
