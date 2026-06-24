@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     can-utils \
     iproute2 \
     libyaml-cpp-dev \
+    libasio-dev \
     python3-catkin-tools \
     ros-noetic-teleop-twist-keyboard \
     && rm -rf /var/lib/apt/lists/*

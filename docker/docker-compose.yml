@@ -153,6 +153,7 @@ services:
         sleep 3
         echo "=== Building Bunker ROS Workspace ==="
         source /catkin_ws/devel/setup.bash
+        catkin build bunker_base bunker_msgs bunker_bringup ugv_sdk
         roslaunch bunker_bringup bunker_robot_base.launch port_name:=can0
 
   teleop:
