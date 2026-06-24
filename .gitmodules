@@ -7,7 +7,7 @@
 	branch = noetic
 [submodule "catkin_ws/src/bunker_ros"]
 	path = catkin_ws/src/bunker_ros
-	url = https://github.com/agilexrobotics/bunker_ros.git
+	url = https://github.com/errorcodecritical/bunker_ros
 [submodule "catkin_ws/src/ugv_sdk"]
 	path = catkin_ws/src/ugv_sdk
 	url = https://github.com/agilexrobotics/ugv_sdk.git
