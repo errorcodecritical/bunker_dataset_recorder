@@ -13,18 +13,23 @@ services:
     privileged: true
     network_mode: host
     restart: unless-stopped
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.Xauthority
     volumes:
       - ../catkin_ws:/catkin_ws
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/tmp/.Xauthority:rw
     command:
       - /bin/bash
       - -c
       - |
         sleep 3
         echo "=== Building Hesai ROS Workspace ==="
-        catkin build hesai_lidar -j 6 -p 6
+        catkin build hesai_ros_driver -j 6 -p 6
         source /catkin_ws/devel/setup.bash
-        roslaunch hesai_lidar hesai_lidar.launch lidar_type:="PandarQT" 
-        # device_ip:="192.168.1.201"
+        roslaunch hesai_ros_driver start.launch config_path:=/config/hesai/config.yaml
 
   oakd_driver:
     image: oakd_noetic:latest
@@ -53,7 +58,6 @@ services:
         catkin build depthai_ros_driver -j 6 -p 6
         source /catkin_ws/devel/setup.bash
         roslaunch depthai_ros_driver camera.launch
-
 
   xsens_mti_driver:
     image: xsens_mti_noetic:latest
