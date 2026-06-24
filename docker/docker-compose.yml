@@ -146,6 +146,7 @@ services:
     volumes:
       - /dev/:/dev/
       - ../catkin_ws:/catkin_ws
+      - ../config/bunker/bunker_robot_base.launch:/catkin_ws/src/bunker_ros/bunker_bringup/launch/bunker_robot_base.launch
     command:
       - /bin/bash
       - -c
