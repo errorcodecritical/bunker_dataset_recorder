@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     ros-noetic-tf \
     ros-noetic-tf2-ros \
     ros-noetic-geometry-msgs \
+    ros-noetic-twist-mux \
     && rm -rf /var/lib/apt/lists/*
 
 # Create the main workspace directory
