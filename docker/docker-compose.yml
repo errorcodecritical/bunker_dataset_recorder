@@ -41,7 +41,7 @@ services:
       - /dev/:/dev/
       - ../catkin_ws:/catkin_ws
       #Depthai ROS config
-      - ../config/oakd/depthai_ros_driver:/catkin_ws/src/depthai-ros/depthai_ros_driver
+      - ../config/oakd/depthai_ros_driver/config:/catkin_ws/src/depthai-ros/depthai_ros_driver/config
       # - ../config/oakd/depthai_ros_driver/launch:/catkin_ws/src/depthai-ros/depthai_ros_driver/launch
     command:
       - /bin/bash
