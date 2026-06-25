@@ -13,14 +13,8 @@ services:
     privileged: true
     network_mode: host
     restart: unless-stopped
-    environment:
-      - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1
-      - XAUTHORITY=/tmp/.Xauthority
     volumes:
       - ../catkin_ws:/catkin_ws
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ~/.Xauthority:/tmp/.Xauthority:rw
     command:
       - /bin/bash
       - -c
@@ -119,9 +113,14 @@ services:
     privileged: true
     network_mode: host
     restart: unless-stopped
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.Xauthority
     volumes:
-      - /dev/:/dev/
       - ../catkin_ws:/catkin_ws
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/tmp/.Xauthority:rw
     command:
       - /bin/bash
       - -c
@@ -129,7 +128,7 @@ services:
         sleep 3
         echo "=== Building Recorder ROS Workspace ==="
         source /catkin_ws/devel/setup.bash
-        roslaunch recorder recorder.launch
+        rviz
 
   bunker_driver:
     image: bunker_driver_noetic:latest
