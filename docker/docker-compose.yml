@@ -152,6 +152,8 @@ services:
       - -c
       - |
         sleep 3
+        echo "=== Activating CAN2 device ==="
+        ip link set can2 up type can bitrate 500000
         echo "=== Building Bunker ROS Workspace ==="
         catkin build bunker_base bunker_msgs bunker_bringup ugv_sdk -j 6 -p 6 --cmake-args -DCMAKE_CXX_FLAGS="-DASIO_ENABLE_OLD_SERVICES"
         source /catkin_ws/devel/setup.bash
