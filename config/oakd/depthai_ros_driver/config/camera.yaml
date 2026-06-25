@@ -1,23 +1,20 @@
 /**:
   ros__parameters:
 
-    camera:
-      i_enable_imu: true
-      i_enable_ir: false
-      i_nn_type: none
-      i_pipeline_type: RGB
-      i_publish_tf_from_calibration: false
-      i_enable_sync: true
-    nn:
-      i_nn_config_path: depthai_ros_driver/mobilenet
+    camera_i_enable_imu: true
+    camera_i_enable_ir: false
+    camera_i_nn_type: none
+    camera_i_pipeline_type: RGB
+    camera_i_publish_tf_from_calibration: false
+    camera_i_enable_sync: true
+    nn_i_nn_config_path: depthai_ros_driver/mobilenet
 
-    rgb:
-      i_sensor_img_orientation: ROTATE_180_DEG
-      i_resolution: 1080P
-      # i_height: 1080
-      # i_width: 1920
-      i_fps: 60.0
-      i_publish_compressed: false
+    rgb_i_sensor_img_orientation: ROTATE_180_DEG
+    rgb_i_resolution: 1080P
+    # rgb_i_height: 1080
+    # rgb_i_width: 1920
+    rgb_i_fps: 60.0
+    rgb_i_publish_compressed: false
 
 
   # camera:
