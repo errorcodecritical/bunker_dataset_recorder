@@ -7,15 +7,16 @@
   camera_i_mx_id: ''
   camera_i_pipeline_type: stereo
   camera_i_usb_port_id: ''
-  camera_i_usb_speed: SUPER_PLUS
+  camera_i_usb_speed: HIGH
   rgb_i_sensor_img_orientation: ROTATE_180_DEG
   left_i_sensor_img_orientation: ROTATE_180_DEG
   right_i_sensor_img_orientation: ROTATE_180_DEG
-  
+
   stereo_i_align_depth: true          # Aligns depth to the RGB frame (highly recommended)
   stereo_i_enable_lazy_publisher: false # Prevents ROS from cutting the stream when nobody is listening
   stereo_i_publish_topic: true        # FORCE the driver to output the depth topic
-  stereo_i_depth_filter_flags: "ENABLE" # (Optional) Cleans up high-frequency noise
+  # stereo_i_depth_filter_flags: "ENABLE" # (Optional) Cleans up high-frequency noise
 
   left_i_enable_lazy_publisher: false
   right_i_enable_lazy_publisher: false
+  rgb_i_enable_lazy_publisher: false
