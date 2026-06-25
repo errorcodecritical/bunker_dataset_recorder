@@ -11,3 +11,5 @@
   camera_i_usb_speed: SUPER_PLUS
   nn_i_nn_config_path: depthai_ros_driver/mobilenet
   rgb_i_sensor_img_orientation: ROTATE_180_DEG
+  left_i_sensor_img_orientation: ROTATE_180_DEG
+  right_i_sensor_img_orientation: ROTATE_180_DEG
