@@ -1,6 +1,6 @@
 [submodule "catkin_ws/src/HesaiLidar_ROS_2.0"]
 	path = catkin_ws/src/HesaiLidar_ROS_2.0
-	url = https://github.com/HesaiTechnology/HesaiLidar_ROS_2.0
+	url = https://github.com/errorcodecritical/HesaiLidar_ROS_2.0
 [submodule "catkin_ws/src/depthai-ros"]
 	path = catkin_ws/src/depthai-ros
 	url = https://github.com/luxonis/depthai-ros

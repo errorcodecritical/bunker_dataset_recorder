@@ -9,7 +9,7 @@ lidar:
         ptc_port: 9347                                # PTC port of lidar
         multicast_ip_address: ""                      # Multicast IP address, if the lidar is in multicast mode, fill in the multicast IP address, otherwise leave it empty("")
 
-        use_ptc_connected: true                       # Set to false when ptc connection is not used
+        use_ptc_connected: false                       # Set to false when ptc connection is not used
         host_ptc_port: 0                              # PTC source port, 0 means auto
         correction_file_path: "/catkin_ws/src/HesaiLidar_ROS_2.0/src/driver/HesaiLidar_SDK_2.0/correction/angle_correction/QT128C2X_Angle Correction File.csv" # The path of correction file                      # The path of correction file
         firetimes_path: "/catkin_ws/src/HesaiLidar_ROS_2.0/src/driver/HesaiLidar_SDK_2.0/correction/firetime_correction/QT128C2X_Firetime Correction File.csv" # The path of firetimes file                            # The path of firetimes file
@@ -84,5 +84,5 @@ lidar:
       ros_send_imu_topic: /hesai/imu                  # Topic used to send lidar imu message
       ros_send_packet_loss_topic: /hesai/lidar_packets_loss # Topic used to monitor packets loss condition through ROS
       send_packet_ros: true                           # true: Send packets through ROS 
-      send_point_cloud_ros: false                      # true: Send point cloud through ROS    
+      send_point_cloud_ros: true                      # true: Send point cloud through ROS    
       send_imu_ros: true     
