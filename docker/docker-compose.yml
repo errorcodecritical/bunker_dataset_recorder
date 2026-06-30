@@ -128,7 +128,17 @@ services:
         sleep 3
         echo "=== Building Recorder ROS Workspace ==="
         source /catkin_ws/devel/setup.bash
-        rosbag record -a -O /rosbags/$(date +%Y_%m_%d_%H_%M_%S)_recording.bag
+        roscore &
+        sleep 1
+        rosbag record -O /rosbags/$(date +%Y_%m_%d_%H_%M_%S)_recording.bag \
+          /hesai/points \
+          /oakd/color/image_raw \
+          /oakd/stereo/image_raw \
+          /imu/data \
+          /imu/mag \
+          /fix \
+          /odom \
+          /cmd_vel
 
   bunker_driver:
     image: bunker_driver_noetic:latest
