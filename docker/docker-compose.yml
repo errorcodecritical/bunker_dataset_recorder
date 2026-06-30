@@ -41,9 +41,7 @@ services:
     volumes:
       - /dev/:/dev/
       - ../catkin_ws:/catkin_ws
-      #Depthai ROS config
       - ../config/oakd/depthai_ros_driver/config:/catkin_ws/src/depthai-ros/depthai_ros_driver/config
-      # - ../config/oakd/depthai_ros_driver/launch:/catkin_ws/src/depthai-ros/depthai_ros_driver/launch
     command:
       - /bin/bash
       - -c
@@ -120,6 +118,7 @@ services:
       - XAUTHORITY=/tmp/.Xauthority
     volumes:
       - ../catkin_ws:/catkin_ws
+      - ../rosbags:/rosbags
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ~/.Xauthority:/tmp/.Xauthority:rw
     command:
@@ -129,7 +128,7 @@ services:
         sleep 3
         echo "=== Building Recorder ROS Workspace ==="
         source /catkin_ws/devel/setup.bash
-        rviz
+        rosbag record -a -O /rosbags/$(date +%Y_%m_%d_%H_%M_%S)_recording.bag
 
   bunker_driver:
     image: bunker_driver_noetic:latest
