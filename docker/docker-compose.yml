@@ -132,8 +132,9 @@ services:
         sleep 1
         rosbag record -O /rosbags/$(date +%Y_%m_%d_%H_%M_%S)_recording.bag \
           /hesai/points \
-          /oakd/rgb/image_raw \
-          /oakd/stereo/image_raw \
+          /oak/rgb/image_raw \
+          /oak/stereo/image_raw \
+          /oak/imu/data \
           /imu/data \
           /imu/mag \
           /fix \
