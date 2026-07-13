@@ -67,6 +67,7 @@ services:
     volumes:
       - /dev/:/dev/
       - ../catkin_ws:/catkin_ws
+      - ../config/xsens/xsens_mti_node.yaml:/opt/ros/noetic/share/xsens_mti_driver/param/xsens_mti_node.yaml
     command:
       - /bin/bash
       - -c
