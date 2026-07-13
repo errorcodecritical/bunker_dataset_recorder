@@ -8,7 +8,7 @@
 # Option 1: Automatic Device Scanning
 # If set to 'true', the driver will ignore 'port' and 'baudrate' settings.
 # It will automatically scan all ports and select the first device found.
-scan_for_devices: true
+scan_for_devices: false
 
 # Option 2: Manual Device Configuration
 # If you prefer to manually specify the device port and baudrate,
@@ -22,8 +22,8 @@ scan_for_devices: true
 # to set baudrate to 115200, send the command: FA FF 30 00 D1, 
 # or to set it to 921600, send: FA FF 18 01 80 68.
 
-#port: '/dev/xsens' # Uncomment and set your device's port.
-#baudrate: 460800     # Uncomment and set your device's baudrate.
+port: '/dev/xsens' # Uncomment and set your device's port.
+baudrate: 460800     # Uncomment and set your device's baudrate.
 
 # Scan and serial communication timeout
 # -------------------------------------
@@ -66,7 +66,7 @@ enable_logging: false
 # ---------------------------
 # If you want to configure your sensor, firstly set this flag to true, then change desired values for the parameters below.
 # Note: This configuration is required only once, once it is successful, the configurations are stored in the sensor, then you could set this to false.
-enable_deviceConfig: true
+enable_deviceConfig: false
 
 # Sensor Extended Kalman Filter Option Configurations:
 # --------------------------
@@ -176,7 +176,7 @@ output_data_rate_baro_mtione: 50
 # High Rate Data for AccelerationHR and RateOfTurn:
 # ------------------------------------------------
 # if you want to enable high rate data, firstly change the 'enable_high_rate' to true, then change the data rate according to your sensor model.
-enable_high_rate: false
+enable_high_rate: true
 #options for MTi-1 v2: 800, 400, 200, 160
 #options for MTi-1 v3: 1000, 500, 250, 200, 125
 #options for MTi-600: 2000, 1000, 500
@@ -191,9 +191,9 @@ output_date_rate_gyrohr: 800
 
 # Filtering Option Flags 
 # -------------------------------------
-enable_orientation_smoother: true #valid for MTi-G-710, MTi-670(G), MTi-680(G)
-enable_position_velocity_smoother: true #valid for MTi-680(G) only
-enable_continuous_zero_rotation_update: true #valid for MTi-680(G) only
+enable_orientation_smoother: false #valid for MTi-G-710, MTi-670(G), MTi-680(G)
+enable_position_velocity_smoother: false #valid for MTi-680(G) only
+enable_continuous_zero_rotation_update: false #valid for MTi-680(G) only
 
 # Other option flags:
 # valid for MTi-2/3/7/8/20/30/620/630/670/680/200/300/710
@@ -203,9 +203,9 @@ enable_inrun_compass_calibration: false
 # Set baudrate
 # ---------------
 #This is necessary if you have hig output rate, and if you see error message of 'data overflow' 
-enable_setting_baudrate: false
+enable_setting_baudrate: true
 #options: 115200, 230400, 460800, 921600, 2000000
-set_baudrate_value: 921600
+set_baudrate_value: 460800
 
 
 # Manual Gyro Bias Estimation (MGBE) Configuration
