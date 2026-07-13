@@ -48,54 +48,65 @@ BAG_NAME="$(date +%Y_%m_%d_%H_%M_%S)__${label}_"
 #Topics to record
 #OAK: /oak/rgb/image_rect /oak/stereo/image_raw /oak/stereo/camera_info
 #TOPICS="/aeva/ATLAS/point_cloud_compensated /aeva/ATLAS/imu /aeva/ATLAS/odometry /aeva/ATLAS/point_cloud_metadata /hesai/lidar_packets /hesai/points /sensrad/radar_1/radar_data /oak/rgb/image_raw /oak/rgb/camera_info /oak/imu/data /imu/data /imu/mag /heading /fix /tf /tf_static"
-TOPICS="/aeva/ATLAS/health \
-        /aeva/ATLAS/imu \
-        /aeva/ATLAS/object_list/detections \
-        /aeva/ATLAS/object_list/markers \
-        /aeva/ATLAS/odometry \
-        /aeva/ATLAS/point_cloud_compensated \
-        /aeva/ATLAS/point_cloud_metadata \
-        /aeva/ATLAS/twist \
-        /diagnostics \
-        /fix \
-        /heading \
-        /hesai/lidar_packets_loss \
-        /hesai/lidar_packets \
+# TOPICS="/aeva/ATLAS/health \
+#         /aeva/ATLAS/imu \
+#         /aeva/ATLAS/object_list/detections \
+#         /aeva/ATLAS/object_list/markers \
+#         /aeva/ATLAS/odometry \
+#         /aeva/ATLAS/point_cloud_compensated \
+#         /aeva/ATLAS/point_cloud_metadata \
+#         /aeva/ATLAS/twist \
+#         /diagnostics \
+#         /fix \
+#         /heading \
+#         /hesai/lidar_packets_loss \
+#         /hesai/lidar_packets \
+#         /imu/data \
+#         /imu/mag \
+#         /imu_data_str \
+#         /oak/imu/data \
+#         /oak/rgb/camera_info \
+#         /oak/rgb/image_rect/compressed \
+#         /sensrad/radar_1/binary_data \
+#         /sensrad/radar_1/control_state \
+#         /sensrad/radar_1/ethernet_logger \
+#         /sensrad/radar_1/meta_data \
+#         /sensrad/radar_1/oden/control_state \
+#         /sensrad/radar_1/oden/detections \
+#         /sensrad/radar_1/oden/ego_motion \
+#         /sensrad/radar_1/oden/extended_point_cloud \
+#         /sensrad/radar_1/oden/free_space_polygon \
+#         /sensrad/radar_1/oden/free_space_volume/camera_info \
+#         /sensrad/radar_1/oden/free_space_volume/image \
+#         /sensrad/radar_1/oden/free_space_volume/raw \
+#         /sensrad/radar_1/oden/ground_plane_data \
+#         /sensrad/radar_1/oden/local_map_cloud \
+#         /sensrad/radar_1/oden/object_tracks \
+#         /sensrad/radar_1/oden/occupancy_grid \
+#         /sensrad/radar_1/oden/region_of_interest \
+#         /sensrad/radar_1/oden/runes/aabb_object_tracks \
+#         /sensrad/radar_1/oden/runes/anomaly_voxels \
+#         /sensrad/radar_1/oden/runes/free_space_ground_polygon \
+#         /sensrad/radar_1/oden/runes/occupancy_grid_markers \
+#         /sensrad/radar_1/oden/runes/roi_marker \
+#         /sensrad/radar_1/oden/runes/static_map_voxels \
+#         /sensrad/radar_1/oden/static_map \
+#         /sensrad/radar_1/oden/statistics \
+#         /sensrad/radar_1/radar_data \
+#         /sensrad/radar_1/radar_header \
+#         /sensrad/ymir/ego_trajectory \
+#         /sensrad/ymir/ego_trajectory_markers \
+#         /tf \
+#         /tf_static"
+TOPICS="/hesai/points \
         /imu/data \
         /imu/mag \
         /imu_data_str \
-        /oak/imu/data \
         /oak/rgb/camera_info \
         /oak/rgb/image_rect/compressed \
-        /sensrad/radar_1/binary_data \
-        /sensrad/radar_1/control_state \
-        /sensrad/radar_1/ethernet_logger \
-        /sensrad/radar_1/meta_data \
-        /sensrad/radar_1/oden/control_state \
-        /sensrad/radar_1/oden/detections \
-        /sensrad/radar_1/oden/ego_motion \
-        /sensrad/radar_1/oden/extended_point_cloud \
-        /sensrad/radar_1/oden/free_space_polygon \
-        /sensrad/radar_1/oden/free_space_volume/camera_info \
-        /sensrad/radar_1/oden/free_space_volume/image \
-        /sensrad/radar_1/oden/free_space_volume/raw \
-        /sensrad/radar_1/oden/ground_plane_data \
-        /sensrad/radar_1/oden/local_map_cloud \
-        /sensrad/radar_1/oden/object_tracks \
-        /sensrad/radar_1/oden/occupancy_grid \
-        /sensrad/radar_1/oden/region_of_interest \
-        /sensrad/radar_1/oden/runes/aabb_object_tracks \
-        /sensrad/radar_1/oden/runes/anomaly_voxels \
-        /sensrad/radar_1/oden/runes/free_space_ground_polygon \
-        /sensrad/radar_1/oden/runes/occupancy_grid_markers \
-        /sensrad/radar_1/oden/runes/roi_marker \
-        /sensrad/radar_1/oden/runes/static_map_voxels \
-        /sensrad/radar_1/oden/static_map \
-        /sensrad/radar_1/oden/statistics \
-        /sensrad/radar_1/radar_data \
-        /sensrad/radar_1/radar_header \
-        /sensrad/ymir/ego_trajectory \
-        /sensrad/ymir/ego_trajectory_markers \
+        /oak/rgb/image_raw/compressed \
+        /oak/right/image_raw/compressed \
+        /oak/left/image_raw/compressed \
         /tf \
         /tf_static"
 

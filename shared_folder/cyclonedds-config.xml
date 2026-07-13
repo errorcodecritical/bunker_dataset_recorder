@@ -1,0 +1,27 @@
+<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+  <Domain Id="any">
+    <General>
+      <Interfaces>
+        <NetworkInterface autodetermine="false" name="wlP1p1s0" priority="default" multicast="default" />
+      </Interfaces>
+      <AllowMulticast>false</AllowMulticast>
+      <MaxMessageSize>65500B</MaxMessageSize>
+    </General>
+    <Discovery>
+        <Peers>
+            <Peer Address="127.0.0.1"/>      <!-- self / host <-> container -->
+            <Peer Address="172.16.1.100"/>   <!-- BUNKER -->
+            <Peer Address="172.16.1.101"/>   <!-- CURTMINI -->
+            <!-- Add this robot's own LAN IP too if other robots need to reach it,
+                    and add every robot's IP to every robot's list, not just this one -->
+        </Peers>
+        <MaxAutoParticipantIndex>100</MaxAutoParticipantIndex>
+    </Discovery>
+    <Internal>
+      <SocketReceiveBufferSize min="10MB" />
+      <Watermarks>
+        <WhcHigh>500kB</WhcHigh>
+      </Watermarks>
+    </Internal>
+  </Domain>
+</CycloneDDS>

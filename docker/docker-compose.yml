@@ -14,7 +14,8 @@ services:
       - ../sensor_configs/xsens/mtnode.py:/root/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtnode.py:rw
       - ../sensor_configs/xsens/xsens_driver.launch.xml:/root/ros2_ws/src/norlab_xsens_driver/launch/xsens_driver.launch.xml:rw
     environment:
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: /root/shared_folder/xsens-launch.sh
 
   emlid:
@@ -31,7 +32,8 @@ services:
       - ../sensor_configs/emlid/nmea_serial_driver.py:/root/ros2_ws/src/nmea_navsat_driver/src/libnmea_navsat_driver/nodes/nmea_serial_driver.py:rw
       - ../sensor_configs/emlid/nmea_serial_driver.yaml:/root/ros2_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml:rw
     environment:
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: /root/shared_folder/emlid-launch.sh
 
   oakd:
@@ -52,7 +54,8 @@ services:
       #- ../sensor_configs/oakd/depthai_ros_driver/config/:/opt/ros/jazzy/share/depthai_ros_driver_v3/config/
       #- ../sensor_configs/oakd/depthai_ros_driver/launch/:/opt/ros/jazzy/share/depthai_ros_driver_v3/launch/
     environment:
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: /root/shared_folder/oakd-launch.sh
 
   hesai:
@@ -70,7 +73,8 @@ services:
       - ../ros2_ws/src/HesaiLidar_ROS_2.0/:/root/ros2_ws/src/HesaiLidar_ROS_2.0/
       - ../shared_folder/:/root/shared_folder/
     environment:
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: /root/shared_folder/hesai-launch.sh
 
   atlas:
@@ -88,7 +92,8 @@ services:
       - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
       - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
     environment:
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: /root/shared_folder/atlas-launch.sh
 
   hugin:
@@ -120,7 +125,8 @@ services:
       - DISPLAY=$DISPLAY
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: /root/shared_folder/hugin-launch.sh
 
   bunker:
@@ -135,7 +141,8 @@ services:
       - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
       - ../shared_folder/:/root/shared_folder/
     environment:
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: /root/shared_folder/bunker-launch.sh
 
   recorder:
@@ -154,7 +161,8 @@ services:
       - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
       - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
     environment:
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: /root/shared_folder/recorder-launch.sh
 
   visualizer:
@@ -187,5 +195,105 @@ services:
       - DISPLAY=$DISPLAY
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: /root/shared_folder/visualizer-launch.sh
+
+### NAVIGATION PIPELINE ###
+
+  traversability_ros2:
+    build:
+     context: .
+     dockerfile: traversability_mapping/traversability_mapping_ros2.Dockerfile
+    container_name: trav_ros2
+    privileged: true
+    network_mode: host
+    volumes:
+      - /dev/:/dev/
+      - ../ros2_ws/build/trav_ros2-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../ros2_ws/src/traversability_mapping_ros2:/root/ros2_ws/src/traversability_mapping_ros2
+    environment:
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
+    command: /root/shared_folder/trav_ros2-launch.sh
+
+  glim:
+    build:
+     context: .
+     dockerfile: glim/glim-jetson.Dockerfile
+    container_name: glim
+    privileged: true
+    network_mode: host
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    volumes:
+      - /dev/:/dev/
+      - ../../rosbags/:/root/rosbags/
+      - ../ros2_ws/build/glim-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/glim/config:/glim_ws/src/glim/config
+    environment:
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
+    command: /root/shared_folder/glim-launch.sh
+  
+  nav2:
+    build:
+      context: .
+      dockerfile: nav2/nav2.Dockerfile
+    container_name: nav2
+    network_mode: host
+    volumes:
+      - ../ros2_ws/build/nav2-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/nav2:/root/nav2
+      - ../sensor_configs/nav2/navigation_launch.py:/opt/ros/kilted/share/nav2_bringup/launch/navigation_launch.py:rw
+      - ../sensor_configs/nav2/bringup_launch.py:/opt/ros/kilted/share/nav2_bringup/launch/bringup_launch.py:rw
+    environment:
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
+    command: /root/shared_folder/nav2-launch.sh
+
+### Kalhan Algorithms
+
+  hmr_localisation:
+    build:
+     context: .
+     dockerfile: hmr_localisation/hmr.Dockerfile
+    container_name: hmr_localisation
+    privileged: true
+    network_mode: host
+    volumes:
+      - /dev/:/dev/
+      - ../ros2_ws/build/hmr-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/hmr_localisation/gt_ouster_ndt_tree.yaml:/root/ros2_ws/src/hmr_localisation/config/gt_ouster_ndt_tree.yaml:rw
+    environment:
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
+    command: /root/shared_folder/hmr-launch.sh
+
+  scovox:
+    build:
+     context: .
+     dockerfile: scovox/scovox.Dockerfile
+    container_name: scovox
+    privileged: true
+    network_mode: host
+    volumes:
+      - /dev/:/dev/
+      - ../ros2_ws/build/scovox-build:/root/ros2_ws/build
+      - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/scovox/config:/root/ros2_ws/src/scovox/config
+      - ../sensor_configs/explo_planner/config:/root/ros2_ws/src/explo_planner/config
+      - ../sensor_configs/scovox/scovox_multi_robot.launch.py:/root/ros2_ws/src/scovox/src/scovox_mapping/launch/scovox_multi_robot.launch.py:rw
+    environment:
+      - ROS_DOMAIN_ID=30
+      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
+    command: /root/shared_folder/scovox-launch.sh

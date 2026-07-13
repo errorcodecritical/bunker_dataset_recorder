@@ -1,0 +1,5 @@
+<library path="lib/libtm_planner_lib">
+  <class name="tm_planner/TMPlanner" type="tm_planner::TMPlanner" base_class_type="nav2_core::GlobalPlanner">
+    <description>This is a Nav2 global planner plugin by Tixiao Shan. Converts goals to PRM planner and returns paths.</description>
+  </class>
+</library>

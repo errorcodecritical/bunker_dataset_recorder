@@ -84,5 +84,5 @@ lidar:
       ros_send_imu_topic: /hesai/imu                  # Topic used to send lidar imu message
       ros_send_packet_loss_topic: /hesai/lidar_packets_loss # Topic used to monitor packets loss condition through ROS
       send_packet_ros: true                           # true: Send packets through ROS 
-      send_point_cloud_ros: false                      # true: Send point cloud through ROS    
+      send_point_cloud_ros: true                      # true: Send point cloud through ROS    
       send_imu_ros: true     
