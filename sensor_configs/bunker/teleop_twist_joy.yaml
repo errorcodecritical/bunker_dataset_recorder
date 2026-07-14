@@ -41,7 +41,7 @@
 # D-pad Horiz.     6
 # D-pad Vert.      7
 
-joy_teleop/teleop_twist_joy_node:
+/teleop_twist_joy_node:
   ros__parameters:
     axis_linear:
       x: 7
@@ -57,8 +57,7 @@ joy_teleop/teleop_twist_joy_node:
       yaw: 3.6
     enable_button: 4
     enable_turbo_button: 5
-    publish_stamped_twist: true
-joy_teleop/joy_node:
+/joy_node:
   ros__parameters:
     deadzone: 0.1
     autorepeat_rate: 20.0
