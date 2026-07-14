@@ -1,0 +1,21 @@
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='joy',
+            executable='joy_node',
+            name='joy_node',
+            output='screen',
+            parameters=['/config/bunker/teleop_twist_joy.yaml'],
+        ),
+        Node(
+            package='teleop_twist_joy',
+            executable='teleop_node',
+            name='teleop_twist_joy_node',
+            output='screen',
+            parameters=['/config/bunker/teleop_twist_joy.yaml'],
+            arguments=['--ros-args', '--log-level', 'debug'],
+        ),
+    ])
