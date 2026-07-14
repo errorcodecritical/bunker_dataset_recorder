@@ -134,6 +134,7 @@ services:
       - ../ros2_ws/build/bunker-build:/root/ros2_ws/build
       - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
       - ../shared_folder/:/root/shared_folder/
+      - ../sensor_configs/bunker:/config/bunker
     environment:
       - ROS_DOMAIN_ID=42
     command: /root/shared_folder/bunker-launch.sh
