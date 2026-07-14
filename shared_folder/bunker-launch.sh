@@ -26,4 +26,4 @@ ros2 launch bunker_base bunker_base.launch.py use_sim_time:=false port_name:=can
 #Run bunker URDF publisher
 ros2 launch bunker_description robot_state_publisher.launch.py &
 
-ros2 launch /config/bunker/teleop_bringup.launch.py
+ros2 launch /root/shared_folder/teleop_bringup.launch.py
