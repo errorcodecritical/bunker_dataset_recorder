@@ -18,6 +18,7 @@ RUN apt update && apt install -y \
     ros-jazzy-teleop-twist-keyboard \
     ros-jazzy-twist-mux \
     ros-jazzy-ros2-control \
+    libasio-dev \
     can-utils
 
 #Configure catkin workspace
