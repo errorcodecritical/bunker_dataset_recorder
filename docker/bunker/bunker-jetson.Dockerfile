@@ -14,6 +14,9 @@ RUN apt update && apt install -y \
     ros-jazzy-joint-state-publisher \
     ros-jazzy-joint-state-publisher-gui \
     ros-jazzy-xacro \
+    ros-jazzy-teleop-twist-joy \
+    ros-jazzy-teleop-twist-keyboard \
+    ros-jazzy-twist-mux \
     ros-jazzy-ros2-control
 
 #Configure catkin workspace

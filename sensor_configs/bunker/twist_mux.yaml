@@ -1,0 +1,21 @@
+# Input topics to multiplex
+topics:
+- name: "teleop_joystick"
+  topic: "cmd_vel/joy"
+  timeout: 0.5
+  priority: 100
+- name: "teleop_keyboard"
+  topic: "cmd_vel/key"
+  timeout: 0.5
+  priority: 90
+- name: "navigation"
+  topic: "cmd_vel/nav"
+  timeout: 1.0
+  priority: 10
+
+# Optional software locks to completely disable movement streams via Bool topics
+locks:
+- name: "e_stop"
+  topic: "mux/e_stop"
+  timeout: 0.0
+  priority: 255
