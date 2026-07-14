@@ -133,6 +133,10 @@ services:
     volumes:
       - ../ros2_ws/build/bunker-build:/root/ros2_ws/build
       - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
+      
+      - ../ros2_ws/src/bunker_ros2:/root/ros2_ws/src/bunker_ros2
+      - ../ros2_ws/src/ugv_sdk:/root/ros2_ws/src/ugv_sdk
+
       - ../shared_folder/:/root/shared_folder/
       - ../sensor_configs/bunker:/config/bunker
     environment:
