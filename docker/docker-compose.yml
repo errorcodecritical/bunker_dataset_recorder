@@ -139,16 +139,18 @@ services:
     volumes:
       - ../ros2_ws/build/bunker-build:/root/ros2_ws/build
       - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
-      
-      - ../ros2_ws/src/bunker_ros2:/root/ros2_ws/src/bunker_ros2
-      - ../ros2_ws/src/ugv_sdk:/root/ros2_ws/src/ugv_sdk
-
       - ../shared_folder/:/root/shared_folder/
       - ../sensor_configs/bunker:/config/bunker
     environment:
       - ROS_DOMAIN_ID=30
       - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/bunker-launch.sh
+    command: 
+      - /bin/bash
+      - c
+      - |
+        /root/shared_folder/bunker-launch.sh &
+        sleep 10
+        ros2 launch /root/shared_folder/teleop_bringup.launch.py
 
   recorder:
     build:
