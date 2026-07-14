@@ -20,8 +20,10 @@ colcon build --symlink-install
 # Source ROS2 Workspace
 source /root/ros2_ws/install/setup.bash
 
+ip link set can2 up type can bitrate 500000
+
 #Run realsense driver
 ros2 launch bunker_description robot_state_publisher.launch.py & \
-ros2 launch bunker_base bunker_base.launch.py & \
+ros2 launch bunker_base bunker_base.launch.py port_name:='can2' & \
 ros2 launch twist_mux twist_mux.launch.py config_locks:=/config/bunker/twist_mux.yaml config_topics:=/config/bunker/twist_mux.yaml & \
 ros2 launch teleop_twist_joy teleop-launch.py config_filepath:=/config/bunker/teleop_twist_joy.yaml

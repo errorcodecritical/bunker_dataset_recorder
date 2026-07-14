@@ -19,6 +19,7 @@ RUN apt update && apt install -y \
     ros-jazzy-twist-mux \
     ros-jazzy-ros2-control \
     libasio-dev \
+    iproute2 \
     can-utils
 
 #Configure catkin workspace
