@@ -26,4 +26,7 @@ ip link set can2 up type can bitrate 500000
 ros2 launch bunker_base bunker_base.launch.py use_sim_time:=false port_name:=can2 odom_frame:=odom base_frame:=base_link odom_topic_name:=bunker_odom is_bunker_mini:=true simulated_robot:=false control_rate:=50 &
 
 #Run bunker URDF publisher
-ros2 launch bunker_description robot_state_publisher.launch.py 
+ros2 launch bunker_description robot_state_publisher.launch.py &
+
+ros2 launch twist_mux twist_mux.launch.py config_locks:=/config/bunker/twist_mux.yaml config_topics:=/config/bunker/twist_mux.yaml &
+ros2 launch teleop_twist_joy teleop-launch.py config_filepath:=/config/bunker/teleop_twist_joy.yaml
