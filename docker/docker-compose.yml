@@ -146,7 +146,7 @@ services:
       - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
     command: 
       - /bin/bash
-      - c
+      - -c
       - |
         /root/shared_folder/bunker-launch.sh &
         sleep 10
