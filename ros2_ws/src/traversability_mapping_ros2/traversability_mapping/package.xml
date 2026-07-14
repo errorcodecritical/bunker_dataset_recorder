@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>traversability_mapping</name>
+  <version>0.0.0</version>
+  <description>Traversability Mapping</description>
+
+  <maintainer email="tshan3@stevens.edu">Tixiao Shan</maintainer>
+
+  <license>TODO</license>
+
+  <author>Tixiao Shan</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- ROS2 dependencies -->
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  
+  <!-- PCL -->
+  <depend>pcl_conversions</depend>
+  <depend>pcl_ros</depend>
+  
+  <!-- OpenCV -->
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  
+  <!-- Messages -->
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>elevation_msgs</depend>
+  <depend>visualization_msgs</depend>
+  
+  <!-- Navigation -->
+  <depend>pluginlib</depend>
+  <depend>nav2_core</depend>
+  <depend>tf2_eigen</depend>
+  
+  <!-- Other -->
+  <depend>laser_geometry</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <nav2_core plugin="${prefix}/tm_planner_plugin.xml" />
+  </export>
+</package>

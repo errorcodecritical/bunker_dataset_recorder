@@ -1,0 +1,27 @@
+global_costmap:
+  global_frame: map
+  robot_base_frame: base # bobcat_base
+  update_frequency: 5.0 #2.0 5.0
+  publish_frequency: 5.0
+  #static_map: true
+  rolling_window: false
+  width: 250
+  height: 250
+  transform_tolerance: 2.0 #0.5
+  footprint: [[-0.35, -0.165], [-0.35, 0.165], [0.35, 0.165], [0.35, -0.165]]
+  footprint_padding: 0.0
+
+  plugins: 
+  - {name: static_layer,  type: "costmap_2d::StaticLayer"}
+  #- {name: inflation_layer,     type: "costmap_2d::InflationLayer"}
+
+
+  static_layer:
+    map_topic: /occupancy_map_local
+    subscribe_to_updates: true
+    static_map: true
+    trinary_costmap: true # flag to switch between trinary costmap (unknown/free/occ) or full range costmap
+    track_unknown_space: false # flag to decide wether unknown space is treated as free or unknown
+
+  inflation_layer:
+    inflation_radius: 0.01

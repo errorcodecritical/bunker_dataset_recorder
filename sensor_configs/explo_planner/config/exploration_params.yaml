@@ -1,0 +1,182 @@
+explo_planner:
+  ros__parameters:
+    use_sim_time: false
+    robot_name: ""
+    max_steps: 200
+    output_csv: "/root/shared_folder/exploration_eig.csv"
+    map_resolution: 0.10
+
+    # Frames — planner reads dscovox map (in map_frame) and uses TF
+    # map_frame -> base_frame for the robot pose. Goals are published in
+    # map_frame for the nav stack to consume.
+    map_frame: "map"
+    base_frame: "base_link"   # empty -> defaults to <robot_name>/base_link
+
+    # 2D inflated OccupancyGrid used for the candidate free/occupied filter,
+    # cost-grid reachability and path cost. By default it is a hard startup
+    # precondition. Set require_planning_map: false to make it best-effort —
+    # the planner then starts without it, warns, and falls back to straight-
+    # line distances (no 2D obstacle/reachability filtering), while still
+    # using the map whenever it IS published (incl. an external one on
+    # planning_map_topic).
+    # planning_map_topic: "/<robot>/dscovox_node/planning_map"  # default
+    require_planning_map: true
+    # Best-effort grace window (s): when require_planning_map is false, how long
+    # to keep waiting for a late (latched) planning_map after map + pose are
+    # ready before starting in straight-line fallback. Ignored when
+    # require_planning_map is true.
+    planning_map_wait_sec: 5.0
+
+    # Navigation
+    goal_xy_tolerance: 0.3
+    goal_yaw_tolerance: 0.2
+    integrate_wait: 2.0
+
+    # Smart navigate timeout. Total budget per NAVIGATE cycle is computed
+    # at entry from straight-line distance to the goal:
+    #   budget = clamp(dist / speed_est * safety, min, max)
+    # so a 2 m hop gets ~8 s and an 8 m hop gets ~32 s. Tune speed_est down
+    # if the controller is slower than expected (obstacle avoidance, tight
+    # corridors); tune safety up if you want more headroom.
+    nav_speed_estimate_mps: 0.15
+    nav_safety_factor: 3.0
+    nav_min_timeout_sec: 30.0
+    nav_max_timeout_sec: 180.0
+
+    # No-progress watchdog (runs in parallel with the budget). If the robot
+    # hasn't accumulated >= progress_min_distance_m of travel within
+    # progress_window_sec, the goal fails immediately — wedged-robot case.
+    progress_window_sec: 15.0
+    progress_min_distance_m: 0.2
+
+    # Teleport guard for distance tracking. cumulative_distance_ is integrated
+    # from per-tick map->base_link TF deltas at 10 Hz; a localization
+    # relocalization (NDT/EKF correction) teleports the pose by metres in one
+    # tick. A single-tick delta above this (m) is treated as a discontinuity,
+    # not travel, so it doesn't inflate distance_traveled or spoof the
+    # no-progress watchdog. At 10 Hz this can't reject real motion (a 1 m/s
+    # robot moves 0.1 m/tick). Set 0 to disable and reproduce raw integration.
+    max_pose_jump_m: 1.0
+
+    # Failed-goal blacklist. After a navigate timeout, the failed goal is
+    # parked for failed_goal_ttl_sec; subsequent picks reject any candidate
+    # within failed_goal_radius_m of an active entry. Prevents the planner
+    # from re-picking the same unreachable goal when the robot is stuck.
+    failed_goal_radius_m: 2.0
+    failed_goal_ttl_sec: 60.0
+
+    # Coverage-based termination. Once the unknown fraction in the ROI of
+    # the planning_map drops below done_unknown_fraction for
+    # done_min_consecutive_steps PLAN cycles in a row, the planner declares
+    # the map saturated and transitions to DONE. Set done_unknown_fraction
+    # <= 0 to disable (then only max_steps stops the planner).
+    done_unknown_fraction: 0.05
+    done_min_consecutive_steps: 3
+
+    # Candidate generation
+    # Polar enabled: with frontier-only mode the planner exhausted reachable
+    # candidates (~70 cand) when the robot pushed to ROI corners and entered
+    # an oscillation loop until the planner timeout fired.  Polar adds
+    # n_radial*n_rings*n_yaw = 96 grid samples around the robot, giving
+    # consistent fallback options.  Affects both A/B map types equally.
+    candidate_enable_polar: true
+    candidate_n_radial: 8
+    candidate_n_rings: 3
+    candidate_min_radius: 2.0
+    candidate_max_radius: 8.0
+    candidate_n_yaw: 4
+    candidate_robot_z: 0.3
+    candidate_occ_thresh: 0.7
+
+    # Frontier-centroid clustering bin size (m). Frontier cells (free voxels
+    # adjacent to unknown space) are binned into cubes of this edge length and
+    # one centroid per bin is emitted as a long-range candidate. Larger ->
+    # fewer, coarser frontier targets.
+    frontier_cluster_radius_m: 5.0
+
+    # Region of interest (XY bounding box, map frame, metres). The planner
+    # will not select candidates outside this box. KEEP IN SYNC with the
+    # dscovox planning_map size + origin in simple_nav_3d.launch.py so the
+    # global planner is constrained to the same area.
+    # Default: 60x60 m centred at the world origin.
+    roi_min_x: -30.0
+    roi_max_x:  30.0
+    roi_min_y: -30.0
+    roi_max_y:  30.0
+
+    # Vertical ROI band (map frame, metres): candidate goals are clamped to
+    # z in [roi_min_z, roi_max_z]. Values here mirror the code defaults
+    # (explo_planner_node.cpp). KEEP IN SYNC with the multi-robot shared-map
+    # z-band — scovox_node share_roi_z_min/share_roi_z_max (sender wire
+    # filter) and dscovox_node share_roi_z_min/share_roi_z_max (receiver
+    # ingest clip): when that band is enabled it must be a SUPERSET of this
+    # planner band, otherwise free voxels near the band edge never reach the
+    # fused map and read as unknown here (starved candidates / phantom
+    # frontiers at the boundary).
+    roi_min_z: -0.5
+    roi_max_z: 2.0
+
+    # FOV evaluation (matches simulated RGBD: 320x240, 60deg HFOV)
+    fov_hfov: 1.047              # 60 degrees
+    fov_vfov: 0.785              # ~45 degrees (from 320x240 aspect)
+    fov_min_range: 0.3
+    fov_max_range: 10.0
+    fov_h_rays: 16
+    fov_v_rays: 12
+    fov_occ_stop: 0.7
+
+    # ----------------------------------------------------------------
+    # Utility math + multi-robot coordination
+    # ----------------------------------------------------------------
+    # Per-candidate utility is SSMI-style information-per-distance
+    # (Asgharivaskasi & Atanasov, TRO 2023):
+    #
+    #   U(c) = info_gain(c) / (ε + path_cost(c))      ε = 0.1 m
+    #
+    # Longer paths dilute a candidate's score; unreachable candidates
+    # (infinite cost) get U = −∞ and sort last. info_gain comes from FOV
+    # raycasting (EIG / entropy / frontier count); path_cost comes from
+    # CostGrid (bounded Dijkstra over planning_map). The denominator form
+    # is parameter-free — there are no separate α/β weights.
+
+    # Bounded grid Dijkstra. 0 = auto = candidate_max_radius + 2 m slack
+    # (so the entire candidate disc is covered, plus a margin for diagonals).
+    # ~5 k cells flooded at the auto bound -> well under 1 ms per PLAN tick;
+    # set this >> map size to fall through to a full unbounded flood (~5 ms).
+    cost_grid_radius_cap_m: 0.0
+
+    # Multi-robot coordination. When false the MinPos branch is skipped and
+    # single-robot behaviour is bit-for-bit preserved (the utility math
+    # above still runs in single-robot mode).
+    coordination_enabled: false
+
+    # MinPos parameters. claim_radius is the disc each robot reserves around
+    # its currently-selected goal; ttl is how long an unrefreshed claim
+    # survives before peers can take its target.
+    coord_claim_radius_m: 0.0       # 0 = auto = fov_max_range (Burgard 2005)
+    coord_claim_ttl_sec: 5.0        # 5 x heartbeat; stalled peer releases ~5 s
+    coord_intent_topic: "/exploration/intents"
+    coord_heartbeat_hz: 1.0
+
+    # ----------------------------------------------------------------
+    # Perceptive exploitation
+    # ----------------------------------------------------------------
+    # When a tree target arrives on targets_topic the planner switches
+    # EXPLORE -> EXPLOIT and circles the trunk at n_vantages occlusion-free
+    # vantage points (3 => ~120 deg apart), dwelling exploit_dwell_sec at each
+    # so the rosbag captures overlapping RGB-D/LiDAR views (fusion is offline).
+    # A target is "successfully exploited" once min_vantages_required clear-LoS
+    # vantages are dwelled; it reverts to EXPLORE when the queue empties. The
+    # topic is shared, so a future tree detector publishes the same TreeTarget
+    # message with no planner change. Set exploitation_enabled: false for pure
+    # exploration (the overlay then never subscribes or activates).
+    exploitation_enabled: true
+    targets_topic: "/exploration/targets"
+    n_vantages: 3                   # viewpoints per trunk (3 => 120 deg apart)
+    min_vantages_required: 3        # clear-LoS dwells for a "successful" target
+    vantage_standoff_m: 2.0         # standoff added to trunk radius (m), then
+                                    # clamped to [fov_min_range+r, fov_max_range]
+    vantage_start_angle_deg: 0.0    # angle of the first vantage around the trunk
+    exploit_dwell_sec: 8.0          # hold time at each vantage (s)
+    target_dedup_radius_m: 1.5      # re-reported trees within this are ignored
+    vantage_visited_tol_m: 0.75     # proximity that counts a vantage "dwelled"

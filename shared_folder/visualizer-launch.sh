@@ -28,6 +28,10 @@ source /root/ros2_ws/install/setup.bash
 # Run Foxglove server
 #ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:=9092
 
+#ros2 bag play /root/rosbags/2026_07_03_18_28_32__lab_test_for_glim_ --clock &
+#ros2 bag play /root/rosbags/2026_06_29_16_21_05__lab_test_go1_2_ --clock &
+#ros2 bag play /root/rosbags/2026_07_06_17_26_27__bunker-kalhan-full_ --clock &
+
 # Run Rviz with sensors layout
 rviz2 -d /root/shared_folder/isr.rviz
 

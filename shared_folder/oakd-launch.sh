@@ -4,11 +4,11 @@ set -e
 #ROS 2 Middleware Implementation 
 
 #Fastrtps
-export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+#export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 #export FASTDDS_BUILTIN_TRANSPORTS=UDPv4
 
 #Cyclonedds
-#export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 # Source ROS2 Jazzy
 source /opt/ros/jazzy/setup.bash

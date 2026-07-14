@@ -1,0 +1,70 @@
+local_costmap:
+  global_frame: map
+  robot_base_frame: base # bobcat_base
+  update_frequency: 5.0
+  publish_frequency: 5.0
+  transform_tolerance: 1.0
+  #static_map: false #true
+  rolling_window: true
+  width: 6
+  height: 6
+  resolution: 0.05
+  footprint: [[-0.40, -0.165], [-0.40, 0.165], [0.35, 0.165], [0.35, -0.165]]
+  footprint_padding: 0.1
+  
+  origin_z: 0.0
+  origin_y: -3
+  origin_x: -3
+  z_resolution: 0.5
+  z_voxels: 20
+
+  #plugins:
+    #- {name: inflation_layer,     type: "costmap_2d::InflationLayer"}
+    #- {name: lidar_obstacles_layer,  type: "costmap_2d::VoxelLayer"}
+    #- {name: cameras_obstacles_layer,  type: "costmap_2d::VoxelLayer"}
+    #- {name: static_layer,  type: "costmap_2d::StaticLayer"}
+
+  cameras_obstacles_layer:
+    track_unknown_space: true
+    observation_sources: depth_face depth_left depth_right
+    depth_face: {data_type: PointCloud2,
+      topic: /cam1/point_cloud_face,
+      min_obstacle_height: 1,
+      marking: true,
+      clearing: true}
+    depth_left: {data_type: PointCloud2,
+      topic: /cam3/point_cloud_left,
+      min_obstacle_height: 1,
+      marking: true,
+      clearing: true}
+    depth_right: {data_type: PointCloud2,
+      topic: /cam4/point_cloud_right,
+      min_obstacle_height: 1,
+      marking: true,
+      clearing: true}
+
+  lidar_obstacles_layer:
+    observation_sources: scan
+    track_unknown_space: true
+    scan:
+      {
+        sensor_frame: rslidar,
+        data_type: PointCloud2,
+        topic: /rslidar_points_filtered_2,
+        marking: true,
+        clearing: true,
+        min_obstacle_height: 0.1,
+        max_obstacle_height: 1.5,
+        obstacle_range: 6.0, #if beyond this threshold, then will not mark as obstacle
+        raytrace_range: 1.5 #5.0 Lower this value to detect nearer obstacles with better accuracy
+      }
+
+  static_layer:
+    map_topic: /fused_costmap
+    subscribe_to_updates: true
+    static_map: true
+    trinary_costmap: true # flag to switch between trinary costmap (unknown/free/occ) or full range costmap
+    track_unknown_space: false # flag to decide wether unknown space is treated as free or unknown
+
+  inflation_layer:
+    inflation_radius: 0.5
