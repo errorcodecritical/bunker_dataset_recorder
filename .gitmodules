@@ -1,0 +1,7 @@
+[submodule "ros2_ws/src/bunker_ros2"]
+	path = ros2_ws/src/bunker_ros2
+	url = https://github.com/agilexrobotics/bunker_ros2
+
+[submodule "ros2_ws/src/ugv_sdk"]
+	path = ros2_ws/src/ugv_sdk
+	url = https://github.com/agilexrobotics/ugv_sdk
