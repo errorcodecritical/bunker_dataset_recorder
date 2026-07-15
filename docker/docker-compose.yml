@@ -144,6 +144,7 @@ services:
     environment:
       - ROS_DOMAIN_ID=30
       - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
     command: 
       - /bin/bash
       - -c
