@@ -3,6 +3,7 @@ services:
     build:
      context: .
      dockerfile: xsens/Dockerfile
+    image: ros2_xsens_driver:latest
     container_name: xsens
     privileged: true
     network_mode: host
@@ -30,6 +31,7 @@ services:
     build:
       context: .
       dockerfile: emlid/Dockerfile
+    image: ros2_emlid_driver:latest
     container_name: emlid
     privileged: true
     network_mode: host
@@ -55,6 +57,7 @@ services:
     build:
       context: .
       dockerfile: oakd/Dockerfile
+    image: ros2_oakd_driver:latest
     container_name: oakd
     privileged: true
     network_mode: host
@@ -84,6 +87,7 @@ services:
     build:
      context: .
      dockerfile: hesai/Dockerfile
+    image: ros2_hesai_driver:latest
     container_name: hesai
     privileged: true
     network_mode: host
@@ -110,6 +114,7 @@ services:
     build:
      context: .
      dockerfile: atlas/Dockerfile
+    image: ros2_atlas_driver:latest
     container_name: atlas
     privileged: true
     network_mode: host
@@ -135,8 +140,9 @@ services:
 
   hugin:
     build:
-     context: ..
-     dockerfile: docker/hugin/Dockerfile
+     context: .
+     dockerfile: hugin/Dockerfile
+    image: ros2_hugin_driver:latest
     container_name: hugin
     privileged: true
     runtime: nvidia
@@ -178,6 +184,7 @@ services:
     build:
       context: .
       dockerfile: bunker/Dockerfile
+    image: ros2_bunker_driver:latest
     container_name: bunker
     privileged: true
     network_mode: host
@@ -204,6 +211,7 @@ services:
     build:
       context: .
       dockerfile: recorder/Dockerfile
+    image: ros2_recorder:latest
     container_name: recorder
     privileged: true
     network_mode: host
@@ -225,6 +233,7 @@ services:
     build:
       context: .
       dockerfile: visualizer/Dockerfile
+    image: ros2_visualizer:latest
     container_name: visualizer
     privileged: true
     runtime: nvidia
