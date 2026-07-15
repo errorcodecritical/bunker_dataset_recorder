@@ -122,9 +122,6 @@ services:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
       - ../shared/:/shared/
-      - ../ros2_ws/src/atlas:/shared/atlas # !
-      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/ros2_ws/src/ros2_aeva_publisher
-      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/ros2_ws/src/aeva_msgs
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
