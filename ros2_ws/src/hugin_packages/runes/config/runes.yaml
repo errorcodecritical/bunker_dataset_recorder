@@ -1,0 +1,8 @@
+# Copyright (c) Sensrad 2025
+
+
+/**/odometry_visualizer:
+  ros__parameters:
+    odom_frame_id: odom     # parent frame for odometry TF
+    baselink_frame_id: base_link # child frame for odometry TF
+    sensor_frame_id: radar_1 # sensor frame for odometry TF

@@ -1,0 +1,5 @@
+# Copyright (c) Sensrad 2025
+bool active
+---
+bool success
+string message

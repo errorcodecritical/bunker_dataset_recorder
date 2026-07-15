@@ -17,7 +17,14 @@ services:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
-    command: /shared/xsens-launch.sh
+    command:
+      - bash
+      - -c
+      - |
+        echo "=== Starting XSENS driver ==="
+        colcon build --symlink-install --package-select norlab_xsens_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        source /ros2_ws/install/setup.bash
+        ros2 launch xsens_driver xsens_driver.launch.xml
 
   emlid:
     build:
@@ -36,7 +43,13 @@ services:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
-    command: /shared/emlid-launch.sh
+    command:
+      - bash
+      - -c
+      - |
+        echo "=== Starting EMLID driver ==="
+        source /ros2_ws/install/setup.bash
+        ros2 launch nmea_navsat_driver nmea_serial_driver.launch.xml
 
   oakd:
     build:
@@ -59,7 +72,13 @@ services:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
-    command: /shared/oakd-launch.sh
+    command:
+      - bash
+      - -c
+      - |
+        echo "=== Starting OAK-D driver ==="
+        source /ros2_ws/install/setup.bash
+        ros2 launch depthai_ros_driver camera.launch.py
 
   hesai:
     build:
@@ -78,7 +97,14 @@ services:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
-    command: /shared/hesai-launch.sh
+    command:
+      - bash
+      - -c
+      - |
+        echo "=== Starting HESAI driver ==="
+        colcon build --symlink-install --package-select hesai_ros_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        source /ros2_ws/install/setup.bash
+        ros2 run hesai_ros_driver hesai_ros_driver_node
 
   atlas:
     build:
@@ -98,7 +124,14 @@ services:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
-    command: /shared/atlas-launch.sh
+    command:
+      - bash
+      - -c
+      - |
+        echo "=== Starting ATLAS driver ==="
+        colcon build --symlink-install --package-select ros2_aeva_publisher --cmake-args -DCMAKE_BUILD_TYPE=Release
+        source /ros2_ws/install/setup.bash
+        ros2 run ros2_aeva_publisher ros2_aeva_publisher 10.1.14.24 ATLAS
 
   hugin:
     build:
@@ -123,7 +156,7 @@ services:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
       - ../shared/:/shared/
-      - ../ros2_ws/src/hugin/ros2/src/:/opt/ros/overlay_ws/src/ # !
+      - ../shared/hugin/ros2/src/:/opt/ros/overlay_ws/src/
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
       - DISPLAY=$DISPLAY
@@ -132,7 +165,14 @@ services:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
-    command: /shared/hugin-launch.sh
+    command:
+      - bash
+      - -c
+      - |
+        echo "=== Starting HUGIN driver ==="
+        colcon build --symlink-install --package-select hugin_ros2_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        source /ros2_ws/install/setup.bash
+        ros2 launch hugin_ros2_driver hugin_ros2_driver.launch.py
 
   bunker:
     build:

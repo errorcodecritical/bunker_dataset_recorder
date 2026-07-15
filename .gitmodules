@@ -1,12 +1,10 @@
-[submodule "ros2_ws/src/bunker_ros2"]
-	path = ros2_ws/src/bunker_ros2
+[submodule "ros2_ws/src/bunker_packages/bunker_ros2"]
+	path = ros2_ws/src/bunker_packages/bunker_ros2
 	url = https://github.com/agilexrobotics/bunker_ros2
-
-[submodule "ros2_ws/src/ugv_sdk"]
-	path = ros2_ws/src/ugv_sdk
+[submodule "ros2_ws/src/bunker_packages/ugv_sdk"]
+	path = ros2_ws/src/bunker_packages/ugv_sdk
 	url = https://github.com/agilexrobotics/ugv_sdk
-    branch = c3dfaf4
-
+    branch = main
 [submodule "ros2_ws/src/HesaiLidar_ROS_2.0"]
 	path = ros2_ws/src/HesaiLidar_ROS_2.0
 	url = https://github.com/errorcodecritical/HesaiLidar_ROS_2.0

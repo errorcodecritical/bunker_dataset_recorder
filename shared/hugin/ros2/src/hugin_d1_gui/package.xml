@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>hugin_d1_gui</name>
+  <version>0.0.0</version>
+  <description>GUI application for controlling the Hugin D1 radar.</description>
+  <maintainer email="do_not_use@sensrad.com">Per Ception</maintainer>
+  <license>Proprietary License - see LICENSE file</license>
+
+  <url type="website">support.sensrad.com</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <test_depend>launch</test_depend>
+  <test_depend>launch_testing</test_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>raf2_interfaces</depend>
+  <depend>oden_interfaces</depend>
+  <depend>libgtkmm3.0-dev</depend>
+  <depend>boost</depend>
+
+  <exec_depend>ros2launch</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <!-- Define build tests -->
+  <test_depend>ament_cmake_gtest</test_depend>
+
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

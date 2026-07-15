@@ -30,6 +30,16 @@ RUN apt update \
     ros-$ROS_DISTRO-geometry-msgs \
     ros-$ROS_DISTRO-vision-msgs
 
+
+# dpkg -i /shared/atlas/Atlas_AevaCLI_4_0_0_GA_aarch64.deb
+# dpkg --force-architecture -i /shared/atlas/Atlas_AevaAPI_4_0_0_GA_aarch64.deb 
+
+COPY shared/atlas/Atlas_AevaCLI_4_0_0_GA_aarch64.deb /tmp/Atlas_AevaCLI_4_0_0_GA_aarch64.deb
+COPY shared/atlas/Atlas_AevaAPI_4_0_0_GA_aarch64.deb /tmp/Atlas_AevaAPI_4_0_0_GA_aarch64.deb
+
+RUN dpkg -i /tmp/Atlas_AevaCLI_4_0_0_GA_aarch64.deb
+RUN dpkg --force-architecture -i /tmp/Atlas_AevaAPI_4_0_0_GA_aarch64.deb
+
 RUN apt-get clean
 
 WORKDIR /ros2_ws

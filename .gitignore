@@ -1,4 +1,5 @@
-ros2_ws/
+# Ignore everything inside the workspace folder
+ros2_ws/*
 
-# Re-include only files with a dot at the beginning
+# Do not ignore the src directory itself
 !ros2_ws/src/

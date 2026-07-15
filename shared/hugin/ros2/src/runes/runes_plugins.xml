@@ -1,0 +1,5 @@
+<library path="librunes_components">
+  <class name="perception_visualizer::PerceptionVisualizer"
+         type="perception_visualizer::PerceptionVisualizer"
+         base_class_type="rclcpp::Node"/>
+</library>
