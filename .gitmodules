@@ -6,3 +6,7 @@
 	path = ros2_ws/src/ugv_sdk
 	url = https://github.com/agilexrobotics/ugv_sdk
     branch = c3dfaf4
+
+[submodule "ros2_ws/src/HesaiLidar_ROS_2.0"]
+	path = ros2_ws/src/HesaiLidar_ROS_2.0
+	url = https://github.com/errorcodecritical/HesaiLidar_ROS_2.0
