@@ -24,4 +24,6 @@ source /root/ros2_ws/install/setup.bash
 ros2 launch bunker_base bunker_base.launch.py use_sim_time:=false port_name:=can2 odom_frame:=odom base_frame:=base_link odom_topic_name:=bunker_odom is_bunker_mini:=true simulated_robot:=false control_rate:=50 &
 
 #Run bunker URDF publisher
-ros2 launch bunker_description robot_state_publisher.launch.py
+ros2 launch bunker_description robot_state_publisher.launch.py &
+
+ros2 launch /root/shared_folder/teleop_bringup.launch.py

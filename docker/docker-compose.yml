@@ -143,15 +143,13 @@ services:
       - ../sensor_configs/bunker:/config/bunker
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
+      #- CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
     command: 
       - /bin/bash
       - -c
       - |
-        /root/shared_folder/bunker-launch.sh &
-        sleep 10
-        ros2 launch /root/shared_folder/teleop_bringup.launch.py
+        /root/shared_folder/bunker-launch.sh
 
   recorder:
     build:
