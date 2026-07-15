@@ -23,7 +23,7 @@ services:
       - -c
       - |
         echo "=== Starting XSENS driver ==="
-        colcon build --symlink-install --package-select norlab_xsens_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        colcon build --symlink-install --packages-select norlab_xsens_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
         ros2 launch xsens_driver xsens_driver.launch.xml
 
@@ -106,7 +106,7 @@ services:
       - -c
       - |
         echo "=== Starting HESAI driver ==="
-        colcon build --symlink-install --package-select hesai_ros_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        colcon build --symlink-install --packages-select hesai_ros_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
         ros2 run hesai_ros_driver hesai_ros_driver_node
 
@@ -134,7 +134,7 @@ services:
       - -c
       - |
         echo "=== Starting ATLAS driver ==="
-        colcon build --symlink-install --package-select ros2_aeva_publisher --cmake-args -DCMAKE_BUILD_TYPE=Release
+        colcon build --symlink-install --packages-select ros2_aeva_publisher --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
         ros2 run ros2_aeva_publisher ros2_aeva_publisher 10.1.14.24 ATLAS
 
@@ -176,7 +176,7 @@ services:
       - -c
       - |
         echo "=== Starting HUGIN driver ==="
-        colcon build --symlink-install --package-select hugin_ros2_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        colcon build --symlink-install --packages-select hugin_ros2_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
         ros2 launch hugin_ros2_driver hugin_ros2_driver.launch.py
 
@@ -201,7 +201,7 @@ services:
       - -c
       - |
         echo "=== Starting BUNKER driver ==="
-        colcon build --symlink-install --package-select bunker_ros2_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        colcon build --symlink-install --packages-select bunker_ros2_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
         ros2 launch bunker_base bunker_base.launch.py use_sim_time:=false port_name:=can2 odom_frame:=odom base_frame:=base_link odom_topic_name:=bunker_odom is_bunker_mini:=true simulated_robot:=false control_rate:=50 &
         ros2 launch bunker_description robot_state_publisher.launch.py
