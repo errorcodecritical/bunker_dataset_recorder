@@ -2,7 +2,7 @@ services:
   xsens:
     build:
      context: .
-     dockerfile: xsens/xsens-jetson.Dockerfile
+     dockerfile: xsens/Dockerfile
     container_name: xsens
     privileged: true
     network_mode: host
@@ -21,7 +21,7 @@ services:
   emlid:
     build:
       context: .
-      dockerfile: emlid/emlid-jetson.Dockerfile
+      dockerfile: emlid/Dockerfile
     container_name: emlid
     privileged: true
     network_mode: host
@@ -39,7 +39,7 @@ services:
   oakd:
     build:
       context: .
-      dockerfile: oakd/oakd-jetson.Dockerfile
+      dockerfile: oakd/Dockerfile
     container_name: oakd
     privileged: true
     network_mode: host
@@ -61,7 +61,7 @@ services:
   hesai:
     build:
      context: .
-     dockerfile: hesai/hesai-jetson.Dockerfile
+     dockerfile: hesai/Dockerfile
     container_name: hesai
     privileged: true
     network_mode: host
@@ -80,7 +80,7 @@ services:
   atlas:
     build:
      context: .
-     dockerfile: atlas/atlas-jetson.Dockerfile
+     dockerfile: atlas/Dockerfile
     container_name: atlas
     privileged: true
     network_mode: host
@@ -99,7 +99,7 @@ services:
   hugin:
     build:
      context: ..
-     dockerfile: docker/hugin/hugin-jetson.Dockerfile
+     dockerfile: docker/hugin/Dockerfile
     container_name: hugin
     privileged: true
     runtime: nvidia
@@ -132,7 +132,7 @@ services:
   bunker:
     build:
       context: .
-      dockerfile: bunker/bunker-jetson.Dockerfile
+      dockerfile: bunker/Dockerfile
     container_name: bunker
     privileged: true
     network_mode: host
@@ -145,16 +145,12 @@ services:
       - ROS_DOMAIN_ID=30
       #- CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-    command: 
-      - /bin/bash
-      - -c
-      - |
-        /root/shared_folder/bunker-launch.sh
+    command: /root/shared_folder/bunker-launch.sh
 
   recorder:
     build:
       context: .
-      dockerfile: recorder/recorder-jetson.Dockerfile
+      dockerfile: recorder/Dockerfile
     container_name: recorder
     privileged: true
     network_mode: host
@@ -174,7 +170,7 @@ services:
   visualizer:
     build:
       context: .
-      dockerfile: visualizer/visualizer-jetson.Dockerfile
+      dockerfile: visualizer/Dockerfile
     container_name: visualizer
     privileged: true
     runtime: nvidia
@@ -252,7 +248,7 @@ services:
   nav2:
     build:
       context: .
-      dockerfile: nav2/nav2.Dockerfile
+      dockerfile: nav2/Dockerfile
     container_name: nav2
     network_mode: host
     volumes:
@@ -271,7 +267,7 @@ services:
   hmr_localisation:
     build:
      context: .
-     dockerfile: hmr_localisation/hmr.Dockerfile
+     dockerfile: hmr_localisation/Dockerfile
     container_name: hmr_localisation
     privileged: true
     network_mode: host
@@ -288,7 +284,7 @@ services:
   scovox:
     build:
      context: .
-     dockerfile: scovox/scovox.Dockerfile
+     dockerfile: scovox/Dockerfile
     container_name: scovox
     privileged: true
     network_mode: host

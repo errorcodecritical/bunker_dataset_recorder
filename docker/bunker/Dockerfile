@@ -27,13 +27,13 @@ RUN apt update && apt install -y \
 ENV CATKIN_WS=/root/ros2_ws
 RUN mkdir -p $CATKIN_WS/src
 
-WORKDIR $CATKIN_WS/src
-RUN git clone https://github.com/agilexrobotics/ugv_sdk.git
-RUN git clone https://github.com/agilexrobotics/bunker_ros2.git
+# WORKDIR $CATKIN_WS/src
+# RUN git clone https://github.com/agilexrobotics/ugv_sdk.git
+# RUN git clone https://github.com/agilexrobotics/bunker_ros2.git
 
-WORKDIR $CATKIN_WS/src/ugv_sdk
+# WORKDIR $CATKIN_WS/src/ugv_sdk
 
-RUN git checkout -b working_commit c2f2aa0
+# RUN git checkout -b working_commit c2f2aa0
 
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
 RUN echo "source /root/ros2_ws/install/setup.bash" >> /root/.bashrc
