@@ -5,4 +5,4 @@
 [submodule "ros2_ws/src/ugv_sdk"]
 	path = ros2_ws/src/ugv_sdk
 	url = https://github.com/agilexrobotics/ugv_sdk
-    branch = working_commit
+    branch = c3dfaf4
