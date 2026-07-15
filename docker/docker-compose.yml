@@ -170,7 +170,7 @@ services:
         echo "=== Building Bunker ROS Workspace ==="
         catkin build bunker_base bunker_msgs bunker_bringup ugv_sdk -j 6 -p 6 --cmake-args -DCMAKE_CXX_FLAGS="-DASIO_ENABLE_OLD_SERVICES"
         source /catkin_ws/devel/setup.bash
-        roslaunch twist_mux twist_mux.launch config_locks:=/config/bunker/twist_mux.yaml config_topics:=/config/bunker/twist_mux.yaml &
+        roslaunch twist_mux twist_mux.launch config_locks:=/config/bunker/twist_mux.yaml config_topics:=/config/bunker/twist_mux.yaml cmd_vel_out:=/smoother_cmd_vel &
         sleep 1
         roslaunch bunker_bringup bunker_robot_base.launch
 
