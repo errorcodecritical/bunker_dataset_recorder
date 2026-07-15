@@ -1,8 +1,8 @@
 services:
   xsens:
     build:
-     context: .
-     dockerfile: xsens/Dockerfile
+     context: ..
+     dockerfile: docker/xsens/Dockerfile
     image: ros2_xsens_driver:latest
     container_name: xsens
     privileged: true
@@ -29,8 +29,8 @@ services:
 
   emlid:
     build:
-      context: .
-      dockerfile: emlid/Dockerfile
+      context: ..
+      dockerfile: docker/emlid/Dockerfile
     image: ros2_emlid_driver:latest
     container_name: emlid
     privileged: true
@@ -55,8 +55,8 @@ services:
 
   oakd:
     build:
-      context: .
-      dockerfile: oakd/Dockerfile
+      context: ..
+      dockerfile: docker/oakd/Dockerfile
     image: ros2_oakd_driver:latest
     container_name: oakd
     privileged: true
@@ -85,8 +85,8 @@ services:
 
   hesai:
     build:
-     context: .
-     dockerfile: hesai/Dockerfile
+     context: ..
+     dockerfile: docker/hesai/Dockerfile
     image: ros2_hesai_driver:latest
     container_name: hesai
     privileged: true
@@ -112,8 +112,8 @@ services:
 
   atlas:
     build:
-     context: .
-     dockerfile: atlas/Dockerfile
+     context: ..
+     dockerfile: docker/atlas/Dockerfile
     image: ros2_atlas_driver:latest
     container_name: atlas
     privileged: true
@@ -140,8 +140,8 @@ services:
 
   hugin:
     build:
-     context: .
-     dockerfile: hugin/Dockerfile
+     context: ..
+     dockerfile: docker/hugin/Dockerfile
     image: ros2_hugin_driver:latest
     container_name: hugin
     privileged: true
@@ -182,8 +182,8 @@ services:
 
   bunker:
     build:
-      context: .
-      dockerfile: bunker/Dockerfile
+      context: ..
+      dockerfile: docker/bunker/Dockerfile
     image: ros2_bunker_driver:latest
     container_name: bunker
     privileged: true
@@ -209,8 +209,8 @@ services:
 
   recorder:
     build:
-      context: .
-      dockerfile: recorder/Dockerfile
+      context: ..
+      dockerfile: docker/recorder/Dockerfile
     image: ros2_recorder:latest
     container_name: recorder
     privileged: true
@@ -231,8 +231,8 @@ services:
 
   visualizer:
     build:
-      context: .
-      dockerfile: visualizer/Dockerfile
+      context: ..
+      dockerfile: docker/visualizer/Dockerfile
     image: ros2_visualizer:latest
     container_name: visualizer
     privileged: true
