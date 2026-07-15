@@ -16,19 +16,9 @@ RUN apt update \
 #Install ros2 pkg
 RUN apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp
 
-#Configure catkin workspace
-ENV CATKIN_WS=/root/ros2_ws
-RUN mkdir -p $CATKIN_WS/src
-
-#WORKDIR $CATKIN_WS/src
-#RUN git clone --recurse-submodules https://github.com/HesaiTechnology/HesaiLidar_ROS_2.0.git
-#RUN rosdep update && rosdep install --from-paths . -y --ignore-src
-
-RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
-RUN echo "source /root/ros2_ws/install/setup.bash" >> /root/.bashrc
-
-# Clean-up
-WORKDIR /root
 RUN apt-get clean
 
-CMD ["bash"]
+WORKDIR /ros2_ws
+
+RUN echo "source /opt/ros/jazzy/setup.bash"      >> /root/.bashrc && \     
+    echo "source /ros2_ws/install/setup.bash"     >> /root/.bashrc

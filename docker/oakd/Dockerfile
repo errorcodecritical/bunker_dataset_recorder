@@ -24,10 +24,9 @@ RUN apt-get update \
     #Depthai-V3
     #ros-$ROS_DISTRO-depthai-ros-v3
 
-RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
-
-# Clean-up
-WORKDIR /root
 RUN apt-get clean
 
-CMD ["bash"]
+WORKDIR /ros2_ws
+
+RUN echo "source /opt/ros/jazzy/setup.bash"      >> /root/.bashrc && \     
+    echo "source /ros2_ws/install/setup.bash"     >> /root/.bashrc

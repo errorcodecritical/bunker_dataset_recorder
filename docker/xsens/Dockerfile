@@ -18,19 +18,9 @@ RUN apt install -y \
     ros-$ROS_DISTRO-imu-tools \
     ros-$ROS_DISTRO-rmw-cyclonedds-cpp
 
-#Configure catkin workspace
-ENV CATKIN_WS=/root/ros2_ws
-RUN mkdir -p $CATKIN_WS/src
-
-#Clone xsens pkg
-WORKDIR $CATKIN_WS/src
-RUN git clone https://github.com/norlab-ulaval/norlab_xsens_driver.git
-
-RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
-RUN echo "source /root/ros2_ws/install/setup.bash" >> /root/.bashrc
-
-# Clean-up
-WORKDIR /root
 RUN apt-get clean
 
-CMD ["bash"]
+WORKDIR /ros2_ws
+
+RUN echo "source /opt/ros/jazzy/setup.bash"      >> /root/.bashrc && \     
+    echo "source /ros2_ws/install/setup.bash"     >> /root/.bashrc

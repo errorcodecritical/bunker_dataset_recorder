@@ -23,23 +23,9 @@ RUN apt update && apt install -y \
     ros-$ROS_DISTRO-twist-mux \
     ros-$ROS_DISTRO-ros2-control
 
-#Configure catkin workspace
-ENV CATKIN_WS=/root/ros2_ws
-RUN mkdir -p $CATKIN_WS/src
-
-# WORKDIR $CATKIN_WS/src
-# RUN git clone https://github.com/agilexrobotics/ugv_sdk.git
-# RUN git clone https://github.com/agilexrobotics/bunker_ros2.git
-
-# WORKDIR $CATKIN_WS/src/ugv_sdk
-
-# RUN git checkout -b working_commit c2f2aa0
-
-RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
-RUN echo "source /root/ros2_ws/install/setup.bash" >> /root/.bashrc
-
-# Clean-up
-WORKDIR /root
 RUN apt-get clean
 
-CMD ["bash"]
+WORKDIR /ros2_ws
+
+RUN echo "source /opt/ros/jazzy/setup.bash"      >> /root/.bashrc && \     
+    echo "source /ros2_ws/install/setup.bash"     >> /root/.bashrc

@@ -32,24 +32,14 @@ RUN apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
     ros-$ROS_DISTRO-backward-ros \
     ros-$ROS_DISTRO-vision-msgs
 
-#Configure catkin workspace
-ENV CATKIN_WS=/root/ros2_ws
-RUN mkdir -p $CATKIN_WS/src
-
-WORKDIR $CATKIN_WS/src
-
 # Clone dependencies repos
-RUN git clone https://github.com/tu-darmstadt-ros-pkg/hector_recorder.git
-
-RUN git clone --recurse-submodules https://github.com/HesaiTechnology/HesaiLidar_ROS_2.0.git
+WORKDIR /tmp/HesaiLidar_ROS_2.0
+RUN git clone --recurse-submodules https://github.com/HesaiTechnology/HesaiLidar_ROS_2.0.git /tmp/HesaiLidar_ROS_2.0
 RUN rosdep update && rosdep install --from-paths . -y --ignore-src
 
-
-RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
-RUN echo "source /root/ros2_ws/install/setup.bash" >> /root/.bashrc
-
-# Clean-up
-WORKDIR /root
 RUN apt-get clean
 
-CMD ["bash"]
+WORKDIR /ros2_ws
+
+RUN echo "source /opt/ros/jazzy/setup.bash"      >> /root/.bashrc && \     
+    echo "source /ros2_ws/install/setup.bash"     >> /root/.bashrc

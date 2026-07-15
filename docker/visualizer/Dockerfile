@@ -43,7 +43,7 @@ RUN apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
 
 
 #Configure catkin workspace
-ENV CATKIN_WS=/root/ros2_ws
+ENV CATKIN_WS=/ros2_ws
 RUN mkdir -p $CATKIN_WS/src
 
 WORKDIR $CATKIN_WS/src
@@ -51,7 +51,7 @@ RUN git clone --recurse-submodules https://github.com/HesaiTechnology/HesaiLidar
 RUN rosdep update && rosdep install --from-paths . -y --ignore-src
 
 RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
-RUN echo "source /root/ros2_ws/install/setup.bash" >> /root/.bashrc
+RUN echo "source /ros2_ws/install/setup.bash" >> /root/.bashrc
 
 # Clean-up
 WORKDIR /root

@@ -18,11 +18,11 @@ dpkg --force-architecture -i Atlas_AevaAPI_4_0_0_GA_aarch64.deb
 source /opt/ros/jazzy/setup.bash
 
 #Build workspace
-cd /root/ros2_ws/
+cd /ros2_ws/
 colcon build --symlink-install
 
 # Source ROS2 Workspace
-source /root/ros2_ws/install/setup.bash
+source /ros2_ws/install/setup.bash
 
 # Run Atlas ROS2
 ros2 run ros2_aeva_publisher ros2_aeva_publisher 10.1.14.24 ATLAS

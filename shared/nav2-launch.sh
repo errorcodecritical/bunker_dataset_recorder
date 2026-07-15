@@ -14,11 +14,11 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 source /opt/ros/jazzy/setup.bash
 
 #Build workspace only with the packages descriminated on docker compose file
-cd /root/ros2_ws/
+cd /ros2_ws/
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 # Source ROS2 Workspace
-source /root/ros2_ws/install/setup.bash
+source /ros2_ws/install/setup.bash
 
 #Run nav2 ROS" framework
 ros2 launch nav2_bringup navigation_launch.py use_sim_time:=false params_file:=/root/nav2/nav2_params.yaml

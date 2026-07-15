@@ -19,9 +19,9 @@ dpkg -i Atlas_AevaCLI_4_0_0_GA_aarch64.deb
 dpkg --force-architecture -i Atlas_AevaAPI_4_0_0_GA_aarch64.deb
 
 #Build workspace only with the packages descriminated on docker compose file
-cd /root/ros2_ws/
+cd /ros2_ws/
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
-source /root/ros2_ws/install/setup.bash
+source /ros2_ws/install/setup.bash
 sleep 10
 
 #Database of random names to bags

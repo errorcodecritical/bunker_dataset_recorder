@@ -14,7 +14,7 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 source /opt/ros/humble/install/setup.bash
 
 #Build workspace only with the packages descriminated on docker compose file
-cd /root/ros2_ws/
+cd /ros2_ws/
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_WITH_CUDA=OFF -DBUILD_WITH_VIEWER=OFF
 
 #ros2 run tf2_ros static_transform_publisher --x 0 --y 0 --z 0 --yaw 0 --pitch 0 --roll 0 --frame-id global_map --child-frame-id map &

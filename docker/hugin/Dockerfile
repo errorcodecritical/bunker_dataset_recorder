@@ -67,5 +67,9 @@ ENV XDG_RUNTIME_DIR=/run/user/1000
 # Disable accessibility features to prevent dbind warnings
 ENV NO_AT_BRIDGE=1
 
-# Run launch file
-CMD ["bash"]
+RUN apt-get clean
+
+WORKDIR /ros2_ws
+
+RUN echo "source /opt/ros/jazzy/setup.bash"      >> /root/.bashrc && \     
+    echo "source /ros2_ws/install/setup.bash"     >> /root/.bashrc

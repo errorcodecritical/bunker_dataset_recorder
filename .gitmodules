@@ -10,3 +10,13 @@
 [submodule "ros2_ws/src/HesaiLidar_ROS_2.0"]
 	path = ros2_ws/src/HesaiLidar_ROS_2.0
 	url = https://github.com/errorcodecritical/HesaiLidar_ROS_2.0
+[submodule "ros2_ws/src/nmea_navsat_driver"]
+	path = ros2_ws/src/nmea_navsat_driver
+	url = https://github.com/ros-drivers/nmea_navsat_driver.git
+	branch = ros2
+[submodule "ros2_ws/src/hector_recorder"]
+	path = ros2_ws/src/hector_recorder
+	url = https://github.com/tu-darmstadt-ros-pkg/hector_recorder.git
+[submodule "ros2_ws/src/norlab_xsens_driver"]
+	path = ros2_ws/src/norlab_xsens_driver
+	url = https://github.com/norlab-ulaval/norlab_xsens_driver.git
