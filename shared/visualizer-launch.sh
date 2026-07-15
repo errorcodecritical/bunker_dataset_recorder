@@ -14,7 +14,7 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 source /opt/ros/jazzy/setup.bash
 
 # Install Atlas Eava ROS2 API
-cd /root/shared_folder/atlas/
+cd /root/shared/atlas/
 dpkg -i Atlas_AevaCLI_4_0_0_GA_aarch64.deb
 dpkg --force-architecture -i Atlas_AevaAPI_4_0_0_GA_aarch64.deb
 
@@ -33,7 +33,7 @@ source /root/ros2_ws/install/setup.bash
 #ros2 bag play /root/rosbags/2026_07_06_17_26_27__bunker-kalhan-full_ --clock &
 
 # Run Rviz with sensors layout
-rviz2 -d /root/shared_folder/isr.rviz
+rviz2 -d /root/shared/isr.rviz
 
 # Run Camera Calibrator
 #ros2 run camera_calibration cameracalibrator --size 10x7 --square 0.025 --ros-args -r image:=/oak/rgb/image_raw

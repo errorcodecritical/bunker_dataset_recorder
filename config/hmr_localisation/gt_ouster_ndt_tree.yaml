@@ -42,7 +42,7 @@
       
       # --- map ---
       use_pcd_map: true
-      map_path: "/root/ros2_ws/src/hmr_localisation/gt_map/gt_map_us050.pcd" #"/root/shared_folder/lab_dense.ply"
+      map_path: "/root/ros2_ws/src/hmr_localisation/gt_map/gt_map_us050.pcd" #"/root/shared/lab_dense.ply"
 
       # --- initial pose ---
       # The GLIM map is built in the os_lidar frame (map origin == first os_lidar

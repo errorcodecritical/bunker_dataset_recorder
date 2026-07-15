@@ -14,7 +14,7 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 source /opt/ros/jazzy/setup.bash
 
 # Install Atlas Eava ROS2 API
-cd /root/shared_folder/atlas/
+cd /root/shared/atlas/
 dpkg -i Atlas_AevaCLI_4_0_0_GA_aarch64.deb
 dpkg --force-architecture -i Atlas_AevaAPI_4_0_0_GA_aarch64.deb
 
@@ -25,7 +25,7 @@ source /root/ros2_ws/install/setup.bash
 sleep 10
 
 #Database of random names to bags
-names_dir="/root/shared_folder"
+names_dir="/root/shared"
 name_1=$(shuf -n 1 "$names_dir/.names_1")
 
 # Directory where the bags are saved

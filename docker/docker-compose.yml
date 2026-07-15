@@ -8,15 +8,15 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/xsens-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/xsens/mtdevice.py:/root/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtdevice.py:rw
-      - ../sensor_configs/xsens/mtnode.py:/root/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtnode.py:rw
-      - ../sensor_configs/xsens/xsens_driver.launch.xml:/root/ros2_ws/src/norlab_xsens_driver/launch/xsens_driver.launch.xml:rw
+      - ../ros2_ws/build/xsens-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../config/xsens/mtdevice.py:/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtdevice.py:rw
+      - ../config/xsens/mtnode.py:/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtnode.py:rw
+      - ../config/xsens/xsens_driver.launch.xml:/ros2_ws/src/norlab_xsens_driver/launch/xsens_driver.launch.xml:rw
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/xsens-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/xsens-launch.sh
 
   emlid:
     build:
@@ -27,14 +27,14 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/emlid-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/emlid/nmea_serial_driver.py:/root/ros2_ws/src/nmea_navsat_driver/src/libnmea_navsat_driver/nodes/nmea_serial_driver.py:rw
-      - ../sensor_configs/emlid/nmea_serial_driver.yaml:/root/ros2_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml:rw
+      - ../ros2_ws/build/emlid-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../config/emlid/nmea_serial_driver.py:/ros2_ws/src/nmea_navsat_driver/src/libnmea_navsat_driver/nodes/nmea_serial_driver.py:rw
+      - ../config/emlid/nmea_serial_driver.yaml:/ros2_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml:rw
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/emlid-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/emlid-launch.sh
 
   oakd:
     build:
@@ -45,18 +45,18 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/oakd-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
+      - ../ros2_ws/build/oakd-build:/ros2_ws/build
+      - ../shared/:/shared/
       #Depthai ROS config
-      - ../sensor_configs/oakd/depthai_ros_driver/config:/opt/ros/jazzy/share/depthai_ros_driver/config
-      - ../sensor_configs/oakd/depthai_ros_driver/launch:/opt/ros/jazzy/share/depthai_ros_driver/launch
+      - ../config/oakd/depthai_ros_driver/config:/opt/ros/jazzy/share/depthai_ros_driver/config
+      - ../config/oakd/depthai_ros_driver/launch:/opt/ros/jazzy/share/depthai_ros_driver/launch
       #Depthai ROS V3 config
-      #- ../sensor_configs/oakd/depthai_ros_driver/config/:/opt/ros/jazzy/share/depthai_ros_driver_v3/config/
-      #- ../sensor_configs/oakd/depthai_ros_driver/launch/:/opt/ros/jazzy/share/depthai_ros_driver_v3/launch/
+      #- ../config/oakd/depthai_ros_driver/config/:/opt/ros/jazzy/share/depthai_ros_driver_v3/config/
+      #- ../config/oakd/depthai_ros_driver/launch/:/opt/ros/jazzy/share/depthai_ros_driver_v3/launch/
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/oakd-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/oakd-launch.sh
 
   hesai:
     build:
@@ -69,13 +69,13 @@ services:
     #   - "2368:2368/udp"
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/hesai-build:/root/ros2_ws/build
-      - ../ros2_ws/src/HesaiLidar_ROS_2.0/:/root/ros2_ws/src/HesaiLidar_ROS_2.0/
-      - ../shared_folder/:/root/shared_folder/
+      - ../ros2_ws/build/hesai-build:/ros2_ws/build
+      - ../ros2_ws/src/HesaiLidar_ROS_2.0/:/ros2_ws/src/HesaiLidar_ROS_2.0/
+      - ../shared/:/shared/
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/hesai-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/hesai-launch.sh
 
   atlas:
     build:
@@ -86,15 +86,15 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/atlas-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../ros2_ws/src/atlas:/root/shared_folder/atlas
-      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
-      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
+      - ../ros2_ws/build/atlas-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../ros2_ws/src/atlas:/shared/atlas
+      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/ros2_ws/src/ros2_aeva_publisher
+      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/ros2_ws/src/aeva_msgs
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/atlas-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/atlas-launch.sh
 
   hugin:
     build:
@@ -118,7 +118,7 @@ services:
     volumes:
       - /dev/:/dev/
       - ../ros2_ws/build/hugin-build:/opt/ros/overlay_ws/build
-      - ../shared_folder/:/root/shared_folder/
+      - ../shared/:/shared/
       - ../ros2_ws/src/hugin/ros2/src/:/opt/ros/overlay_ws/src/
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
@@ -126,8 +126,8 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/hugin-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/hugin-launch.sh
 
   bunker:
     build:
@@ -137,15 +137,15 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - ../ros2_ws/build/bunker-build:/root/ros2_ws/build
-      - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
-      - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/bunker:/config/bunker
+      - ../ros2_ws/build/bunker-build:/ros2_ws/build
+      - ../ros2_ws/src/bunker_description:/ros2_ws/src/bunker_description
+      - ../shared/:/shared/
+      - ../config/bunker:/config/bunker
     environment:
       - ROS_DOMAIN_ID=30
-      #- CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
+      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-    command: /root/shared_folder/bunker-launch.sh
+    command: /shared/bunker-launch.sh
 
   recorder:
     build:
@@ -156,16 +156,16 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../../rosbags/:/root/rosbags/
-      - ../ros2_ws/build/recorder-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../ros2_ws/src/atlas:/root/shared_folder/atlas
-      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
-      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
+      - ../../rosbags/:/rosbags/
+      - ../ros2_ws/build/recorder-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../ros2_ws/src/atlas:/shared/atlas
+      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/ros2_ws/src/ros2_aeva_publisher
+      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/ros2_ws/src/aeva_msgs
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/recorder-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/recorder-launch.sh
 
   visualizer:
     build:
@@ -185,21 +185,21 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../../rosbags/:/root/rosbags/
-      - ../ros2_ws/build/visualizer-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../ros2_ws/src/atlas:/root/shared_folder/atlas
-      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/root/ros2_ws/src/ros2_aeva_publisher
-      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/root/ros2_ws/src/aeva_msgs
-      - ../ros2_ws/src/bunker_description:/root/ros2_ws/src/bunker_description
+      - ../../rosbags/:/rosbags/
+      - ../ros2_ws/build/visualizer-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../ros2_ws/src/atlas:/shared/atlas
+      - ../ros2_ws/src/atlas/ros2_examples/src/ros2_aeva_publisher:/ros2_ws/src/ros2_aeva_publisher
+      - ../ros2_ws/src/atlas/ros2_examples/src/aeva_msgs:/ros2_ws/src/aeva_msgs
+      - ../ros2_ws/src/bunker_description:/ros2_ws/src/bunker_description
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
       - DISPLAY=$DISPLAY
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/visualizer-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/visualizer-launch.sh
 
 ### NAVIGATION PIPELINE ###
 
@@ -212,13 +212,13 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/trav_ros2-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../ros2_ws/src/traversability_mapping_ros2:/root/ros2_ws/src/traversability_mapping_ros2
+      - ../ros2_ws/build/trav_ros2-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../ros2_ws/src/traversability_mapping_ros2:/ros2_ws/src/traversability_mapping_ros2
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/trav_ros2-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/trav_ros2-launch.sh
 
   glim:
     build:
@@ -236,14 +236,14 @@ services:
               capabilities: [gpu]
     volumes:
       - /dev/:/dev/
-      - ../../rosbags/:/root/rosbags/
-      - ../ros2_ws/build/glim-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/glim/config:/glim_ws/src/glim/config
+      - ../../rosbags/:/rosbags/
+      - ../ros2_ws/build/glim-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../config/glim/config:/glim_ws/src/glim/config
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/glim-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/glim-launch.sh
   
   nav2:
     build:
@@ -252,15 +252,15 @@ services:
     container_name: nav2
     network_mode: host
     volumes:
-      - ../ros2_ws/build/nav2-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/nav2:/root/nav2
-      - ../sensor_configs/nav2/navigation_launch.py:/opt/ros/kilted/share/nav2_bringup/launch/navigation_launch.py:rw
-      - ../sensor_configs/nav2/bringup_launch.py:/opt/ros/kilted/share/nav2_bringup/launch/bringup_launch.py:rw
+      - ../ros2_ws/build/nav2-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../config/nav2:/nav2
+      - ../config/nav2/navigation_launch.py:/opt/ros/kilted/share/nav2_bringup/launch/navigation_launch.py:rw
+      - ../config/nav2/bringup_launch.py:/opt/ros/kilted/share/nav2_bringup/launch/bringup_launch.py:rw
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/nav2-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/nav2-launch.sh
 
 ### Kalhan Algorithms
 
@@ -273,13 +273,13 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/hmr-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/hmr_localisation/gt_ouster_ndt_tree.yaml:/root/ros2_ws/src/hmr_localisation/config/gt_ouster_ndt_tree.yaml:rw
+      - ../ros2_ws/build/hmr-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../config/hmr_localisation/gt_ouster_ndt_tree.yaml:/ros2_ws/src/hmr_localisation/config/gt_ouster_ndt_tree.yaml:rw
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/hmr-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/hmr-launch.sh
 
   scovox:
     build:
@@ -290,12 +290,12 @@ services:
     network_mode: host
     volumes:
       - /dev/:/dev/
-      - ../ros2_ws/build/scovox-build:/root/ros2_ws/build
-      - ../shared_folder/:/root/shared_folder/
-      - ../sensor_configs/scovox/config:/root/ros2_ws/src/scovox/config
-      - ../sensor_configs/explo_planner/config:/root/ros2_ws/src/explo_planner/config
-      - ../sensor_configs/scovox/scovox_multi_robot.launch.py:/root/ros2_ws/src/scovox/src/scovox_mapping/launch/scovox_multi_robot.launch.py:rw
+      - ../ros2_ws/build/scovox-build:/ros2_ws/build
+      - ../shared/:/shared/
+      - ../config/scovox/config:/ros2_ws/src/scovox/config
+      - ../config/explo_planner/config:/ros2_ws/src/explo_planner/config
+      - ../config/scovox/scovox_multi_robot.launch.py:/ros2_ws/src/scovox/src/scovox_mapping/launch/scovox_multi_robot.launch.py:rw
     environment:
       - ROS_DOMAIN_ID=30
-      - CYCLONEDDS_URI=file:///root/shared_folder/cyclonedds-config.xml
-    command: /root/shared_folder/scovox-launch.sh
+      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    command: /shared/scovox-launch.sh

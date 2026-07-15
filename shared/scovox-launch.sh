@@ -24,4 +24,4 @@ source /root/ros2_ws/install/setup.bash
 ros2 launch scovox_mapping lidar_mapping.launch.py params_file:="/root/ros2_ws/src/scovox/config/scovox_lidar_raw_deskew.yaml" pointcloud_topic:=/hesai/points use_sim_time:=false &
 ros2 launch scovox_mapping scovox_multi_robot.launch.py robot_name:=bunker use_sim_time:=false
 
-#ros2 launch explo_planner exploration_experiment.launch.py max_steps:=200 output_csv:=/root/shared_folder/exploration_eig.csv use_sim_time:=false 
+#ros2 launch explo_planner exploration_experiment.launch.py max_steps:=200 output_csv:=/root/shared/exploration_eig.csv use_sim_time:=false 

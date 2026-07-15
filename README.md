@@ -30,7 +30,7 @@ The entire data-acquisition system for the Bunker mini is organized under:
 │   ├── oakd-build/
 │   ├── recorder-build/
 │   └── xsens-build/
-├── shared_folder/
+├── shared/
 │   ├── atlas/
 │   ├── hugin/
 │   ├── atlas-launch.sh
@@ -42,7 +42,7 @@ The entire data-acquisition system for the Bunker mini is organized under:
 │   ├── oakd-launch.sh
 │   ├── recorder-launch.sh
 │   └── xsens-launch.sh
-├── sensor_configs/
+├── config/
 │   ├── emlid/
 │   ├── hesai/
 │   ├── hugin/
@@ -75,7 +75,7 @@ The directory ```ros2_ws/``` is a workspace shared across all containers. Each c
 
 ### 1.3 Shared Entry-Point Scripts
 
-The folder **shared_folder/** contains launcher scripts used by each container:
+The folder **shared/** contains launcher scripts used by each container:
 
 - They source the ROS2 setup
 - Build only the required packages
@@ -154,7 +154,7 @@ Current recording topics:
 
 To modify what is recorded:
 
-1. Edit the **recorder entry-point script** in **shared_folder/recorder-launch.sh**
+1. Edit the **recorder entry-point script** in **shared/recorder-launch.sh**
 2. Update:
    - **TOPICS variable** → to add/remove ROS2 topics
    - **hector_recorder command** → configure:
@@ -168,7 +168,7 @@ To modify what is recorded:
 
 ## 4. Sensor Configuration
 
-All sensor configuration live inside sensor_configs/.
+All sensor configuration live inside config/.
 Configuration files are located here:
 
 ### 4.1 Emlid

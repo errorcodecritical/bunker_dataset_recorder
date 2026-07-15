@@ -10,7 +10,7 @@ set -e
 #Cyclonedds
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
-cd /root/shared_folder/atlas/
+cd /root/shared/atlas/
 dpkg -i Atlas_AevaCLI_4_0_0_GA_aarch64.deb
 dpkg --force-architecture -i Atlas_AevaAPI_4_0_0_GA_aarch64.deb
 

@@ -3,7 +3,7 @@ explo_planner:
     use_sim_time: false
     robot_name: ""
     max_steps: 200
-    output_csv: "/root/shared_folder/exploration_eig.csv"
+    output_csv: "/root/shared/exploration_eig.csv"
     map_resolution: 0.10
 
     # Frames — planner reads dscovox map (in map_frame) and uses TF
