@@ -23,7 +23,7 @@ services:
       - -c
       - |
         echo "=== Starting XSENS driver ==="
-        colcon build --symlink-install --packages-select norlab_xsens_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        colcon build --symlink-install --packages-select xsens_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
         ros2 launch xsens_driver xsens_driver.launch.xml
 
@@ -50,8 +50,9 @@ services:
       - -c
       - |
         echo "=== Starting EMLID driver ==="
+        colcon build --symlink-install --packages-select nmea_navsat_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
-        ros2 launch nmea_navsat_driver nmea_serial_driver.launch.xml
+        ros2 run nmea_navsat_driver nmea_serial_driver
 
   oakd:
     build:
@@ -131,7 +132,7 @@ services:
       - -c
       - |
         echo "=== Starting ATLAS driver ==="
-        colcon build --symlink-install --packages-select ros2_aeva_publisher --cmake-args -DCMAKE_BUILD_TYPE=Release
+        colcon build --symlink-install --packages-select aeva_msgs ros2_aeva_publisher --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
         ros2 run ros2_aeva_publisher ros2_aeva_publisher 10.1.14.24 ATLAS
 
@@ -173,9 +174,15 @@ services:
       - -c
       - |
         echo "=== Starting HUGIN driver ==="
-        colcon build --symlink-install --packages-select hugin_ros2_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        colcon build --symlink-install --packages-select hugin_d1 hugin_d1_gui liboden oden oden_interfaces oden_mqtt_bridge raf2_interfaces runes yggdrasil ymir --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
-        ros2 launch hugin_ros2_driver hugin_ros2_driver.launch.py
+        (sleep 5
+        ros2 service call /sensrad/radar_1/set_active_seq raf2_interfaces/srv/RdrCtrlSetActiveSeq "{requested_sequence_id: 2}"
+        sleep 1
+        ros2 service call /sensrad/radar_1/start_tx raf2_interfaces/srv/RdrCtrlStartTx
+        sleep 1
+        ros2 service call /sensrad/radar_1/set_thresholds raf2_interfaces/srv/RdrCtrlSetThresholds "{static_threshold: 10.0, dynamic_azimuth: 15.0, dynamic_elevation: 15.0, dynamic_basic: 15.0}") &
+        ros2 launch yggdrasil sensrad.launch.py visualizer:=none
 
   bunker:
     build:
@@ -198,7 +205,7 @@ services:
       - -c
       - |
         echo "=== Starting BUNKER driver ==="
-        colcon build --symlink-install --packages-select bunker_ros2_driver --cmake-args -DCMAKE_BUILD_TYPE=Release
+        colcon build --symlink-install --packages-select ugv_sdk bunker_msgs bunker_base bunker_description --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
         ros2 launch bunker_base bunker_base.launch.py use_sim_time:=false port_name:=can2 odom_frame:=odom base_frame:=base_link odom_topic_name:=bunker_odom is_bunker_mini:=true simulated_robot:=false control_rate:=50 &
         ros2 launch bunker_description robot_state_publisher.launch.py
