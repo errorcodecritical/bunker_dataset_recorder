@@ -16,6 +16,6 @@ def generate_launch_description():
             name='teleop_twist_joy_node',
             output='screen',
             parameters=['/config/bunker/teleop_twist_joy.yaml'],
-            arguments=['--ros-args', '--log-level', 'debug'],
+            arguments=['--ros-args', '--log-level', 'info'],
         ),
     ])
