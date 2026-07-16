@@ -21,7 +21,9 @@ RUN apt update && apt install -y \
     ros-$ROS_DISTRO-teleop-twist-joy \
     ros-$ROS_DISTRO-teleop-twist-keyboard \
     ros-$ROS_DISTRO-twist-mux \
-    ros-$ROS_DISTRO-ros2-control
+    ros-$ROS_DISTRO-ros2-control \
+    can-utils \
+    iproute2
 
 RUN apt-get clean
 
