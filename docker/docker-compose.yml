@@ -197,6 +197,7 @@ services:
       - ../ros2_ws:/ros2_ws
       - ../shared/:/shared/
       - ../config/bunker:/config/bunker
+      - /dev:/dev:rw,rslave
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
@@ -207,13 +208,27 @@ services:
         echo "=== Starting BUNKER driver ==="
         colcon build --symlink-install --packages-select ugv_sdk bunker_msgs bunker_base bunker_description --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
-        sleep 15
-        ip link set can2 down
+
+        # 1. Wait quietly until the CAN interface appears, then configure it
+        until ip link show can2 >/dev/null 2>&1; do sleep 2; done
+        ip link set can2 down || true
         ip link set can2 up type can bitrate 500000
+
+        # 2. Crash out if the CAN configuration fails to initialize
+        ip link show can2 | grep -q "UP" || { echo "CAN interface failed"; exit 1; }
+
+        # 3. Launch Chassis Core processes to the background
         ros2 launch bunker_base bunker_base.launch.py use_sim_time:=false port_name:=can2 odom_frame:=odom base_frame:=base_link odom_topic_name:=bunker_odom is_bunker_mini:=true simulated_robot:=false control_rate:=50 &
         ros2 launch bunker_description robot_state_publisher.launch.py &
-        ros2 launch /shared/teleop_bringup.launch.py
-        wait
+
+        # 4. Infinite Joystick Hot-Plug Loop
+        while true; do
+          if [ -c /dev/input/js0 ]; then
+            chmod a+rw /dev/input/js0 || true
+            ros2 launch /shared/teleop_bringup.launch.py
+          fi
+          sleep 3
+        done
 
 
   recorder:
