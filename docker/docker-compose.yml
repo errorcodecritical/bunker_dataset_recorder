@@ -184,7 +184,7 @@ services:
         ros2 service call /sensrad/radar_1/set_thresholds raf2_interfaces/srv/RdrCtrlSetThresholds "{static_threshold: 10.0, dynamic_azimuth: 15.0, dynamic_elevation: 15.0, dynamic_basic: 15.0}") &
         ros2 launch yggdrasil sensrad.launch.py visualizer:=none
 
-    bunker:
+  bunker:
     build:
       context: ..
       dockerfile: docker/bunker/Dockerfile
