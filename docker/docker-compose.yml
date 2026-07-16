@@ -207,19 +207,13 @@ services:
         echo "=== Starting BUNKER driver ==="
         colcon build --symlink-install --packages-select ugv_sdk bunker_msgs bunker_base bunker_description --cmake-args -DCMAKE_BUILD_TYPE=Release
         source /ros2_ws/install/setup.bash
+        sleep 15
         ip link set can2 down
         ip link set can2 up type can bitrate 500000
         ros2 launch bunker_base bunker_base.launch.py use_sim_time:=false port_name:=can2 odom_frame:=odom base_frame:=base_link odom_topic_name:=bunker_odom is_bunker_mini:=true simulated_robot:=false control_rate:=50 &
         ros2 launch bunker_description robot_state_publisher.launch.py &
         ros2 launch /shared/teleop_bringup.launch.py
         wait
-        
-    healthcheck:
-      test: ["CMD-SHELL", "/shared/bunker_healthcheck.sh"]
-      interval: 15s      # How often to run the check after startup
-      timeout: 5s        # How long to wait for the health check script to finish
-      retries: 3         # How many consecutive failures before marking as unhealthy
-      start_period: 20s  # Gives colcon build up to 20 seconds to finish before checking health
 
 
   recorder:
