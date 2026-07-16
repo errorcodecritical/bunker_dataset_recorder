@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libasio-dev \
     python3-catkin-tools \
     ros-noetic-teleop-twist-keyboard \
+    ros-noetic-teleop-twist-joy \
     ros-noetic-tf \
     ros-noetic-tf2-ros \
     ros-noetic-geometry-msgs \

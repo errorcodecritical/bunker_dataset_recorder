@@ -21,7 +21,7 @@ services:
       - -c
       - |
         sleep 3
-        echo "=== Building Hesai ROS Workspace ==="
+        echo "=== Starting HESAI Driver ==="
         catkin build hesai_ros_driver -j 6 -p 6
         source /catkin_ws/devel/setup.bash
         roslaunch hesai_ros_driver start.launch
@@ -47,7 +47,7 @@ services:
       - -c
       - |
         sleep 3
-        echo "=== Building OakD ROS Workspace ==="
+        echo "=== Starting OAK-D Driver ==="
         catkin build depthai_ros_driver -j 6 -p 6
         source /catkin_ws/devel/setup.bash
         roslaunch depthai_ros_driver camera.launch
@@ -74,7 +74,7 @@ services:
       - -c
       - |
         sleep 3
-        echo "=== Building Xsens MTI ROS Workspace ==="
+        echo "=== Starting Xsens MTI ROS Driver ==="
         source /catkin_ws/devel/setup.bash
         roslaunch xsens_mti_driver xsens_mti_node.launch
 
@@ -98,7 +98,7 @@ services:
       - -c
       - |
         sleep 3
-        echo "=== Building NMEA NavSat ROS Workspace ==="
+        echo "=== Starting EMLID Driver ==="
         source /catkin_ws/devel/setup.bash
         roslaunch nmea_navsat_driver nmea_serial_driver.launch
 
@@ -128,7 +128,7 @@ services:
       - -c
       - |
         sleep 3
-        echo "=== Building Recorder ROS Workspace ==="
+        echo "=== Starting RECORDER ==="
         source /catkin_ws/devel/setup.bash
         roscore &
         sleep 1
@@ -156,7 +156,6 @@ services:
     network_mode: host
     restart: unless-stopped
     volumes:
-      - /dev/:/dev/
       - ../catkin_ws:/catkin_ws
       - ../config/bunker/bunker_robot_base.launch:/catkin_ws/src/bunker_ros/bunker_bringup/launch/bunker_robot_base.launch
       - ../config:/config
@@ -165,9 +164,9 @@ services:
       - -c
       - |
         sleep 3
-        echo "=== Activating CAN2 device ==="
+        echo "=== Starting BUNKER Driver ==="
         ip link set can2 up type can bitrate 500000
-        echo "=== Building Bunker ROS Workspace ==="
+        echo "=== Starting Bunker ROS Driver ==="
         catkin build bunker_base bunker_msgs bunker_bringup ugv_sdk -j 6 -p 6 --cmake-args -DCMAKE_CXX_FLAGS="-DASIO_ENABLE_OLD_SERVICES"
         source /catkin_ws/devel/setup.bash
         roslaunch twist_mux twist_mux.launch config_locks:=/config/bunker/twist_mux.yaml config_topics:=/config/bunker/twist_mux.yaml cmd_vel_out:=/smoother_cmd_vel &
@@ -185,15 +184,23 @@ services:
     network_mode: host
     restart: unless-stopped
     volumes:
-      - /dev/:/dev/
       - ../catkin_ws:/catkin_ws
+      - ../config:/config
+      - /dev:/dev:rw,rslave
     command:
       - /bin/bash
       - -c
       - |
         sleep 3
-        echo "=== Building Teleop ROS Workspace ==="
+        echo "=== Starting TELEOP Driver ==="
         source /catkin_ws/devel/setup.bash
-        roslaunch bunker_bringup bunker_teleop_keyboard.launch
+        # 1. Infinite Joystick Hot-Plug Loop
+        while true; do
+          if [ -c /dev/input/js0 ]; then
+            chmod a+rw /dev/input/js0 || true
+            roslaunch /config/bunker/teleop.launch joy_dev:=/dev/input/js0
+          fi
+          sleep 3
+        done
     depends_on:
       - bunker_driver

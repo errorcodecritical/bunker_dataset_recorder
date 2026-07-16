@@ -1,0 +1,19 @@
+<launch>
+  <!-- Arguments for joystick configuration -->
+  <arg name="joy_config" default="rc" />
+  <arg name="joy_dev" default="/dev/input/f710" />
+
+  <!-- 1. Start the core ROS Joy Node to interface with your hardware -->
+  <node pkg="joy" type="joy_node" name="joy_node">
+    <param name="dev" value="$(arg joy_dev)" />
+    <param name="deadzone" value="0.1" />
+    <param name="autorepeat_rate" value="20.0" />
+  </node>
+
+  <!-- 2. Start the Teleop Twist Joy Node with parameters loaded from YAML -->
+  <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">
+    <rosparam command="load" file="/config/teleop_twist_joy.yaml" />
+    <!-- Optional: Remap the output velocity topic if your robot uses a different name -->
+    <remap from="cmd_vel" to="cmd_vel" />
+  </node>
+</launch>
