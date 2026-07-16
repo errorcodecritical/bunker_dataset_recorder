@@ -192,6 +192,7 @@ services:
     container_name: bunker
     privileged: true
     network_mode: host
+    restart: unless-stopped # Important to start teleop on boot!
     volumes:
       - ../ros2_ws:/ros2_ws
       - ../shared/:/shared/
