@@ -1,5 +1,5 @@
 ARG ARCH=linux/arm64/v8
-FROM ros:humble-ros-base
+FROM ros:jazzy-ros-base
 
 LABEL maintainer="Duarte Cruz <duarte.cruz@isr.uc.pt>"
 
