@@ -13,4 +13,4 @@ make eventlists
 make CXXFLAGS="-fno-PIE" LDFLAGS="-no-pie"
 
 # 4. Run the daemon
-./moltengamepad --mimic-xpad --daemon
+#./moltengamepad --mimic-xpad --daemon
