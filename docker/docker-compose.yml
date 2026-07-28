@@ -184,12 +184,12 @@ services:
         ros2 service call /sensrad/radar_1/set_thresholds raf2_interfaces/srv/RdrCtrlSetThresholds "{static_threshold: 10.0, dynamic_azimuth: 15.0, dynamic_elevation: 15.0, dynamic_basic: 15.0}") &
         ros2 launch yggdrasil sensrad.launch.py visualizer:=none
 
-  bunker:
+  bunker_driver:
     build:
       context: ..
       dockerfile: docker/bunker/Dockerfile
     image: ros2_bunker_driver:latest
-    container_name: bunker
+    container_name: bunker_driver
     privileged: true
     network_mode: host
     restart: unless-stopped
@@ -219,7 +219,7 @@ services:
 
         # 3. Launch Chassis Core processes to the background
         ros2 launch bunker_base bunker_base.launch.py use_sim_time:=false port_name:=can2 odom_frame:=odom base_frame:=base_link odom_topic_name:=bunker_odom is_bunker_mini:=true simulated_robot:=false control_rate:=50 &
-        ros2 launch bunker_description robot_state_publisher.launch.py &
+        #ros2 launch bunker_description robot_state_publisher.launch.py &
         ros2 run twist_mux twist_mux --ros-args --params-file /config/bunker/twist_mux.yaml -r /cmd_vel_out:=/cmd_vel &
 
         # 4. Infinite Joystick Hot-Plug Loop
