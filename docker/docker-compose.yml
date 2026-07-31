@@ -160,15 +160,9 @@ services:
     privileged: true
     network_mode: host
     restart: unless-stopped
-    environment:
-      - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1
-      - XAUTHORITY=/tmp/.Xauthority
     volumes:
       - ../catkin_ws:/catkin_ws
-      - ../rosbags:/rosbags
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ~/.Xauthority:/tmp/.Xauthority:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
       - /bin/bash
       - -c
@@ -178,7 +172,8 @@ services:
         catkin build node_monitor -j 6 -p 6
         source /catkin_ws/devel/setup.bash
         roscore &
-        rosrun node_monitor monitor.py
+        rosrun node_monitor monitor.py &
+        rostopic echo /node_metrics
         
 
   recorder:
