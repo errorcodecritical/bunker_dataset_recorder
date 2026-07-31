@@ -10,7 +10,11 @@ RUN apt-get update && apt-get install -y \
     libyaml-cpp-dev \
     python3-catkin-tools \
     ros-noetic-rviz \
+    python3-pip \
     && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --no-cache-dir \
+    psutil
 
 # Create the main workspace directory
 WORKDIR /catkin_ws

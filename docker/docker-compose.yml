@@ -102,47 +102,6 @@ services:
         source /catkin_ws/devel/setup.bash
         roslaunch nmea_navsat_driver nmea_serial_driver.launch
 
-  recorder:
-    image: ros_noetic_recorder:latest
-    container_name: recorder
-    build:
-      context: ./recorder
-      dockerfile: Dockerfile
-    init: true
-    tty: true
-    stdin_open: true
-    privileged: true
-    network_mode: host
-    restart: unless-stopped
-    environment:
-      - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1
-      - XAUTHORITY=/tmp/.Xauthority
-    volumes:
-      - ../catkin_ws:/catkin_ws
-      - ../rosbags:/rosbags
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ~/.Xauthority:/tmp/.Xauthority:rw
-    command:
-      - /bin/bash
-      - -c
-      - |
-        sleep 3
-        echo "=== Starting RECORDER ==="
-        source /catkin_ws/devel/setup.bash
-        roscore &
-        sleep 1
-        rosbag record -O /rosbags/$(date +%Y_%m_%d_%H_%M_%S)_recording.bag \
-          /hesai/points \
-          /oak/rgb/image_raw \
-          /oak/stereo/image_raw \
-          /oak/imu/data \
-          /imu/data \
-          /imu/mag \
-          /fix \
-          /odom \
-          /cmd_vel
-
   bunker_driver:
     image: bunker_driver_noetic:latest
     container_name: bunker_driver
@@ -188,3 +147,77 @@ services:
           fi
           sleep 3
         done
+
+  node_monitor:
+    image: ros_noetic_recorder:latest
+    container_name: monitor
+    build:
+      context: ./recorder
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.Xauthority
+    volumes:
+      - ../catkin_ws:/catkin_ws
+      - ../rosbags:/rosbags
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/tmp/.Xauthority:rw
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Starting MONITOR ==="
+        catkin build node_monitor -j 6 -p 6
+        source /catkin_ws/devel/setup.bash
+        roscore &
+        rosrun node_monitor monitor.py
+        
+
+  recorder:
+    image: ros_noetic_recorder:latest
+    container_name: recorder
+    build:
+      context: ./recorder
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.Xauthority
+    volumes:
+      - ../catkin_ws:/catkin_ws
+      - ../rosbags:/rosbags
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/tmp/.Xauthority:rw
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Starting RECORDER ==="
+        source /catkin_ws/devel/setup.bash
+        roscore &
+        sleep 1
+        rosbag record -O /rosbags/$(date +%Y_%m_%d_%H_%M_%S)_recording.bag \
+          /hesai/points \
+          /oak/rgb/image_raw \
+          /oak/stereo/image_raw \
+          /oak/imu/data \
+          /imu/data \
+          /imu/mag \
+          /fix \
+          /odom \
+          /cmd_vel
