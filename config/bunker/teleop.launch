@@ -12,8 +12,8 @@
 
   <!-- 2. Start the Teleop Twist Joy Node with parameters loaded from YAML -->
   <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">
-    <rosparam command="load" file="/config/teleop_twist_joy.yaml" />
+    <rosparam command="load" file="/config/bunker/teleop_twist_joy.yaml" />
     <!-- Optional: Remap the output velocity topic if your robot uses a different name -->
-    <remap from="cmd_vel" to="cmd_vel" />
+    <remap from="cmd_vel" to="cmd_vel/joy" />
   </node>
 </launch>
