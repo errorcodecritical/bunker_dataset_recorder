@@ -165,36 +165,22 @@ services:
       - |
         sleep 3
         echo "=== Starting BUNKER Driver ==="
-        ip link set can2 up type can bitrate 500000
-        echo "=== Starting Bunker ROS Driver ==="
         catkin build bunker_base bunker_msgs bunker_bringup ugv_sdk -j 6 -p 6 --cmake-args -DCMAKE_CXX_FLAGS="-DASIO_ENABLE_OLD_SERVICES"
         source /catkin_ws/devel/setup.bash
-        roslaunch twist_mux twist_mux.launch config_locks:=/config/bunker/twist_mux.yaml config_topics:=/config/bunker/twist_mux.yaml cmd_vel_out:=/smoother_cmd_vel &
-        sleep 1
-        roslaunch bunker_bringup bunker_robot_base.launch
 
-  teleop:
-    build:
-      context: ./bunker
-      dockerfile: Dockerfile
-    init: true
-    tty: true
-    stdin_open: true
-    privileged: true
-    network_mode: host
-    restart: unless-stopped
-    volumes:
-      - ../catkin_ws:/catkin_ws
-      - ../config:/config
-      - /dev:/dev:rw,rslave
-    command:
-      - /bin/bash
-      - -c
-      - |
-        sleep 3
-        echo "=== Starting TELEOP Driver ==="
-        source /catkin_ws/devel/setup.bash
-        # 1. Infinite Joystick Hot-Plug Loop
+        # 1. Wait quietly until the CAN interface appears, then configure it
+        until ip link show can2 >/dev/null 2>&1; do sleep 2; done
+        ip link set can2 down || true
+        ip link set can2 up type can bitrate 500000
+
+        # 2. Crash out if the CAN configuration fails to initialize
+        ip link show can2 | grep -q "UP" || { echo "CAN interface failed"; exit 1; }
+
+        # 3. Launch Chassis Core processes to the background
+        roslaunch twist_mux twist_mux.launch config_locks:=/config/bunker/twist_mux.yaml config_topics:=/config/bunker/twist_mux.yaml cmd_vel_out:=/smoother_cmd_vel &
+        (sleep 1 && roslaunch bunker_bringup bunker_robot_base.launch) &
+
+        # 4. Infinite Joystick Hot-Plug Loop
         while true; do
           if [ -c /dev/input/js0 ]; then
             chmod a+rw /dev/input/js0 || true
@@ -202,5 +188,3 @@ services:
           fi
           sleep 3
         done
-    depends_on:
-      - bunker_driver

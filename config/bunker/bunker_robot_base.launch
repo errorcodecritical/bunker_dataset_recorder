@@ -4,9 +4,9 @@
     <arg name="port_name" value="can2" />
     <arg name="simulated_robot" value="false" />
     <!--<arg name="model_xacro" default="$(find bunker_description)/urdf/bunker_v2.xacro" />-->
-    <arg name="odom_topic_name" default="odom" />
-    <arg name="is_bunker_mini" default="false" />
-    <arg name="pub_tf" default="true" />
+    <arg name="odom_topic_name" default="wheel_odom" />
+    <arg name="is_bunker_mini" default="true" />
+    <arg name="pub_tf" default="false" />
 
     <include file="$(find bunker_base)/launch/bunker_base.launch">
         <arg name="port_name" default="$(arg port_name)" />
