@@ -38,10 +38,18 @@ RUN apt-get update && apt-get install -y \
     ros-noetic-velodyne-description \
     ros-noetic-rviz \
     ros-noetic-rviz-visual-tools \
+    ros-noetic-gazebo-ros-pkgs \
+    ros-noetic-gazebo-ros-control \
+    ros-noetic-controller-manager \
+    ros-noetic-robot-state-publisher \
+    ros-noetic-joint-state-publisher \
+    ros-noetic-ros-control \
+    ros-noetic-ros-controllers \
+    python-is-python3 \
     && rm -rf /var/lib/apt/lists/*
 
 # Python dependencies
-RUN pip3 install --no-cache-dir "casadi<3.6"
+RUN pip3 install --no-cache-dir "casadi<3.6" matplotlib
 
 WORKDIR /tmp
 

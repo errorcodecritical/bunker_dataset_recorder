@@ -148,6 +148,38 @@ services:
           sleep 3
         done
 
+  putn:
+    image: putn_noetic:latest
+    container_name: putn
+    build:
+      context: ./putn
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.Xauthority
+    volumes:
+      - ../catkin_ws:/catkin_ws
+      # - ../config/putn:/catkin_ws/src/PUTN/config
+      - /dev/:/dev/
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/tmp/.Xauthority:rw
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Starting PUTN ==="
+        catkin build aloam_velodyne gpr local_planner putn putn_launch putn_map rviz_plugins scout_control scout_description scout_gazebo_sim waypoint_generator
+        source /catkin_ws/devel/setup.bash
+        roslaunch putn_launch simulation.launch scene:="map1"
+
   node_monitor:
     image: ros_noetic_recorder:latest
     container_name: monitor
@@ -175,7 +207,6 @@ services:
         rosrun node_monitor monitor.py &
         rostopic echo /node_metrics
         
-
   recorder:
     image: ros_noetic_recorder:latest
     container_name: recorder
@@ -197,6 +228,7 @@ services:
       - ../rosbags:/rosbags
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ~/.Xauthority:/tmp/.Xauthority:rw
+      - /media/tobias/fruc-m2-2/2026_07_01_21_54_38_recording.bag:/rosbags/2026_07_01_21_54_38_recording.bag
     command:
       - /bin/bash
       - -c
