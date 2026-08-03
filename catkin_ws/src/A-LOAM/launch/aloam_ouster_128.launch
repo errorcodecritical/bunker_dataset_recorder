@@ -1,0 +1,38 @@
+<launch>
+
+    <arg name="rviz" default="false" />
+    <arg name="mapping_line_resolution" default="0.075" />
+    <arg name="mapping_plane_resolution" default="0.15" />
+    <arg name="queue_size" default="1" />
+    <arg name="mapping_skip_frame" default="1" />
+    <arg name="scan_line" default="128" />
+    <arg name="minimum_range" default="0.3" />
+    
+    <param name="scan_line" type="int" value="$(arg scan_line)" />
+
+    <!-- if 1, do mapping 10 Hz, if 2, do mapping 5 Hz. Suggest to use 1, it will adjust frequence automaticlly -->
+    <param name="mapping_skip_frame" type="int" value="$(arg mapping_skip_frame)" />
+
+    <!-- remove too closed points -->
+    <param name="minimum_range" type="double" value="$(arg minimum_range)"/>
+
+    <!-- Ouster → Velodyne-compatible point cloud bridge -->
+    <node pkg="aloam_velodyne" type="ouster_preprocess" name="ouster_preprocess" output="log" />
+
+    <param name="mapping_line_resolution" type="double" value="$(arg mapping_line_resolution)"/>
+    <param name="mapping_plane_resolution" type="double" value="$(arg mapping_plane_resolution)"/>
+
+    <!-- Set queue sizes -->
+    <param name="queue_size" type="int" value="$(arg queue_size)" />
+
+    <node pkg="aloam_velodyne" type="ascanRegistration" name="ascanRegistration" output="log" />
+
+    <node pkg="aloam_velodyne" type="alaserOdometry" name="alaserOdometry" output="log" />
+
+    <node pkg="aloam_velodyne" type="alaserMapping" name="alaserMapping" output="log" />
+
+    <group if="$(arg rviz)">
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find aloam_velodyne)/rviz_cfg/aloam_velodyne.rviz" />
+    </group>
+
+</launch>

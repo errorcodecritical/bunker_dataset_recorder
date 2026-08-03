@@ -1,0 +1,15 @@
+services:
+  putn:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: dev
+    stdin_open: true
+    tty: true
+    network_mode: "host"
+    volumes:
+      - ../../putn:/root/catkin_ws/src/putn
+      - ../../A-LOAM:/root/catkin_ws/src/A-LOAM
+    environment:
+      - ROS_IP=127.0.0.1
+    command: "/bin/bash"

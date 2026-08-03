@@ -11,9 +11,3 @@
 [submodule "catkin_ws/src/ugv_sdk"]
 	path = catkin_ws/src/ugv_sdk
 	url = https://github.com/agilexrobotics/ugv_sdk.git
-[submodule "catkin_ws/src/PUTN"]
-	path = catkin_ws/src/PUTN
-	url = https://github.com/errorcodecritical/PUTN
-[submodule "catkin_ws/src/A-LOAM"]
-	path = catkin_ws/src/A-LOAM
-	url = https://github.com/Forestry-Robotics-UC/A-LOAM.git
