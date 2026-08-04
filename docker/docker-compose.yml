@@ -238,7 +238,7 @@ services:
         catkin build aloam_velodyne gpr local_planner putn putn_launch putn_map rviz_plugins scout_control scout_description scout_gazebo_sim waypoint_generator
         source /catkin_ws/devel/setup.bash
         roslaunch putn_launch bringup.launch rviz_putn:=false
-    cpuset: "0-5"  # Heavy Navigation block (Mutually exclusive with IG-LIO)
+    cpuset: "0-6"  # Heavy Navigation block (Mutually exclusive with IG-LIO)
 
   recorder:
     image: ros_noetic_recorder:latest

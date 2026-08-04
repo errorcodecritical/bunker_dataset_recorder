@@ -5,9 +5,9 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /AllMap1
         - /AllMap1/Autocompute Value Bounds1
         - /Marker1/Namespaces1
-        - /PointCloud21
       Splitter Ratio: 0.40095847845077515
     Tree Height: 486
   - Class: rviz/Selection
@@ -41,11 +41,11 @@ Visualization Manager:
       Reference Frame: <Fixed Frame>
       Show Trail: false
       Value: false
-    - Alpha: 1
+    - Alpha: 0.20000000298023224
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 3.282770872116089
-        Min Value: -1.5172291994094849
+        Max Value: 4.364898204803467
+        Min Value: -1.4480093717575073
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -74,7 +74,7 @@ Visualization Manager:
       Marker Topic: /global_planning_node/goal_vis
       Name: Marker
       Namespaces:
-        {}
+        Goal: true
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -82,7 +82,7 @@ Visualization Manager:
       Marker Topic: /global_planning_node/path_vis
       Name: Marker
       Namespaces:
-        {}
+        Path: true
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -90,7 +90,7 @@ Visualization Manager:
       Marker Topic: /global_planning_node/tree_vis
       Name: Marker
       Namespaces:
-        {}
+        Tree: true
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -169,7 +169,11 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        aft_mapped:
+          Value: true
         base_link:
+          Value: true
+        camera_init:
           Value: true
         gps:
           Value: true
@@ -195,6 +199,8 @@ Visualization Manager:
           Value: true
         radar_1:
           Value: true
+        world:
+          Value: true
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -202,27 +208,31 @@ Visualization Manager:
       Show Axes: false
       Show Names: false
       Tree:
-        base_link:
-          gps:
-            {}
-          hesai_lidar:
-            {}
-          imu:
-            {}
-          oak:
-            oak_imu_frame:
+        camera_init:
+          aft_mapped:
+            base_link:
+              gps:
+                {}
+              hesai_lidar:
+                {}
+              imu:
+                {}
+              oak:
+                oak_imu_frame:
+                  {}
+                oak_left_camera_frame:
+                  oak_left_camera_optical_frame:
+                    {}
+                oak_rgb_camera_frame:
+                  oak_rgb_camera_optical_frame:
+                    {}
+                oak_right_camera_frame:
+                  oak_right_camera_optical_frame:
+                    {}
+              radar_1:
+                {}
+            world:
               {}
-            oak_left_camera_frame:
-              oak_left_camera_optical_frame:
-                {}
-            oak_rgb_camera_frame:
-              oak_rgb_camera_optical_frame:
-                {}
-            oak_right_camera_frame:
-              oak_right_camera_optical_frame:
-                {}
-          radar_1:
-            {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -258,7 +268,7 @@ Visualization Manager:
       Marker Topic: /ob_draw
       Name: MarkerArray
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -320,7 +330,11 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        aft_mapped:
+          Value: true
         base_link:
+          Value: true
+        camera_init:
           Value: true
         gps:
           Value: true
@@ -346,6 +360,8 @@ Visualization Manager:
           Value: true
         radar_1:
           Value: true
+        world:
+          Value: true
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -353,34 +369,38 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        base_link:
-          gps:
-            {}
-          hesai_lidar:
-            {}
-          imu:
-            {}
-          oak:
-            oak_imu_frame:
+        camera_init:
+          aft_mapped:
+            base_link:
+              gps:
+                {}
+              hesai_lidar:
+                {}
+              imu:
+                {}
+              oak:
+                oak_imu_frame:
+                  {}
+                oak_left_camera_frame:
+                  oak_left_camera_optical_frame:
+                    {}
+                oak_rgb_camera_frame:
+                  oak_rgb_camera_optical_frame:
+                    {}
+                oak_right_camera_frame:
+                  oak_right_camera_optical_frame:
+                    {}
+              radar_1:
+                {}
+            world:
               {}
-            oak_left_camera_frame:
-              oak_left_camera_optical_frame:
-                {}
-            oak_rgb_camera_frame:
-              oak_rgb_camera_optical_frame:
-                {}
-            oak_right_camera_frame:
-              oak_right_camera_optical_frame:
-                {}
-          radar_1:
-            {}
       Update Interval: 0
       Value: true
   Enabled: true
   Global Options:
     Background Color: 255; 255; 255
     Default Light: true
-    Fixed Frame: base_link
+    Fixed Frame: camera_init
     Frame Rate: 30
   Name: root
   Tools:
@@ -394,7 +414,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.3384015560150146
+      Distance: 7.82283878326416
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -402,17 +422,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 0.4961133599281311
+        Y: 4.100729942321777
+        Z: 0.2265835404396057
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5447965264320374
+      Pitch: 1.459795355796814
       Target Frame: <Fixed Frame>
-      Yaw: 3.808563232421875
+      Yaw: 4.319904804229736
     Saved:
       - Class: rviz/Orbit
         Distance: 79.24484252929688

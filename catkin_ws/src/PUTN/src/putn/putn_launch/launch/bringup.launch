@@ -3,8 +3,8 @@
   <arg name="rviz_putn" default="true" />
   <arg name="rviz_aloam" default="false" />
   <arg name="use_sim_time" default="false" />
-  <arg name="mapping_line_resolution" default="0.075" />
-  <arg name="mapping_plane_resolution" default="0.15" />
+  <arg name="mapping_line_resolution" default="0.055" />
+  <arg name="mapping_plane_resolution" default="0.05" />
   <arg name="mapping_skip_frame" default="1" />
 
   <param name="/use_sim_time" value="$(arg use_sim_time)" />
@@ -20,10 +20,11 @@
   <node pkg="tf2_ros" type="static_transform_publisher" name="aft_mapped_to_base_link" args="0 0 0 -1.57079 0 0 /aft_mapped /base_link" /> -->
 
   <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_camera_init" args="0 0 0 0 0 0 /world /camera_init" />
+  <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_aft_mapped" args="0 0 0 0 0 0 /aft_mapped /world" />    -->
   <node pkg="tf2_ros" type="static_transform_publisher" name="aft_mapped_to_base_link" args="0 0 -0.3 -1.57079 0 0 /aft_mapped /base_link" />
   <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="hesai_to_base_link" args="0 0 0.0 0 0 0 /base_link /hesai_lidar" /> -->
 
-  <node pkg="putn_launch" type="twist_to_twist_stamped.py" name="twist_to_twist_stamped" output="log" />
+  <!-- <node pkg="putn_launch" type="twist_to_twist_stamped.py" name="twist_to_twist_stamped" output="log" /> -->
 
   <node pkg="waypoint_generator" name="waypoint_generator" type="waypoint_generator">
       <remap from="~goal" to="/goal"/>
@@ -57,15 +58,10 @@
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find putn_launch)/rviz_config/simulation.rviz" required="false"/>
   </group>
 
-  <!---node name="local_planner" pkg="local_planner" type="local_planner.py" launch-prefix="gnome-terminal -title=local_planner -x"/>
-  <node name="controller" pkg="local_planner" type="controller.py" launch-prefix="gnome-terminal -title=controller -x"/-->
-
-  <!-- <node name="local_planner" pkg="local_planner" type="local_planner.py" launch-prefix="xterm -title local_planner -hold -e" output="log" /> -->
-
-  <!-- <node name="controller" pkg="local_planner" type="controller.py" launch-prefix="xterm -title controller -hold -e" output="log" /> -->
+  <!-- <node name="controller" pkg="local_planner" type="controller.py" launch-prefix="gnome-terminal -title=controller -x"/> -->
 
   <node name="local_planner" pkg="local_planner" type="local_planner.py" output="log" required="true"/>
 
-  <!-- <node name="controller" pkg="local_planner" type="controller.py" output="log" /> -->
+  <node name="controller" pkg="local_planner" type="controller.py" output="log" />
 
 </launch>

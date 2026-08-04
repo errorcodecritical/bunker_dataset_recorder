@@ -26,7 +26,7 @@ class Controller():
         self.curr_state = np.zeros(4)
         self.sub1 = rospy.Subscriber(
             '/local_plan', Float32MultiArray, self.local_planner_cb)
-        self.pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.pub = rospy.Publisher('/cmd_vel/nav', Twist, queue_size=10)
         self.pub2 = rospy.Publisher(
             '/curr_state', Float32MultiArray, queue_size=10)
         self.__timer_localization = rospy.Timer(
@@ -85,7 +85,7 @@ class Controller():
 
     def control_loop(self):
         while not rospy.is_shutdown():
-            start_auto = self.manual()
+            start_auto = True #self.manual()
             if(start_auto):
                 end_auto = self.auto()
                 if not end_auto:
