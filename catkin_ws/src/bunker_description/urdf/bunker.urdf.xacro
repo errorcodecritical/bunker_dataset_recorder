@@ -29,7 +29,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://bunker_description/meshes/bunker.glb" />
+          filename="package://bunker_description/meshes/bunker.stl" />
       </geometry>
       <material
         name="">
