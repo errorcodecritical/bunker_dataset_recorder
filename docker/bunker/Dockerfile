@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
     libyaml-cpp-dev \
     libasio-dev \
     python3-catkin-tools \
+    ros-noetic-robot-state-publisher \
+    ros-noetic-joint-state-publisher \
+    ros-noetic-joint-state-publisher-gui \
     ros-noetic-teleop-twist-keyboard \
     ros-noetic-teleop-twist-joy \
     ros-noetic-tf \

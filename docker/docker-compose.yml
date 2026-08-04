@@ -141,13 +141,14 @@ services:
 
         # 3. Launch Chassis Core processes to the background
         roslaunch twist_mux twist_mux.launch config_locks:=/config/bunker/twist_mux.yaml config_topics:=/config/bunker/twist_mux.yaml cmd_vel_out:=/smoother_cmd_vel &
-        (sleep 1 && roslaunch bunker_bringup bunker_robot_base.launch) &
+        roslaunch --wait bunker_bringup bunker_robot_base.launch &
+        roslaunch --wait bunker_description robot_description.launch &
 
         # 4. Infinite Joystick Hot-Plug Loop
         while true; do
           if [ -c /dev/input/js0 ]; then
             chmod a+rw /dev/input/js0 || true
-            roslaunch /config/bunker/teleop.launch joy_dev:=/dev/input/js0
+            roslaunch --wait /config/bunker/teleop.launch joy_dev:=/dev/input/js0
           fi
           sleep 3
         done

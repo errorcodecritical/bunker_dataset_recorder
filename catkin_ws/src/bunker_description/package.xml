@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>bunker_description</name>
+  <version>0.0.1</version>
+  <description>The Agilex Bunker robot URDF description package for ROS Noetic.</description>
+  <maintainer email="todo@example.com">TODO</maintainer>
+  <license>TODO</license>
+
+  <url type="website">https://github.com/todo/bunker</url>
+  <author email="todo@example.com">TODO</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>robot_state_publisher</build_depend>
+  <build_depend>joint_state_publisher</build_depend>
+  <build_depend>joint_state_publisher_gui</build_depend>
+  <build_depend>xacro</build_depend>
+
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>rviz</exec_depend>
+
+  <export>
+    <build_type>catkin</build_type>
+  </export>
+</package>

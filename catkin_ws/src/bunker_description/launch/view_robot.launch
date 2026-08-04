@@ -1,0 +1,13 @@
+<launch>
+  <arg name="use_sim_time" default="false" />
+  <arg name="simulation" default="false" />
+  <arg name="gui" default="false" />
+
+  <include file="$(find bunker_description)/launch/robot_state_publisher.launch">
+    <arg name="use_sim_time" value="$(arg use_sim_time)" />
+    <arg name="simulation" value="$(arg simulation)" />
+    <arg name="gui" value="$(arg gui)" />
+  </include>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find bunker_description)/rviz/display.rviz" output="screen" />
+</launch>
