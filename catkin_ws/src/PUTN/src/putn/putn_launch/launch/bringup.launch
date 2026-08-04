@@ -1,4 +1,5 @@
 <launch>
+
   <arg name="rviz_putn" default="true" />
   <arg name="rviz_aloam" default="false" />
   <arg name="use_sim_time" default="false" />
@@ -15,8 +16,12 @@
       <arg name="mapping_skip_frame" value="$(arg mapping_skip_frame)"/>
   </include>
 
-  <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_aft_mapped" args="0 0 0 0 0 0 /world /aft_mapped" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="aft_mapped_to_base_link" args="0 0 0 -1.57079 0 0 /aft_mapped /base_link" />
+  <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_aft_mapped" args="0 0 0 0 0 0 /world /aft_mapped" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="aft_mapped_to_base_link" args="0 0 0 -1.57079 0 0 /aft_mapped /base_link" /> -->
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_camera_init" args="0 0 0 0 0 0 /world /camera_init" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="aft_mapped_to_base_link" args="0 0 -0.3 -1.57079 0 0 /aft_mapped /base_link" />
+  <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="hesai_to_base_link" args="0 0 0.0 0 0 0 /base_link /hesai_lidar" /> -->
 
   <node pkg="putn_launch" type="twist_to_twist_stamped.py" name="twist_to_twist_stamped" output="log" />
 
