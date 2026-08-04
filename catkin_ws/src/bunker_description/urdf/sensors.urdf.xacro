@@ -14,10 +14,10 @@
   <link name="gps" />
   <link name="imu" />
   <link name="radar_1" />
-  <link name="aeva/vehicle" />
+  <!-- <link name="aeva/vehicle" />
   <link name="aeva/ATLAS/sensor" />
   <link name="aeva/ATLAS/camera" />
-  <link name="aeva/ATLAS/imu" />
+  <link name="aeva/ATLAS/imu" /> -->
 
   <joint name="base_link_to_hesai_lidar_joint" type="fixed">
     <origin xyz="0.112963 0.0 0.388981" rpy="0.0008 0.000004 1.569201" />
