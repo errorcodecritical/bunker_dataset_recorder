@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libyaml-cpp-dev \
     libasio-dev \
     python3-catkin-tools \
+    ros-noetic-xacro \
     ros-noetic-robot-state-publisher \
     ros-noetic-joint-state-publisher \
     ros-noetic-joint-state-publisher-gui \
