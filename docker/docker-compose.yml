@@ -235,10 +235,9 @@ services:
       - |
         sleep 3
         echo "=== Starting PUTN Planning ==="
-        catkin build aloam_velodyne gpr local_planner putn putn_launch putn_map rviz_plugins scout_control scout_description scout_gazebo_sim waypoint_generator
         source /catkin_ws/devel/setup.bash
         roslaunch putn_launch bringup_planning.launch rviz_putn:=false
-    cpuset: "4-5"
+    cpuset: "0-6"
 
   putn_aloam:
     image: putn_noetic:latest
@@ -270,7 +269,7 @@ services:
         catkin build aloam_velodyne gpr local_planner putn putn_launch putn_map rviz_plugins scout_control scout_description scout_gazebo_sim waypoint_generator
         source /catkin_ws/devel/setup.bash
         roslaunch putn_launch bringup_aloam.launch rviz_aloam:=false
-    cpuset: "0-3"
+    cpuset: "0-6"
 
   recorder:
     image: ros_noetic_recorder:latest
@@ -290,7 +289,8 @@ services:
       - XAUTHORITY=/tmp/.Xauthority
     volumes:
       - ../catkin_ws:/catkin_ws
-      - ../rosbags:/rosbags
+      # - ../rosbags:/rosbags
+      - /media/tobias/fruc-t9-1:/rosbags
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ~/.Xauthority:/tmp/.Xauthority:rw
     command:

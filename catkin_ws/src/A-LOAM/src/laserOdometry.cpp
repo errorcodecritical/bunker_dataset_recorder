@@ -239,7 +239,7 @@ int main(int argc, char **argv)
                 timeSurfPointsLessFlat != timeLaserCloudFullRes)
             {
                 printf("unsync messeage!");
-                ROS_BREAK();
+                //ROS_BREAK();
             }
 
             mBuf.lock();
