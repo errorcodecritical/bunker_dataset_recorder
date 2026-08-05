@@ -208,9 +208,9 @@ services:
         roslaunch ig_lio lio_hesai.launch
     cpuset: "0-5"  # Heavy SLAM block (Mutually exclusive with PUTN)
 
-  putn:
+  putn_planning:
     image: putn_noetic:latest
-    container_name: putn
+    container_name: putn_planning
     build:
       context: ./putn
       dockerfile: Dockerfile
@@ -234,11 +234,43 @@ services:
       - -c
       - |
         sleep 3
-        echo "=== Starting PUTN ==="
+        echo "=== Starting PUTN Planning ==="
         catkin build aloam_velodyne gpr local_planner putn putn_launch putn_map rviz_plugins scout_control scout_description scout_gazebo_sim waypoint_generator
         source /catkin_ws/devel/setup.bash
-        roslaunch putn_launch bringup.launch rviz_putn:=false
-    cpuset: "0-6"  # Heavy Navigation block (Mutually exclusive with IG-LIO)
+        roslaunch putn_launch bringup_planning.launch rviz_putn:=false
+    cpuset: "4-5"
+
+  putn_aloam:
+    image: putn_noetic:latest
+    container_name: putn_aloam
+    build:
+      context: ./putn
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.Xauthority
+    volumes:
+      - ../catkin_ws:/catkin_ws
+      - /dev/:/dev/
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/tmp/.Xauthority:rw
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Starting PUTN ALOAM ==="
+        catkin build aloam_velodyne gpr local_planner putn putn_launch putn_map rviz_plugins scout_control scout_description scout_gazebo_sim waypoint_generator
+        source /catkin_ws/devel/setup.bash
+        roslaunch putn_launch bringup_aloam.launch rviz_aloam:=false
+    cpuset: "0-3"
 
   recorder:
     image: ros_noetic_recorder:latest

@@ -1,0 +1,49 @@
+<launch>
+
+    <arg name="rviz_putn" default="false" />
+    <arg name="use_sim_time" default="false" />
+    <arg name="mapping_line_resolution" default="0.055" />
+    <arg name="mapping_plane_resolution" default="0.05" />
+    <arg name="mapping_skip_frame" default="1" />
+
+    <param name="/use_sim_time" value="$(arg use_sim_time)" />
+
+    <node pkg="waypoint_generator" name="waypoint_generator" type="waypoint_generator">
+        <remap from="~goal" to="/goal" />
+        <param name="waypoint_type" value="manual-lonely-waypoint" />
+    </node>
+
+    <node pkg="putn" type="global_planning_node" name="global_planning_node" output="log"
+        required="true">
+        <remap from="~waypoints" to="/waypoint_generator/waypoints" />
+        <remap from="~map" to="/hesai/points" />
+
+        <rosparam command="load" file="$(find putn)/config/for_real_scenarios/forest.yaml" />
+    </node>
+
+    <node pkg="putn" type="local_obs_node" name="local_obs_node" output="log" required="true">
+        <remap from="~map" to="/hesai/points" />
+        <param name="map/resolution" value="0.1" />
+        <param name="map/local_x_l" value="-1.8" />
+        <param name="map/local_x_u" value="1.8" />
+        <param name="map/local_y_l" value="-1.8" />
+        <param name="map/local_y_u" value="1.8" />
+        <param name="map/local_z_l" value="-0.5" />
+        <param name="map/local_z_u" value="0.4" />
+    </node>
+
+    <node pkg="gpr" type="gpr_path" name="gpr_path" output="log" required="true">
+        <param name="file/cfg_path" type="string" value="$(find gpr)/config/hyperparam.txt" />
+    </node>
+
+    <group if="$(arg rviz_putn)">
+        <node name="rviz" pkg="rviz" type="rviz"
+            args="-d $(find putn_launch)/rviz_config/simulation.rviz" required="false" />
+    </group>
+
+    <node name="local_planner" pkg="local_planner" type="local_planner.py" output="log"
+        required="true" />
+
+    <node name="controller" pkg="local_planner" type="controller.py" output="log" />
+
+</launch>
