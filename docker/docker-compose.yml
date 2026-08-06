@@ -122,6 +122,7 @@ services:
       - ../catkin_ws:/catkin_ws
       - ../config/bunker/bunker_robot_base.launch:/catkin_ws/src/bunker_ros/bunker_bringup/launch/bunker_robot_base.launch
       - ../config:/config
+      - /dev:/dev
     command:
       - /bin/bash
       - -c
