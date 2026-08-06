@@ -237,7 +237,7 @@ services:
         echo "=== Starting PUTN Planning ==="
         source /catkin_ws/devel/setup.bash
         roslaunch putn_launch bringup_planning.launch rviz_putn:=false
-    cpuset: "0-6"
+    cpuset: "0-11"
 
   putn_aloam:
     image: putn_noetic:latest
@@ -269,7 +269,40 @@ services:
         catkin build aloam_velodyne gpr local_planner putn putn_launch putn_map rviz_plugins scout_control scout_description scout_gazebo_sim waypoint_generator
         source /catkin_ws/devel/setup.bash
         roslaunch putn_launch bringup_aloam.launch rviz_aloam:=false
-    cpuset: "0-6"
+    cpuset: "0-11"
+
+  glim:
+    image: glim_noetic:latest
+    container_name: glim
+    build:
+      context: ./glim
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.Xauthority
+      - CMAKE_VERSION=3.28.3
+    volumes:
+      - ../catkin_ws:/catkin_ws
+      - /dev/:/dev/
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/tmp/.Xauthority:rw
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Starting GLIM ==="
+        CMAKE_POLICY_VERSION_MINIMUM=3.5 CMAKE_VERSION=3.28.3 catkin build glim_ros -j 6 -p 6
+        source /catkin_ws/devel/setup.bash
+        roslaunch glim_ros glim.launch
+    cpuset: "0-11"
 
   recorder:
     image: ros_noetic_recorder:latest

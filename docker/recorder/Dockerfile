@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     git \
     libyaml-cpp-dev \
     python3-catkin-tools \
+    python3-pip \
     ros-noetic-rviz \
     && rm -rf /var/lib/apt/lists/*
 
