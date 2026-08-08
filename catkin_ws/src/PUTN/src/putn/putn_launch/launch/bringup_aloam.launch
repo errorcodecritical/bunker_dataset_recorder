@@ -1,8 +1,8 @@
 <launch>
     <arg name="rviz_aloam" default="false" />
-    <arg name="use_sim_time" default="false" />
-    <arg name="mapping_line_resolution" default="0.055" />
-    <arg name="mapping_plane_resolution" default="0.05" />
+    <arg name="use_sim_time" default="true" />
+    <arg name="mapping_line_resolution" default="0.1" />
+    <arg name="mapping_plane_resolution" default="0.3" />
     <arg name="mapping_skip_frame" default="1" />
 
     <param name="/use_sim_time" value="$(arg use_sim_time)" />
@@ -14,9 +14,12 @@
         <arg name="mapping_skip_frame" value="$(arg mapping_skip_frame)" />
     </include>
 
-    <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_camera_init"
-        args="0 0 0 0 0 0 /world /camera_init" />
-    <node pkg="tf2_ros" type="static_transform_publisher" name="aft_mapped_to_base_link"
-        args="0 0 -0.3 -1.57079 0 0 /aft_mapped /base_link" />
+
+    <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_camera_init" args="0 0 0 0 0 0 /world /camera_init 10" />10ms -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="camera_to_link" args="0 0 -0.4 0 0 0 /aft_mapped /base_link 10" /> -->
+
+    <!-- <node pkg="tf" type="static_transform_publisher" name="glim_map_to_putn_world" args="0 0 0 0 0 0 /map /world 10" />
+    <node pkg="tf" type="static_transform_publisher" name="glim_odom_to_putn_camera_init" args="0 0 0 0 0 0 /odom /camera_init 10" />
+    <node pkg="tf" type="static_transform_publisher" name="putn_aft_mapped_to_base_link" args="0 0 0 0 0 0 /aft_mapped /base_link 10" /> -->
 
 </launch>

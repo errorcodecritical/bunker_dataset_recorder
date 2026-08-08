@@ -8,7 +8,7 @@
     <xacro:property name="wheelbase" value="0.3181"/>
     <xacro:property name="wheel_vertical_offset" value="-0.160000047342231" />-->
   <!-- Base link -->
-  <link name="base_link">
+  <link name="aft_mapped">
     <visual>
       <origin rpy="1.57 0 1.57" xyz="0 0 0.0"/>
       <geometry>
@@ -24,7 +24,7 @@
   </link>
   <!-- <joint name="chassis_link_joint" type="fixed">
         <origin xyz="0 0 ${wheel_radius - wheel_vertical_offset}" rpy="0 0 0" />
-        <parent link="base_link" />
+        <parent link="aft_mapped" />
         <child link="chassis_link" />
     </joint> -->
   <link name="inertial_link">
@@ -36,7 +36,7 @@
   </link>
   <joint name="inertial_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0"/>
-    <parent link="base_link"/>
+    <parent link="aft_mapped"/>
     <child link="inertial_link"/>
   </joint>
   <!-- For testing, hang the robot up in the air -->
@@ -44,7 +44,7 @@
     <joint name="world_to_base_link=" type="fixed">
         <origin xyz="0 0 0.5" rpy="0 0 0" />
         <parent link="world"/>
-        <child link="base_link"/>
+        <child link="aft_mapped"/>
     </joint> -->
   <link name="front_left_wheel_link">
     <!--<inertial>
@@ -83,7 +83,7 @@
     <!--<origin
                   xyz="0.14547 0.20835 -0.07424"
                   rpy="0 1.57 0" />-->
-    <parent link="base_link"/>
+    <parent link="aft_mapped"/>
     <child link="front_left_wheel_link"/>
     <origin rpy="-1.57 0 0" xyz="0.2319755 0.2082515 -0.100998"/>
     <axis rpy="0 0 0" xyz="0 0 -1"/>
@@ -125,7 +125,7 @@
     <!--<origin
                   xyz="-0.17453 0.20835 -0.07424"
                   rpy="0 -1.57 0" />-->
-    <parent link="base_link"/>
+    <parent link="aft_mapped"/>
     <child link="rear_left_wheel_link"/>
     <origin rpy="-1.57 0 0" xyz="-0.2319755 0.2082515 -0.100998"/>
     <axis rpy="0 0 0" xyz="0 0 -1"/>
@@ -167,7 +167,7 @@
     <!--<origin
                   xyz="-0.17453 -0.24424 -0.07424"
                   rpy="0 -1.57 0" />-->
-    <parent link="base_link"/>
+    <parent link="aft_mapped"/>
     <child link="front_right_wheel_link"/>
     <origin rpy="1.57 0 0" xyz="0.2319755 -0.2082515 -0.099998"/>
     <axis rpy="0 0 0" xyz="0 0 -1"/>
@@ -209,7 +209,7 @@
     <!--<origin
                   xyz="0.19247 -0.24486 -0.073441"
                   rpy="-0 1.57 0" />-->
-    <parent link="base_link"/>
+    <parent link="aft_mapped"/>
     <child link="rear_right_wheel_link"/>
     <origin rpy="1.57 0 0" xyz="-0.2319755 -0.2082515 -0.099998"/>
     <axis rpy="0 0 0" xyz="0 0 -1"/>
@@ -219,7 +219,7 @@
        additional URDF, set the HUSKY_URDF_EXTRAS environment variable
        to the full path of the file you would like included. -->
   <!-- Additional definitions for simulation -->
-  <!-- <gazebo reference="base_link">
+  <!-- <gazebo reference="aft_mapped">
         <material>Gazebo/Grey</material>
     </gazebo> -->
   <transmission name="front_right_wheel_trans" type="SimpleTransmission">

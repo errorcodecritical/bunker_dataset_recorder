@@ -272,7 +272,7 @@ void ProbMapDisplay::update( float wall_dt, float ros_dt )
 
   if( !validateFloats( *current_map_ ))
   {
-    setStatus( StatusProperty::Error, "Map", "Message contained invalid floating point values (nans or infs)" );
+    setStatus( StatusProperty::Error, "world", "Message contained invalid floating point values (nans or infs)" );
     return;
   }
 
@@ -280,7 +280,7 @@ void ProbMapDisplay::update( float wall_dt, float ros_dt )
   {
     std::stringstream ss;
     ss << "Map is zero-sized (" << current_map_->info.width << "x" << current_map_->info.height << ")";
-    setStatus( StatusProperty::Error, "Map", QString::fromStdString( ss.str() ));
+    setStatus( StatusProperty::Error, "world", QString::fromStdString( ss.str() ));
     return;
   }
 
@@ -309,7 +309,7 @@ void ProbMapDisplay::update( float wall_dt, float ros_dt )
   frame_ = current_map_->header.frame_id;
   if (frame_.empty())
   {
-    frame_ = "map";
+    frame_ = "world";
   }
 
   // Expand it to be RGB data
@@ -324,7 +324,7 @@ void ProbMapDisplay::update( float wall_dt, float ros_dt )
     std::stringstream ss;
     ss << "Data size doesn't match width*height: width = " << width
        << ", height = " << height << ", data size = " << current_map_->data.size();
-    setStatus( StatusProperty::Error, "Map", QString::fromStdString( ss.str() ));
+    setStatus( StatusProperty::Error, "world", QString::fromStdString( ss.str() ));
     map_status_set = true;
 
     // Keep going, but don't read past the end of the data.
@@ -363,7 +363,7 @@ void ProbMapDisplay::update( float wall_dt, float ros_dt )
 
     if( !map_status_set )
     {
-      setStatus( StatusProperty::Ok, "Map", "Map OK" );
+      setStatus( StatusProperty::Ok, "world", "Map OK" );
     }
   }
   catch(Ogre::RenderingAPIException&)
@@ -388,7 +388,7 @@ void ProbMapDisplay::update( float wall_dt, float ros_dt )
     {
       std::stringstream ss;
       ss << "Map is larger than your graphics card supports.  Downsampled from [" << width << "x" << height << "] to [" << fwidth << "x" << fheight << "]";
-      setStatus(StatusProperty::Ok, "Map", QString::fromStdString( ss.str() ));
+      setStatus(StatusProperty::Ok, "world", QString::fromStdString( ss.str() ));
     }
 
     ROS_WARN("Failed to create full-size map texture, likely because your graphics card does not support textures of size > 2048.  Downsampling to [%d x %d]...", (int)fwidth, (int)fheight);

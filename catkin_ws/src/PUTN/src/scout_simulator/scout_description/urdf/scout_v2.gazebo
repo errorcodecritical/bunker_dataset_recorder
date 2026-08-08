@@ -12,7 +12,7 @@ Reference:
     <xacro:include filename="$(find scout_description)/urdf/scout_wheel.gazebo" />
 
     <!-- Additional definitions for simulation -->
-    <!-- <gazebo reference="base_link">
+    <!-- <gazebo reference="aft_mapped">
         <material>Gazebo/Grey</material>
     </gazebo> -->
 

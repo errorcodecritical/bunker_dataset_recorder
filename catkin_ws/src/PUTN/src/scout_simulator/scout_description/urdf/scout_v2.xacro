@@ -9,7 +9,7 @@
     <xacro:include filename="$(find scout_description)/urdf/scout_wheel_type1.xacro" />
     <xacro:include filename="$(find scout_description)/urdf/scout_wheel_type2.xacro" />
     <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
-    <HDL-32E parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false" lasers="32" max_range="100">
+    <HDL-32E parent="aft_mapped" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false" lasers="32" max_range="100">
         <origin xyz="0 0 0.3" rpy="0 0 0" />
     </HDL-32E>
 
@@ -29,7 +29,7 @@
     <xacro:property name="wheel_radius" value="1.6459e-01" />
 
     <!-- Base link -->
-    <link name="base_link">
+    <link name="aft_mapped">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
@@ -52,7 +52,7 @@
 
     <!-- <joint name="chassis_link_joint" type="fixed">
         <origin xyz="0 0 ${wheel_radius - wheel_vertical_offset}" rpy="0 0 0" />
-        <parent link="base_link" />
+        <parent link="aft_mapped" />
         <child link="chassis_link" />
     </joint> -->
 
@@ -69,7 +69,7 @@
 
     <joint name="inertial_joint" type="fixed">
         <origin xyz="0 0 0" rpy="0 0 0" />
-        <parent link="base_link" />
+        <parent link="aft_mapped" />
         <child link="inertial_link" />
     </joint>
 
@@ -78,7 +78,7 @@
     <joint name="world_to_base_link=" type="fixed">
         <origin xyz="0 0 0.5" rpy="0 0 0" />
         <parent link="world"/>
-        <child link="base_link"/>
+        <child link="aft_mapped"/>
     </joint> -->
 
     <!-- Scout wheel macros -->

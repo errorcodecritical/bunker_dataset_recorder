@@ -31,7 +31,7 @@
     <xacro:property name="wheel_radius" value="1.600e-01" />
 
     <!-- Base link -->
-    <link name="base_link">
+    <link name="aft_mapped">
         <visual>
             <!--origin xyz="-0.0145261552504705 0.0231316650320557 0.00586280190939592" rpy="0 0 0" /-->
             <origin xyz="0.015 0.0231316650320557 0" rpy="0 0 0"/>
@@ -56,7 +56,7 @@
 
     <!-- <joint name="chassis_link_joint" type="fixed">
         <origin xyz="0 0 ${wheel_radius - wheel_vertical_offset}" rpy="0 0 0" />
-        <parent link="base_link" />
+        <parent link="aft_mapped" />
         <child link="chassis_link" />
     </joint> -->
 
@@ -83,7 +83,7 @@
 
     <joint name="inertial_joint" type="fixed">
         <origin xyz="0 0 0" rpy="0 0 0" />
-        <parent link="base_link" />
+        <parent link="aft_mapped" />
         <child link="inertial_link" />
     </joint>
 
@@ -92,7 +92,7 @@
     <joint name="world_to_base_link=" type="fixed">
         <origin xyz="0 0 0.5" rpy="0 0 0" />
         <parent link="world"/>
-        <child link="base_link"/>
+        <child link="aft_mapped"/>
     </joint> -->
 
     <!-- Scout wheel macros -->

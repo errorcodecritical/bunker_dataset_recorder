@@ -232,7 +232,7 @@ void MultiProbMapDisplay::update( float wall_dt, float ros_dt )
     //t[3] = ros::Time::now();                                                                                                                                                                                   
     texture_.push_back(_texture_);                                                
     delete [] pixels;     
-    setStatus( StatusProperty::Ok, "Map", "Map OK" );      
+    setStatus( StatusProperty::Ok, "world", "Map OK" );      
     //t[4] = ros::Time::now();     
     
     // Set material

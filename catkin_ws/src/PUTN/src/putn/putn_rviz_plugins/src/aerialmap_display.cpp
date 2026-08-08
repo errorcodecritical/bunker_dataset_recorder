@@ -272,7 +272,7 @@ void AerialMapDisplay::update( float wall_dt, float ros_dt )
 /*
   if( !validateFloats( *current_map_ ))
   {
-    setStatus( StatusProperty::Error, "Map", "Message contained invalid floating point values (nans or infs)" );
+    setStatus( StatusProperty::Error, "world", "Message contained invalid floating point values (nans or infs)" );
     return;
   }
 */
@@ -309,7 +309,7 @@ void AerialMapDisplay::update( float wall_dt, float ros_dt )
   frame_ = current_map_->header.frame_id;
   if (frame_.empty())
   {
-    frame_ = "map";
+    frame_ = "world";
   }
 
   // Expand it to be RGB data

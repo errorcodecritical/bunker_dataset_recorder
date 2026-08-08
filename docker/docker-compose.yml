@@ -236,40 +236,9 @@ services:
       - |
         sleep 3
         echo "=== Starting PUTN Planning ==="
+        catkin build gpr local_planner putn putn_launch putn_map waypoint_generator
         source /catkin_ws/devel/setup.bash
         roslaunch putn_launch bringup_planning.launch rviz_putn:=false
-    cpuset: "0-11"
-
-  putn_aloam:
-    image: putn_noetic:latest
-    container_name: putn_aloam
-    build:
-      context: ./putn
-      dockerfile: Dockerfile
-    init: true
-    tty: true
-    stdin_open: true
-    privileged: true
-    network_mode: host
-    restart: unless-stopped
-    environment:
-      - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1
-      - XAUTHORITY=/tmp/.Xauthority
-    volumes:
-      - ../catkin_ws:/catkin_ws
-      - /dev/:/dev/
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ~/.Xauthority:/tmp/.Xauthority:rw
-    command:
-      - /bin/bash
-      - -c
-      - |
-        sleep 3
-        echo "=== Starting PUTN ALOAM ==="
-        catkin build aloam_velodyne gpr local_planner putn putn_launch putn_map rviz_plugins scout_control scout_description scout_gazebo_sim waypoint_generator
-        source /catkin_ws/devel/setup.bash
-        roslaunch putn_launch bringup_aloam.launch rviz_aloam:=false
     cpuset: "0-11"
 
   glim:
@@ -291,6 +260,7 @@ services:
       - CMAKE_VERSION=3.28.3
     volumes:
       - ../catkin_ws:/catkin_ws
+      - ../config/glim/config:/catkin_ws/src/glim/config
       - /dev/:/dev/
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ~/.Xauthority:/tmp/.Xauthority:rw
@@ -300,9 +270,9 @@ services:
       - |
         sleep 3
         echo "=== Starting GLIM ==="
-        CMAKE_POLICY_VERSION_MINIMUM=3.5 CMAKE_VERSION=3.28.3 catkin build glim_ros -j 6 -p 6
-        source /catkin_ws/devel/setup.bash
-        roslaunch glim_ros glim.launch
+        catkin build glim_ros glim -j 6 -p 6 -DCMAKE_BUILD_TYPE=Release -DBUILD_WITH_CUDA=OFF -DBUILD_WITH_VIEWER=ON ${CMAKE_ARGS} -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+        source /catkin_ws/install/setup.bash
+        rosrun glim_ros glim_rosnode
     cpuset: "0-11"
 
   recorder:
@@ -324,7 +294,7 @@ services:
     volumes:
       - ../catkin_ws:/catkin_ws
       # - ../rosbags:/rosbags
-      - /media/tobias/fruc-t9-1:/rosbags
+      - /media/tobias/fruc-t9-1:/rosbags:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ~/.Xauthority:/tmp/.Xauthority:rw
     command:

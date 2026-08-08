@@ -114,7 +114,7 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "local_obs_node");
   ros::NodeHandle nh("~");
 
-  pt_sub = nh.subscribe("map", 1, rcvVelodyneCallBack);
+  pt_sub = nh.subscribe("world", 1, rcvVelodyneCallBack);
 
   obs_pub = nh.advertise<sensor_msgs::PointCloud2>("obs_vis", 1);
   obs_array_pub = nh.advertise<std_msgs::Float32MultiArray>("/obs", 1);
