@@ -238,6 +238,7 @@ services:
         echo "=== Starting PUTN Planning ==="
         catkin build gpr local_planner putn putn_launch putn_map waypoint_generator
         source /catkin_ws/devel/setup.bash
+        rosparam set use_sim_time true
         roslaunch putn_launch bringup_planning.launch rviz_putn:=false
     cpuset: "0-11"
 
@@ -272,7 +273,7 @@ services:
         echo "=== Starting GLIM ==="
         catkin build glim_ros glim -j 6 -p 6 -DCMAKE_BUILD_TYPE=Release -DBUILD_WITH_CUDA=OFF -DBUILD_WITH_VIEWER=ON ${CMAKE_ARGS} -DCMAKE_POLICY_VERSION_MINIMUM=3.5
         source /catkin_ws/install/setup.bash
-        rosrun glim_ros glim_rosnode
+        rosrun glim_ros glim_rosnode use_sim_time:=true
     cpuset: "0-11"
 
   recorder:

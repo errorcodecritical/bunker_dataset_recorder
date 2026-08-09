@@ -1,9 +1,9 @@
 map:
-  resolution: 0.1
-  map_x_l: -100.0
-  map_x_u: 100.0
-  map_y_l: -100.0
-  map_y_u: 100.0
+  resolution: 0.3
+  map_x_l: -30.0
+  map_x_u: 30.0
+  map_y_l: -30.0
+  map_y_u: 30.0
 
 planning: 
   step_size: 0.3
@@ -11,7 +11,7 @@ planning:
 
   radius_fit_plane: 0.6
 
-  w_flatness: 2500.0
+  w_flatness: 1500.0
   w_slope: 0.03
   w_sparsity: 0.2
   w_fit_plane: 0.5
