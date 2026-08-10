@@ -18,4 +18,3 @@
 [submodule "catkin_ws/src/glim"]
 	path = catkin_ws/src/glim
 	url = https://github.com/koide3/glim
-	branch = v1.1.0
