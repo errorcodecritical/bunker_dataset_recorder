@@ -6,4 +6,6 @@ glim_ws/src/CMakeLists.txt
 
 # Re-include only files with a dot at the beginning
 !catkin_ws/src/
+!catkin_ws/setup.sh
 !glim_ws/src/
+!glim_ws/setup.sh
