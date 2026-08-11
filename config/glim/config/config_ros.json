@@ -59,7 +59,7 @@
     "base_frame_id": "aft_mapped", // If blank, IMU frame ID is used
     "odom_frame_id": "odom",
     "map_frame_id": "camera_init",
-    "publish_imu2lidar": false,
+    "publish_imu2lidar": true,
     "tf_time_offset": 1e-6,
     // Extension modules
     "extension_modules": [
