@@ -260,7 +260,7 @@ services:
       - XAUTHORITY=/tmp/.Xauthority
       - CMAKE_VERSION=3.28.3
     volumes:
-      - ../glim:/catkin_ws
+      - ../glim_ws:/catkin_ws
       - ../config/glim/config:/catkin_ws/src/glim/config
       - /dev/:/dev/
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
