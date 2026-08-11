@@ -1,7 +1,7 @@
 <launch>
 
     <arg name="rviz_putn" default="false" />
-    <arg name="use_sim_time" default="true" />
+    <arg name="use_sim_time" default="false" />
     <arg name="mapping_line_resolution" default="0.055" />
     <arg name="mapping_plane_resolution" default="0.05" />
     <arg name="mapping_skip_frame" default="1" />
