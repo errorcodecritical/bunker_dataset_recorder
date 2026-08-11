@@ -12,9 +12,9 @@
 	path = catkin_ws/src/ugv_sdk
 	url = https://github.com/agilexrobotics/ugv_sdk.git
 [submodule "catkin_ws/src/glim_ros1"]
-	path = catkin_ws/src/glim_ros1
+	path = glim_ws/src/glim_ros1
 	url = https://github.com/koide3/glim_ros1
     branch = v1.1.0
 [submodule "catkin_ws/src/glim"]
-	path = catkin_ws/src/glim
+	path = glim_ws/src/glim
 	url = https://github.com/koide3/glim
