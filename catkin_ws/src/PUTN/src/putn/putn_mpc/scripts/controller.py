@@ -49,7 +49,7 @@ class Controller():
     def get_current_state(self, event):
         try:
             (trans, rot) = self.listener.lookupTransform(
-                'map', 'base_link', rospy.Time(0))
+                'world', 'base_link', rospy.Time(0))
 
             self.curr_state[0] = trans[0]
             self.curr_state[1] = trans[1]
