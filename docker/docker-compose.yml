@@ -294,8 +294,8 @@ services:
       - XAUTHORITY=/tmp/.Xauthority
     volumes:
       - ../catkin_ws:/catkin_ws
-      # - ../rosbags:/rosbags
-      - /media/tobias/fruc-t9-1:/rosbags:ro
+      - ../rosbags:/rosbags
+      # - /home/tobias/Documents/field-rec-arush.bag:/rosbags/field-rec-arush.bag:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ~/.Xauthority:/tmp/.Xauthority:rw
     command:

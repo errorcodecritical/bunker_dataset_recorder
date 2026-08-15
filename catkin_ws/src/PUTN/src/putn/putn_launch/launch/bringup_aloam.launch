@@ -1,6 +1,6 @@
 <launch>
     <arg name="rviz_aloam" default="false" />
-    <arg name="use_sim_time" default="true" />
+    <arg name="use_sim_time" default="false" />
     <arg name="mapping_line_resolution" default="0.1" />
     <arg name="mapping_plane_resolution" default="0.3" />
     <arg name="mapping_skip_frame" default="1" />
