@@ -1,0 +1,35 @@
+pure_pursuit_controller:
+  # Reference Path Topic Name
+  ref_path_topic_name: "/global_path"
+  # Vehicle Odometry Topic Name
+  odom_topic_name: "/glim_ros/odom"
+  # Vehicel Command-Velocity Topic Name
+  cmd_vel_topic_name: "/cmd_vel/nav"
+  # Status topic name
+  status_topic_name: "/path_following_status"
+  # Next Waypoint Topic Name for Rviz
+  interp_waypoint_topic_name: "/interpolated_waypoint_pose"
+  # Vehicle Pose Frame ID
+  pose_frame_id: "base_link"
+  # Max Queue Size for publishers and subscribers 
+  queue_depth: 100
+  # The Pure Pursuit Controller Frequency
+  control_frequency: 50.0
+  # Vehicle Target Linear Velocity
+  target_velocity: 0.6 # [m/s]
+  # Delta Pose Error Threshold
+  epsilon: 1e-6
+  # Minimum lookahead distance (based on curvature of the path)
+  ld_min: 0.5
+  # Maximum lookahead distance (based on curvature of the path)
+  ld_max: 1.5
+  # Maximum allowable path curvature to look past. Above this value, lookahead gets shorter until reaching straight path again
+  curvature_threshold: 0.05
+
+trajectory_drawer:
+  # Trajectory Topic Name for Rviz
+  traj_topic_name: "/planned_trajectory"
+  # Vehicle Odometry Topic Name
+  odom_topic_name: "/glim_ros/odom"
+  # Trajectoy Update Frequency
+  frequency: 1.0

@@ -1,0 +1,40 @@
+# node_params.yaml
+# Parameters for NodeInterface
+
+# --- Topic names ---
+path_topic: "global_path"
+image_topic: "inference_result"
+depth_topic: "/camera/aligned_depth_to_color/image_raw"
+relative_depth_topic: "input_relative_depth"
+path_publisher_topic: "optimized_path"
+
+# --- Frame IDs ---
+robot_frame: "base"
+world_frame: "map"
+camera_optical_frame: "camera_color_optical_frame"
+
+# --- Image parameters ---
+image_width: 640
+image_height: 480
+
+# --- Processing parameters ---
+local_horizon_distance: 5.0
+convert_depth_from_mm_to_m: false
+
+# --- Camera intrinsics ---
+camera_matrix:
+  data: [612.9004516601562, 0.0, 321.5191345214844,
+         0.0, 613.1563110351562, 276.79446411132812,
+         0.0, 0.0, 1.0]
+
+# --- Distortion coefficients (k1, k2, p1, p2, k3) ---
+distortion_coefficients:
+  data: [0.0, 0.0, 0.0, 0.0, 0.0]
+
+# --- Transform from robot frame to camera frame ---
+# (4x4 homogeneous matrix, row-major order)
+robot_T_camera:
+  data: [1.0, 0.0, 0.0, 0.0,
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, 0.0,
+         0.0, 0.0, 0.0, 1.0]

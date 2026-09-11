@@ -1,11 +1,8 @@
 # Exclude everything in *-build directories
-catkin_ws/*
-catkin_ws/src/CMakeLists.txt
-glim_ws/*
-glim_ws/src/CMakeLists.txt
+*_ws/*
+*_ws/src/CMakeLists.txt
+rosbags/*.bag
 
 # Re-include only files with a dot at the beginning
-!catkin_ws/src/
-!catkin_ws/setup.sh
-!glim_ws/src/
-!glim_ws/setup.sh
+!*_ws/src/
+!*_ws/setup.sh

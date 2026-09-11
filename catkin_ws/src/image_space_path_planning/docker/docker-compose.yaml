@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  psteer:
+    image: ros1-noetic-jetson:jp6.1
+    container_name: psteer
+
+    runtime: nvidia
+    network_mode: host
+    privileged: true
+    restart: unless-stopped
+
+    stdin_open: true
+    tty: true
+
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      CUDA_HOME: /usr/local/cuda-12.6
+      LD_LIBRARY_PATH: /usr/local/cuda-12.6/lib64
+
+    volumes:
+      # ".." means image_space_path_planning_jetson,
+      # because compose is inside its docker directory
+      - ..:/root/catkin_ws/src/image_space_path_planning
+
+      # Model weights
+      - /home/fruc-bunker-jetson/git/data:/root/data
+
+    working_dir: /root/catkin_ws
+
+    command: >
+      bash -lc "
+      source /opt/ros/noetic/setup.bash &&
+      tail -f /dev/null
+      "

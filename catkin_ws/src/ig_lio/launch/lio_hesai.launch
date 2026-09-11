@@ -1,0 +1,45 @@
+<launch>
+    <arg name="use_sim_time" default="false" />
+
+    <!-- Static transforms: replace these values/frames with your real setup -->
+    <node pkg="tf"
+          type="static_transform_publisher"
+          name="hesai_broadcaster"
+          args="0 0 0 0 0 0 base_link hesai_lidar 10" />
+
+    <node pkg="tf"
+          type="static_transform_publisher"
+          name="imu_broadcaster"
+          args="0 0 0 0 0 0 base_link imu_link 10" />
+      
+     <node pkg="tf"
+      type="static_transform_publisher"
+      name="base_to_base_link_broadcaster"
+      args="0 0 0 -1.5708 0 0 base_link base 10" />
+      
+    <!-- Load Hesai configuration -->
+    <rosparam command="load"
+              file="$(find ig_lio)/config/hesai.yaml" />
+
+    <!-- iG-LIO node -->
+    <node pkg="ig_lio"
+          type="ig_lio_node"
+          name="ig_lio_node"
+          output="screen" />
+
+    <!-- Nodelet manager -->
+    <node pkg="nodelet"
+          type="nodelet"
+          name="nodelet_manager"
+          args="manager"
+          output="screen" />
+
+    <!-- RViz -->
+    <!--    
+    <node name="rviz"
+          pkg="rviz"
+          type="rviz"
+          args="-d $(find ig_lio)/rviz/lio_show_mine.rviz"
+          required="true" />
+    -->
+</launch>

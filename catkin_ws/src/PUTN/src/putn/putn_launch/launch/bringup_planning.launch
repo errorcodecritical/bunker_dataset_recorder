@@ -6,7 +6,7 @@
     <arg name="mapping_plane_resolution" default="0.05" />
     <arg name="mapping_skip_frame" default="1" />
 
-    <param name="/use_sim_time" value="$(arg use_sim_time)" />
+    <param name="use_sim_time" value="$(arg use_sim_time)" />
 
     <!-- <node pkg="tf" type="static_transform_publisher" name="glim_map_to_putn_world" args="0 0 0 0 0 0 /map /world 10" /> -->
     <node pkg="tf2_ros" type="static_transform_publisher" name="putn_world_to_putn_camera_init"
@@ -30,12 +30,13 @@
     <node pkg="putn" type="local_obs_node" name="local_obs_node" output="log" required="true">
         <remap from="~map" to="/hesai/points" />
         <param name="map/resolution" value="0.3" />
-        <param name="map/local_x_l" value="-5.0" />
-        <param name="map/local_x_u" value="5.0" />
-        <param name="map/local_y_l" value="-5.0" />
-        <param name="map/local_y_u" value="5.0" />
-        <param name="map/local_z_l" value="-0.4" />
-        <param name="map/local_z_u" value="0.4" />
+        <param name="map/local_x_l" value="-8.0" />  <!-- Expanded from -5 to catch context -->
+        <param name="map/local_x_u" value="8.0" />
+        <param name="map/local_y_l" value="-8.0" />
+        <param name="map/local_y_u" value="8.0" />
+        <!-- FIX: Lower the z_l to -1.0m so the ground at -0.5m is fully captured -->
+        <param name="map/local_z_l" value="-2.0" /> 
+        <param name="map/local_z_u" value="1.0" />
     </node>
 
     <node pkg="gpr" type="gpr_path" name="gpr_path" output="log" required="true">

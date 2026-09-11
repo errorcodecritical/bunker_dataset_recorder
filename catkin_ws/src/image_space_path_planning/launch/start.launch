@@ -1,0 +1,7 @@
+<launch>
+    <!-- Load parameters from YAML -->
+    <rosparam file="$(find image_space_path_planning)/configs/test_config.yaml" command="load" />
+
+    <!-- Start the node -->
+    <node name="image_space_path_planning" pkg="image_space_path_planning" type="image_space_path_planning" output="screen" />
+</launch>

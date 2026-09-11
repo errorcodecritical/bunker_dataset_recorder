@@ -1,0 +1,18 @@
+moltengamepad (2024.12.01-msb1) UNRELEASED; urgency=medium
+
+  * Fix build errors on Ubuntu 24.04
+  * physical device identification
+
+ -- Matthias S. Benkmann <msb@winterdrache.de>  Mon, 02 Dec 2024 01:29:37 +0100
+
+moltengamepad (2021.08.23-msb1) unstable; urgency=medium
+
+  * Add systemd service to debian packaging
+
+ -- msb <msb@ninja>  Mon, 23 Aug 2021 12:02:06 +0200
+
+moltengamepad (2020.11.01-msb1) unstable; urgency=medium
+
+  * Initial release
+
+ -- Matthias S. Benkmann <matthias@winterdrache.de>  Mon, 25 May 2020 15:12:31 +0200

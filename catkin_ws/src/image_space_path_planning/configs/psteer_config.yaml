@@ -1,0 +1,7 @@
+model_save_path: "/config/data/bookchapter - best - 20 epochs.pth"
+device: 'cuda'
+n_classes: 1
+height: 112
+width: 112
+original_height: 480
+original_width: 640

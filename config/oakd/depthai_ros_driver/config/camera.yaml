@@ -13,3 +13,4 @@
   rgb_i_sensor_img_orientation: ROTATE_180_DEG
   left_i_sensor_img_orientation: ROTATE_180_DEG
   right_i_sensor_img_orientation: ROTATE_180_DEG
+  rgb_i_fps: 15.0

@@ -25,7 +25,7 @@ services:
         catkin build hesai_ros_driver -j 6 -p 6
         source /catkin_ws/devel/setup.bash
         roslaunch hesai_ros_driver start.launch
-    cpuset: "7-9"  # High-throughput point-cloud ingestion
+    cpuset: "4-5"  # High-throughput point-cloud ingestion
 
   oakd_driver:
     image: oakd_noetic:latest
@@ -49,10 +49,10 @@ services:
       - |
         sleep 3
         echo "=== Starting OAK-D Driver ==="
-        catkin build depthai_ros_driver -j 6 -p 6
         source /catkin_ws/devel/setup.bash
         roslaunch depthai_ros_driver camera.launch
-    cpuset: "7-9"  # Shared with Hesai to balance high-rate streaming drivers
+# catkin build depthai_ros_driver -j 6 -p 6
+    cpuset: "6"  # Camera stream, separated from Hesai to avoid contention
 
   xsens_mti_driver:
     image: xsens_mti_noetic:latest
@@ -79,7 +79,7 @@ services:
         echo "=== Starting Xsens MTI ROS Driver ==="
         source /catkin_ws/devel/setup.bash
         roslaunch xsens_mti_driver xsens_mti_node.launch
-    cpuset: "10-11"  # Light serial/USB sensor stream
+    cpuset: "11"  # Light serial/USB sensor stream
 
   nmea_navsat_driver:
     image: nmea_navsat_noetic:latest
@@ -104,7 +104,7 @@ services:
         echo "=== Starting EMLID Driver ==="
         source /catkin_ws/devel/setup.bash
         roslaunch nmea_navsat_driver nmea_serial_driver.launch
-    cpuset: "10-11"  # Light serial/USB sensor stream
+    cpuset: "11"  # Light serial/USB sensor stream
 
   bunker_driver:
     image: bunker_driver_noetic:latest
@@ -153,7 +153,7 @@ services:
           fi
           sleep 3
         done
-    cpuset: "10-11"  # CAN bus communication and motion control loops
+    cpuset: "11"  # CAN bus communication and motion control loops
 
   node_monitor:
     image: ros_noetic_recorder:latest
@@ -182,32 +182,7 @@ services:
         roscore &
         rosrun node_monitor monitor.py &
         rostopic echo /node_metrics
-    cpuset: "10-11"  # Monitoring/telemetry thread overhead
-
-  ig_lio:
-    image: ig_lio_noetic:latest
-    container_name: ig_lio
-    build:
-      context: ./ig_lio
-      dockerfile: Dockerfile
-    init: true
-    tty: true
-    stdin_open: true
-    privileged: true
-    network_mode: host
-    restart: unless-stopped
-    volumes:
-      - ../catkin_ws:/catkin_ws
-    command:
-      - /bin/bash
-      - -c
-      - |
-        sleep 3
-        echo "=== Starting IG-LIO ==="
-        catkin build ig_lio -j 6 -p 6 --cmake-args -DCMAKE_CXX_FLAGS="-DASIO_ENABLE_OLD_SERVICES"
-        source /catkin_ws/devel/setup.bash
-        roslaunch ig_lio lio_hesai.launch
-    cpuset: "0-5"  # Heavy SLAM block (Mutually exclusive with PUTN)
+    cpuset: "11"  # Monitoring/telemetry thread overhead
 
   putn_planning:
     image: putn_noetic:latest
@@ -240,7 +215,7 @@ services:
         source /catkin_ws/devel/setup.bash
         rosparam set use_sim_time false
         roslaunch putn_launch bringup_planning.launch rviz_putn:=false
-    cpuset: "0-11"
+    cpuset: "7-10"  # Heavy planning - exclusive with traversability_mapping (never runs concurrently)
 
   glim:
     image: glim_noetic:latest
@@ -261,7 +236,8 @@ services:
       - CMAKE_VERSION=3.28.3
     volumes:
       - ../glim_ws:/catkin_ws
-      - ../config/glim/config:/catkin_ws/src/glim/config
+      - ../config/glim/config_psteer:/catkin_ws/src/glim/config
+      #- ../config/glim/config_putn:/catkin_ws/src/glim/config
       - /dev/:/dev/
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ~/.Xauthority:/tmp/.Xauthority:rw
@@ -273,8 +249,82 @@ services:
         echo "=== Starting GLIM ==="
         catkin build glim_ros glim -j 6 -p 6 -DCMAKE_BUILD_TYPE=Release -DBUILD_WITH_CUDA=OFF -DBUILD_WITH_VIEWER=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5
         source /catkin_ws/install/setup.bash
+        rosparam set use_sim_time false
         rosrun glim_ros glim_rosnode
-    cpuset: "0-11"
+    cpuset: "0-3"  # SLAM/odometry - heavy, latency-sensitive, dedicated block
+
+  traversability_mapping:
+    image: tm_melodic:latest
+    container_name: traversability_mapping
+    build:
+      context: ./traversability
+      dockerfile: Dockerfile
+      target: dev
+    init: true
+    tty: true
+    stdin_open: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    runtime: nvidia
+    volumes:
+      - /dev/dri:/dev/dri
+      - /dev/:/dev/
+      - ../traversability_ws:/catkin_ws
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Starting TRAVERSABILITY MAPPING ==="
+        catkin build traversability_mapping elevation_msgs pure_pursuit_controller -j 6 -p 6 -DCMAKE_BUILD_TYPE=Release
+        source /catkin_ws/devel/setup.bash
+        rosparam set use_sim_time false
+        roslaunch traversability_mapping offline.launch
+    cpuset: "7-10"  # Heavy mapping - exclusive with putn_planning (never runs concurrently)
+
+  psteer_driver:
+    image: ros1-noetic-jetson:jp6.1
+    container_name: psteer_driver
+    build:
+      context: ./psteer
+      dockerfile: Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    runtime: nvidia
+    volumes:
+      - /dev/:/dev/
+      - ../catkin_ws:/catkin_ws
+      - ../config/psteer/data/:/config/data/
+      - ../config/psteer/.cache/torch:/root/.cache/torch
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      CUDA_HOME: /usr/local/cuda-12.6
+      LD_LIBRARY_PATH: /usr/local/cuda-12.6/lib64
+      PYTHONPATH: "/config/data/featup_ext:$PYTHONPATH"
+      XFORMERS_DISABLED: 1
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 3
+        echo "=== Starting P-STEER Driver ==="
+        source /opt/ros/noetic/setup.bash
+        cd /catkin_ws/src/image_space_path_planning/scripts
+        python3 ros_inference_overlay.py &
+        python3 temporal_mask_smoother.py &
+        python3 close_range_dodge_controller.py \
+        _global_cmd_topic:=/cmd_vel/nav \
+        _output_cmd_topic:=/cmd_vel/psteer
+    #cpuset: "6-8"  # Camera stream, separated from Hesai to avoid contention
 
   recorder:
     image: ros_noetic_recorder:latest
@@ -317,4 +367,4 @@ services:
           /fix \
           /odom \
           /cmd_vel
-    cpuset: "6"  # Dedicated single core for I/O disk writes without blocking active algorithms
+    cpuset: "6"  # Dedicated I/O disk writes, shares core with OAK-D (low contention risk)

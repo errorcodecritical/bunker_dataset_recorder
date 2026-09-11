@@ -12,6 +12,10 @@ topics:
   topic: "cmd_vel/nav"
   timeout: 1.0
   priority: 10
+- name: "psteer"
+  topic: "cmd_vel/psteer"
+  timeout: 1.0
+  priority: 20
 
 # Optional software locks to completely disable movement streams via Bool topics
 locks:

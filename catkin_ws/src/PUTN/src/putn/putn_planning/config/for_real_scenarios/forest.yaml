@@ -6,19 +6,23 @@ map:
   map_y_u: 420.0
 
 planning: 
-  step_size: 0.4
-  h_surf_car: 0.6
+  # Step size matched to Bunker Mini chassis length (~0.66m)
+  step_size: 0.6            # Was 0.3 (Reduces search depth for fast >50m planning)
+  h_surf_car: 0.5           # Matches exact Hesai sensor height relative to ground
 
-  radius_fit_plane: 0.8
+  # Significantly expanded search radii to connect sparse distant LiDAR beams
+  radius_fit_plane: 2.5     # Was 1.0 (Gathers enough sparse points at >30-50m)
+  neighbor_radius: 2.5      # Was 1.0 (Prevents orphaned graph nodes in unmapped regions)
 
-  w_flatness: 800.0
-  w_slope: 0.02
-  w_sparsity: 0.05
-  w_fit_plane: 0.2
-  ratio_max: 0.3
-  ratio_min: 0.01
-  conv_thre: 0.5152
+  # Optimistic Weight Parameters
+  w_flatness: 50.0         # Reduced: Tracked treads easily absorb bumpy forest ground
+  w_slope: 0.05             # Low: Allows Bunker Mini to climb steep slopes without path rejection
+  w_sparsity: 0.001         # NEAR ZERO: Planner freely plans through sparse/unmapped space
+  w_fit_plane: 0.005        # Minimal penalty for weak plane fits in sparse areas
+
+  # Surface & Convergence Thresholds
+  ratio_max: 0.25           # Permissive: Allows climbing small logs/roots without flagging as obstacles
+  ratio_min: 0.001          # Ultra-flat ground bound
+  conv_thre: 0.90           # High convergence threshold to force path completion despite sparse data
 
   max_initial_time: 15000.0
-
-

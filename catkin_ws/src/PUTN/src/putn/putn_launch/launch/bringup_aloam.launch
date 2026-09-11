@@ -5,7 +5,7 @@
     <arg name="mapping_plane_resolution" default="0.3" />
     <arg name="mapping_skip_frame" default="1" />
 
-    <param name="/use_sim_time" value="$(arg use_sim_time)" />
+    <param name="use_sim_time" value="$(arg use_sim_time)" />
 
     <include file="$(find aloam_velodyne)/launch/aloam_ouster_128.launch">
         <arg name="rviz" value="$(arg rviz_aloam)" />
