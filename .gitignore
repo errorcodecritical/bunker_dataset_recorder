@@ -2,6 +2,7 @@
 *_ws/*
 *_ws/src/CMakeLists.txt
 rosbags/*.bag
+.cache
 
 # Re-include only files with a dot at the beginning
 !*_ws/src/
