@@ -1,208 +1,215 @@
-This repository provides a pipeline to record datasets with Agilex Bunker mini robot. For a detailed instruction manual, please check the [Wiki]()!
+# Bunker Dataset Recorder (ROS 2)
 
-## 1. System Architecture
+A Dockerized, multi-sensor data-recording pipeline for the **Agilex Bunker Mini** UGV, built on **ROS 2 Jazzy**. Each sensor driver runs in its own container, all containers share a single ROS 2 workspace, and everything is orchestrated through Docker Compose and a single startup script.
 
-The entire data-acquisition system for the Bunker mini is organized under:
+> For a full step-by-step operating manual, see the project [Wiki]().
+
+## Contents
+
+- [Sensors & Hardware](#sensors--hardware)
+- [System Architecture](#system-architecture)
+- [Repository Layout](#repository-layout)
+- [Prerequisites](#prerequisites)
+- [Getting the Code](#getting-the-code)
+- [Running the System](#running-the-system)
+- [Recording Configuration](#recording-configuration)
+- [Sensor Configuration Reference](#sensor-configuration-reference)
+- [Bunker Description & Gazebo Simulation](#bunker-description--gazebo-simulation)
+
+## Sensors & Hardware
+
+| Sensor | Purpose | Container |
+|---|---|---|
+| Aeva Atlas | 4D FMCW LiDAR | `atlas` |
+| Hesai QT128 | Mechanical LiDAR | `hesai` |
+| Sensrad Hugin D1 | 4D imaging radar | `hugin` |
+| OAK-D | Stereo camera (RGB, depth, IMU) | `oakd` |
+| Xsens MTi | IMU | `xsens` |
+| Emlid Reach M2 | GNSS-RTK | `emlid` |
+| Agilex Bunker Mini | Robot base / chassis driver | `bunker_driver` |
+| — | ROS 2 bag recording (`hector_recorder`) | `recorder` |
+| — | RViz / visualization | `visualizer` |
+
+## System Architecture
+
+- **One container per sensor.** Each sensor has its own Dockerfile (`docker/<sensor>/Dockerfile`) and its own ROS 2 driver dependencies, so a failure or rebuild of one sensor doesn't affect the others.
+- **Shared ROS 2 workspace.** All containers mount the same `ros2_ws/` directory, so interfaces (custom messages, description packages, drivers) are built once and available everywhere.
+- **Config injection via bind mounts.** Sensor-specific tuning files in `config/` are bind-mounted directly over the driver's default config inside each container, so you can edit a YAML file on the host without rebuilding an image.
+- **Central orchestration.** `docker/docker-compose.yml` defines every service, and `startup.sh` / `startup-nav.sh` bring the stack up with the correct set of containers enabled.
+- **Recording.** The `recorder` container runs [`hector_recorder`](https://github.com/tu-darmstadt-ros-pkg/hector_recorder), an interactive TUI for starting/stopping `ros2 bag` recordings, writing bags outside the containers to a host-mounted directory.
+
+## Repository Layout
 
 ```
-~/bunker_dataset_recorder/
-├── Docker/
-│   ├── atlas/
-│   ├── bunker/
-│   ├── emlid/
-│   ├── foxglove/
-│   ├── hesai/
-│   ├── hugin/
-│   ├── oakd/
-│   ├── recorder/
-│   ├── xsens/
-│   └── docker-compose.yml
+bunker_dataset_recorder/
+├── config/                     # Per-sensor configuration files, bind-mounted into containers
+│   ├── bunker/                 #   twist_mux + teleop_twist_joy params
+│   ├── emlid/                  #   nmea_navsat_driver node + config
+│   ├── oakd/                   #   depthai_ros_driver launch/config overrides
+│   └── xsens/                  #   norlab_xsens_driver node + launch overrides
+├── docker/
+│   ├── atlas/, bunker/, emlid/, hesai/, hugin/, oakd/, xsens/   # Per-sensor Dockerfiles
+│   ├── recorder/                # hector_recorder image
+│   ├── visualizer/              # RViz / GUI image
+│   └── docker-compose.yml       # Defines all services
 ├── ros2_ws/
-│   ├── bunker_description/
-│   ├── bunker_gazebo_sim/
-│   ├── atlas-build/
-│   ├── bunker-build/
-│   ├── curt-build/
-│   ├── emlid-build/
-│   ├── foxglove-build/
-│   ├── hesai-build/
-│   ├── hugin-build/
-│   ├── oakd-build/
-│   ├── recorder-build/
-│   └── xsens-build/
-├── shared/
-│   ├── atlas/
-│   ├── hugin/
-│   ├── atlas-launch.sh
-│   ├── bunker-launch.sh
-│   ├── emlid-launch.sh
-│   ├── foxglove-launch.sh
-│   ├── hesai-launch.sh
-│   ├── hugin-launch.sh
-│   ├── oakd-launch.sh
-│   ├── recorder-launch.sh
-│   └── xsens-launch.sh
-├── config/
-│   ├── emlid/
-│   ├── hesai/
-│   ├── hugin/
-│   ├── oakd/
-│   └── xsens/
-└── startup.sh
+│   └── src/
+│       ├── aeva_packages/         # aeva_msgs + ros2_aeva_publisher (Atlas LiDAR)
+│       ├── bunker_packages/       # bunker_ros2 (submodule), ugv_sdk (submodule),
+│       │                          #   bunker_description, bunker_gazebo_sim
+│       ├── HesaiLidar_ROS_2.0/    # Hesai driver (submodule)
+│       ├── hector_recorder/       # ROS 2 bag recording TUI (submodule)
+│       ├── hugin_packages/        # hugin_d1, hugin_d1_gui, liboden, oden, runes,
+│       │                          #   yggdrasil, ymir (Sensrad Hugin D1 radar stack)
+│       ├── nmea_navsat_driver/    # GNSS driver (submodule)
+│       └── norlab_xsens_driver/   # Xsens IMU driver (submodule)
+├── shared/                     # Assets/scripts shared across containers (e.g. joystick setup,
+│                                #   Atlas SDK .deb packages and API examples, Hugin sources)
+├── startup.sh                  # Bring up the full recording stack
+└── startup-nav.sh              # Bring up the stack for navigation (recorder/visualizer disabled)
 ```
 
-### 1.1 Docker Containers
+### ROS 2 packages of note
 
-Each sensor package has its own Dockerfile inside its corresponding directory:
-
-- **atlas/** → Aeva Atlas 4D LiDAR driver
-- **emlid/** → GNSS-RTK (Reach M2) driver
-- **oakd/** → OAK-D camera driver
-- **xsens/** → Xsens IMU
-- **bunker/** → Bunker mini URDF
-- **hesai/** → Hegin QT128 LiDAR
-- **hugin/** → Sensrad Hugin D1 Radar
-- **recorder/** → hector_recorder
-- **foxglove/** → Foxglove and RViZ docker containers
-
-A **docker-compose.yml** file creates all containers for the sensors and the recording.
-
-### 1.2 Shared ROS 2 Workspace
-
-The directory ```ros2_ws/``` is a workspace shared across all containers. Each container mounts:
-
-- **ros2_ws/<sensor>-build/** → Build folder of each container This prevents each container from rebuilding the full workspace and allows faster startup. This directory also contains two packages that are being shared to the containers:
-
-### 1.3 Shared Entry-Point Scripts
-
-The folder **shared/** contains launcher scripts used by each container:
-
-- They source the ROS2 setup
-- Build only the required packages
-- And run the corresponding launch files or drivers
-
-The recorder entry point runs the **hector_recorder** ROS2 command.
-
-### 1.4 Sensor Configuration
-
-This folder has every configuration needed to each sensor. Every sensor has its own directory and the files are linked to the respective containers.
-
-### 1.5 Bunker mini URDF Package
-
-This folder, inside ```ros2_ws/```, has the package needed to launch the Bunker mini URDF with all the sensors.
-
-`ros2 launch bunker_description robot_state_publisher.launch.py`
-
-### 1.6 Bunker Gazebo Sim
-
-This package, located inside `ros2_ws/`, launches the Bunker URDF model into a Gazebo simulation environment.
-
-To enable Gazebo simulation with ROS 2 control, the following changes have been made:
-
-1. **`bunker.xacro`** – Updated to include the Gazebo plugin `libgz_ros2_control-system.so` and include the **ros2_control** parameters for all the wheels of the robot.
-
-2. **Controller Configuration** – Created `bunker_controllers.yaml` inside `/bunker_gazebo_sim/config/`  
-   This file defines the parameters for the wheel controllers and other necessary control logic.
-
-#### Launch Package
-
-The launch file (`bunker_gazebo_sim.launch.py`) starts:
-- **`robot_state_publisher`** – Publishes the robot's TF transforms
-- **`ros_gz_sim`** – Gazebo integration package for ROS 2 Jazzy
-
-## 2. System Startup Procedure
-
-### 2.1 Connecting to the CURT-NUC
-
-The hotspot automatically powers on when the Bunker mini robot is turned on.
-
-It hosts a Wi-Fi hotspot:
-
-- **SSID:** fruc-bunker-jetson
-- **IP Address:** 10.42.0.10
-- **Connect via SSH:**
+- **`bunker_description`** — URDF/xacro model of the Bunker Mini with all sensors attached.
+  ```bash
+  ros2 launch bunker_description robot_state_publisher.launch.py
   ```
-  ssh fruc-bunker-jetson@10.42.0.10
-  ```
+- **`bunker_gazebo_sim`** — Spawns the Bunker model in Gazebo with `ros2_control`-based wheel controllers, using the `libgz_ros2_control-system.so` plugin (see [Bunker Description & Gazebo Simulation](#bunker-description--gazebo-simulation)).
 
-### 2.2 Launching the Recording System
+## Prerequisites
 
-Run the script **startup.sh** to start all the system components. The script will tranfer the RM3100 CAN device to the container and run:
+- Docker Engine + Docker Compose v2 (`docker compose ...`)
+- NVIDIA Container Toolkit (required for the `hugin` and `visualizer` services, which request `runtime: nvidia`)
+- Host running Linux with access to the required device nodes (`/dev`) for CAN, serial, USB, and camera devices
+- A configured CAN interface (`can2`) at 500 kbit/s for the Bunker chassis driver
 
-1. **docker compose up -d**
-   → Starts all sensor containers in the background
-2. **docker compose run -i --rm recorder**
-   → Opens an interactive shell and launches the hector_recorder TUI
-   The recorder will then:
+## Getting the Code
 
-- Ask for a bag name (leave empty to auto-generate)
-- Start recording once confirmed
-  All ROS2 bags are saved outside the containers. In the directory that you mount to the recorder container, inside the docker-compose file. By default, ouside the repo main directory.
+Several drivers are pulled in as git submodules, so clone recursively:
 
-#### To close the system:
+```bash
+git clone --recurse-submodules -b ros2 https://github.com/errorcodecritical/bunker_dataset_recorder.git
+cd bunker_dataset_recorder
+```
 
-1. Press **Ctrl+C** to close the hector_recording and stop the system.
----
+If you already cloned without `--recurse-submodules`:
 
-## 3. Recording Configuration
+```bash
+git submodule update --init --recursive
+```
 
-Current recording topics:
+## Running the System
+
+### 1. Connect to the robot's onboard computer
+
+The Bunker Mini's onboard NUC hosts a Wi-Fi hotspot that powers on automatically with the robot:
+
+- **SSID:** `fruc-bunker-jetson`
+- **IP address:** `10.42.0.10`
+
+```bash
+ssh fruc-bunker-jetson@10.42.0.10
+```
+
+### 2. Start the stack
+
+```bash
+./startup.sh
+```
+
+This will:
+
+1. Run `docker compose up -d` to start the sensor containers in the background.
+2. Run `docker compose run -i --rm recorder` to attach an interactive `hector_recorder` session.
+
+You'll be prompted for a bag name (leave blank to auto-generate one), then recording begins. All `ros2 bag` output is written to the host directory mounted in the `recorder`/`visualizer` services in `docker-compose.yml` (by default, a `rosbags/` folder outside the repository).
+
+To bring the stack up **without** recording or visualization (e.g. for navigation/testing), use:
+
+```bash
+./startup-nav.sh
+```
+
+### 3. Stop the system
+
+Press **Ctrl+C** in the recorder session. The trapped `EXIT` handler runs `docker compose down` to clean up all containers.
+
+## Recording Configuration
+
+Topics currently recorded by `hector_recorder`:
 
 ```text
-/aeva/ATLAS/point_cloud_compensated /aeva/ATLAS/imu /aeva/ATLAS/odometry /aeva/ATLAS/point_cloud_metadata /lidar_packets /oak/rgb/image_raw /oak/rgb/camera_info /oak/rgb/image_rect /oak/stereo/image_raw /oak/stereo/camera_info /oak/imu/data /imu/data /imu/mag /heading /fix /tf /tf_static
+/aeva/ATLAS/point_cloud_compensated
+/aeva/ATLAS/imu
+/aeva/ATLAS/odometry
+/aeva/ATLAS/point_cloud_metadata
+/lidar_packets
+/oak/rgb/image_raw
+/oak/rgb/camera_info
+/oak/rgb/image_rect
+/oak/stereo/image_raw
+/oak/stereo/camera_info
+/oak/imu/data
+/imu/data
+/imu/mag
+/heading
+/fix
+/tf
+/tf_static
 ```
 
-To modify what is recorded:
+To change what gets recorded:
 
-1. Edit the **recorder entry-point script** in **shared/recorder-launch.sh**
+1. Edit the recorder entry point (`shared/recorder-launch.sh`, used by the `recorder` service in `docker-compose.yml`).
 2. Update:
-   - **TOPICS variable** → to add/remove ROS2 topics
-   - **hector_recorder command** → configure:
-     - Bag size limit
-     - Storage format (MCAP, SQLite)
-     - Compression
-     - Performance parameters
-     - etc…
+   - The **`TOPICS`** variable — add or remove ROS 2 topics.
+   - The **`hector_recorder`** invocation — bag size limit, storage format (MCAP/SQLite3), compression, and other performance parameters.
+
+## Sensor Configuration Reference
+
+All per-sensor tuning lives under `config/` and is bind-mounted into the matching container (see `docker/docker-compose.yml` for exact mount paths).
+
+| Sensor | Files | Mounted into |
+|---|---|---|
+| **Emlid GNSS-RTK** | `config/emlid/nmea_serial_driver.yaml`, `config/emlid/nmea_serial_driver.py` | `nmea_navsat_driver` node/config |
+| **Hesai QT128 LiDAR** | `config/hesai/config.yaml` *(referenced by the driver; see the `HesaiLidar_ROS_2.0` submodule for the full option set)* | Hesai driver container |
+| **Sensrad Hugin D1 Radar** | `config/hugin/sensrad_params_1.yaml` *(see also `shared/hugin/ros2/src/yggdrasil/config/` and `extrinsics/`)* | Hugin driver container |
+| **OAK-D Camera** | `config/oakd/depthai_ros_driver/launch/`, `config/oakd/depthai_ros_driver/config/` | `/opt/ros/jazzy/share/depthai_ros_driver/{launch,config}` |
+| **Xsens IMU** | `config/xsens/xsens_driver.launch.xml`, `mtdevice.py`, `mtnode.py` | `norlab_xsens_driver` node/launch |
+| **Bunker chassis** | `config/bunker/twist_mux.yaml`, `config/bunker/teleop_twist_joy.yaml` | `bunker_driver` container (`twist_mux`, `teleop_twist_joy`) |
+
+Each sensor's ROS 2 driver environment uses:
+
+```yaml
+ROS_DOMAIN_ID: 30
+RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+CYCLONEDDS_URI: file:///shared/cyclonedds-config.xml
+```
+
+## Bunker Description & Gazebo Simulation
+
+To simulate the Bunker Mini in Gazebo with `ros2_control`:
+
+1. **`bunker.xacro`** includes the `libgz_ros2_control-system.so` Gazebo plugin and `ros2_control` parameters for all wheel joints.
+2. **`bunker_controllers.yaml`** (in `ros2_ws/src/bunker_packages/bunker_gazebo_sim/config/`) defines the wheel controller and control-loop parameters.
+3. **`bunker_gazebo_sim.launch.py`** starts:
+   - `robot_state_publisher` — publishes the robot's TF tree
+   - `ros_gz_sim` — the Gazebo/ROS 2 Jazzy integration bridge
+
+```bash
+ros2 launch bunker_gazebo_sim bunker_gazebo_sim.launch.py
+```
 
 ---
 
-## 4. Sensor Configuration
+### Submodules
 
-All sensor configuration live inside config/.
-Configuration files are located here:
-
-### 4.1 Emlid
-
-Config file:
-`emlid/nmea_serial_driver.yaml`
-Launch file:
-`emlid/nmea_serial_driver.py`
-
-### 4.2 Hesai QT128 LiDAR
-
-Config file:
-
-`hesai/config.yaml`
-
-### 4.3 Sensrad Hugin D1 Radar
-
-Config file:
-
-`hugin/sensrad_params_1.yaml`
-
-### 4.4 OAK-D Camera
-
-Launch files:
-
-`oakd/depthai_ros_driver/launch`
-
-Config files:
-
-`oakd/depthai_ros_driver/config`
-
-### 4.5 Xsens IMU
-
-Launch file:
-`xsens/xsens_driver.launch.xml`
-
----
+| Package | Upstream |
+|---|---|
+| `bunker_ros2` | https://github.com/agilexrobotics/bunker_ros2 |
+| `ugv_sdk` | https://github.com/agilexrobotics/ugv_sdk (branch `main`) |
+| `HesaiLidar_ROS_2.0` | https://github.com/errorcodecritical/HesaiLidar_ROS_2.0 |
+| `nmea_navsat_driver` | https://github.com/ros-drivers/nmea_navsat_driver (branch `ros2`) |
+| `hector_recorder` | https://github.com/tu-darmstadt-ros-pkg/hector_recorder |
+| `norlab_xsens_driver` | https://github.com/norlab-ulaval/norlab_xsens_driver |
