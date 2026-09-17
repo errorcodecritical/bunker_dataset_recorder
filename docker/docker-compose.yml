@@ -24,7 +24,14 @@ services:
         echo "=== Starting HESAI Driver ==="
         catkin build hesai_ros_driver -j 6 -p 6
         source /catkin_ws/devel/setup.bash
-        roslaunch hesai_ros_driver start.launch
+        roslaunch hesai_ros_driver start.launch &
+        rosrun nodelet nodelet standalone pcl/VoxelGrid \
+          ~input:=/hesai/points \
+          ~output:=/hesai/points_decimated \
+          _leaf_size:=0.05 \
+          _filter_limit_min:=-10.0 \
+          _filter_limit_max:=10.0
+
     cpuset: "4-5"  # High-throughput point-cloud ingestion
 
   oakd_driver:
@@ -345,7 +352,6 @@ services:
     volumes:
       - ../catkin_ws:/catkin_ws
       - ../rosbags:/rosbags
-      # - /home/tobias/Documents/field-rec-arush.bag:/rosbags/field-rec-arush.bag:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ~/.Xauthority:/tmp/.Xauthority:rw
     command:
@@ -355,16 +361,32 @@ services:
         sleep 3
         echo "=== Starting RECORDER ==="
         source /catkin_ws/devel/setup.bash
-        roscore &
-        sleep 1
-        rosbag record -O /rosbags/$(date +%Y_%m_%d_%H_%M_%S)_recording.bag \
-          /hesai/points \
+        rosbag_fancy record -o /rosbags/recording_$(date +%Y_%m_%d_%H_%M_%S).bag --no-ui --topic \
+          /tf \
+          /tf_static \
           /oak/rgb/image_raw \
-          /oak/stereo/image_raw \
-          /oak/imu/data \
+          /oak/rgb/camera_info \
+          /hesai/points \
+          /elevation_pointcloud \
           /imu/data \
-          /imu/mag \
-          /fix \
+          /inference_result \
+          /inference_mask_smoothed \
+          /glim_ros/map \
+          /glim_ros/odom \
+          /glim_ros/points \
+          /glim_ros/pose \
+          /glim_ros/transform \
+          /node_metrics \
+          /prm_cloud_graph \
+          /prm_cloud_nodes \
+          /prm_goal \
+          /prm_graph \
+          /prm_path \
+          /prm_single_source_paths \
           /odom \
-          /cmd_vel
+          /cmd_vel/joy \
+          /cmd_vel/key \
+          /cmd_vel/nav \
+          /cmd_vel/psteer \
+          /smoother_cmd_vel
     cpuset: "6"  # Dedicated I/O disk writes, shares core with OAK-D (low contention risk)

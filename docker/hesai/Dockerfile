@@ -14,9 +14,8 @@ RUN apt-get update && apt-get install -y \
     ros-noetic-cv-bridge \
     ros-noetic-pcl-conversions \
     ros-noetic-tf \
-    && rm -rf /var/lib/apt/lists/*
-
-# ... (Keep the rest of your Dockerfile/Entrypoint the same) ...
+    ros-noetic-pcl-ros \
+    ros-noetic-pcl-conversions
 
 # Create a temporary space to resolve ROS dependencies
 WORKDIR /tmp/ws/src
