@@ -18,3 +18,7 @@
 [submodule "ros2_ws/src/norlab_xsens_driver"]
 	path = ros2_ws/src/norlab_xsens_driver
 	url = https://github.com/norlab-ulaval/norlab_xsens_driver.git
+[submodule "ext/hmr_localisation"]
+	path = ext/hmr_localisation
+	url = https://github.com/kalhansb/hmr_localisation
+	branch = field-experiments
