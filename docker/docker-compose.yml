@@ -30,7 +30,9 @@ services:
           ~output:=/hesai/points_decimated \
           _leaf_size:=0.05 \
           _filter_limit_min:=-10.0 \
-          _filter_limit_max:=10.0
+          _filter_limit_max:=10.0 \
+          _input_frame:='hesai_lidar' \
+          _output_frame:='hesai_lidar'
 
     cpuset: "4-5"  # High-throughput point-cloud ingestion
 
