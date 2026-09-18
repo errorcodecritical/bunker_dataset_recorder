@@ -1,96 +1,94 @@
 # Agilex Bunker Robot Description Package
 
-ROS 2 Jazzy package for launching the Agilex Bunker robot URDF description.
+ROS Noetic package for launching the Agilex Bunker robot URDF description.
 
 ## Package Contents
 
 - **URDF Files**: Robot description in Xacro format
-- **Launch Files**: Python-based launch files for different use cases
-- **Configuration Files**: ROS 2 control and Gazebo configurations
-- **Meshes**: STL and OBJ mesh files for visualization
+- **Launch Files**: ROS 1 launch files for different use cases
+- **Configuration Files**: Gazebo/RViz configuration files
+- **Meshes**: STL, OBJ, and GLTF mesh files for visualization
 - **RViz Config**: Pre-configured RViz visualization settings
 
 ## Launch Files
 
-### 1. `robot_state_publisher.launch.py`
-Launches the robot state publisher with joint state publisher GUI.
+### 1. `robot_state_publisher.launch`
+Launches the robot state publisher with optional joint state publisher GUI.
 
 ```bash
-ros2 launch curt_description robot_state_publisher.launch.py
+roslaunch bunker_description robot_state_publisher.launch
 ```
 
 **Arguments:**
 - `use_sim_time` (default: false) - Use Gazebo simulation time
-- `simulation` (default: false) - Enable simulation mode
-- `gui` (default: true) - Show joint state publisher GUI
+- `simulation` (default: false) - Pass simulation mode to Xacro
+- `gui` (default: false) - Enable `joint_state_publisher_gui`
 
-### 2. `view_robot.launch.py`
-Launches robot state publisher with RViz2 visualization.
+### 2. `view_robot.launch`
+Launches robot state publisher with RViz visualization.
 
 ```bash
-ros2 launch curt_description view_robot.launch.py
+roslaunch bunker_description view_robot.launch
 ```
 
 **Arguments:**
 - `use_sim_time` (default: false)
 - `simulation` (default: false)
-- `gui` (default: true)
+- `gui` (default: false)
 
-### 3. `robot_description.launch.py`
-Basic launch file for just the robot state publisher.
+### 3. `robot_description.launch`
+Basic launch file for the robot state publisher only.
 
 ```bash
-ros2 launch curt_description robot_description.launch.py
+roslaunch bunker_description robot_description.launch
 ```
 
 ## Installation
 
-1. Navigate to your ROS 2 workspace:
+1. Navigate to your ROS workspace:
 ```bash
-cd ~/ros2_ws/src
+cd ~/catkin_ws
 ```
 
 2. Build the package:
 ```bash
-cd ~/ros2_ws
-colcon build --packages-select curt_description
-source install/setup.bash
+catkin_make --pkg bunker_description
+source devel/setup.bash
 ```
 
 ## Usage Examples
 
 ### View the robot in RViz
 ```bash
-ros2 launch curt_description view_robot.launch.py gui:=true
+roslaunch bunker_description view_robot.launch gui:=true
 ```
 
 ### Control joint states with GUI
 ```bash
-ros2 launch curt_description robot_state_publisher.launch.py gui:=true
+roslaunch bunker_description robot_state_publisher.launch gui:=true
 ```
 
 ### Use with Gazebo simulation
 ```bash
-ros2 launch curt_description robot_state_publisher.launch.py simulation:=true use_sim_time:=true
+roslaunch bunker_description robot_state_publisher.launch simulation:=true use_sim_time:=true
 ```
 
 ## Dependencies
 
 The package depends on:
-- `launch` and `launch_ros`
 - `robot_state_publisher`
-- `joint_state_publisher` and `joint_state_publisher_gui`
+- `joint_state_publisher`
+- `joint_state_publisher_gui`
 - `xacro`
-- `ros2_control` and `gazebo_ros2_control`
-- `rviz2`
+- `rviz`
 
 ## Customization
 
 ### Modify Robot Inertia
-Edit `urdf/robot.urdf.xacro` to adjust inertial properties.
+Edit `urdf/bunker.urdf.xacro` to adjust inertial properties.
 
 ### Update Sensor Transforms
-Modify the joint origins in `robot.urdf.xacro` to update calibrated camera transforms.
+Modify the joint origins in `urdf/bunker.urdf.xacro` or `urdf/sensors.urdf.xacro`.
 
 ### Adjust RViz Display
 Edit `config/rviz.rviz` to customize visualization settings.
@@ -98,16 +96,17 @@ Edit `config/rviz.rviz` to customize visualization settings.
 ## Troubleshooting
 
 ### Meshes not loading
-Ensure mesh files are properly installed:
+Ensure the package is built and sourced:
 ```bash
-colcon build --packages-select curt_description --symlink-install
+catkin_make --pkg bunker_description
+source devel/setup.bash
 ```
 
 ### Xacro variables not resolved
-Check that all referenced properties in `properties.xacro` are defined correctly.
+Check that all referenced properties in your Xacro files are defined correctly.
 
 ### TF tree not updating
-Verify joint_state_publisher is running and publishing on `/joint_states` topic.
+Verify `joint_state_publisher` is running and publishing on `/joint_states`.
 
 ## Package Info
 
@@ -118,7 +117,6 @@ Verify joint_state_publisher is running and publishing on `/joint_states` topic.
 
 ## Notes
 
-- The package uses Python-based build system (`ament_python`)
-- Xacro files are processed at runtime for flexibility
-- Simulation mode includes Gazebo plugin support
-- ROS 2 Jazzy compatible
+- The package now targets ROS Noetic / ROS 1
+- Xacro files are processed at launch for flexibility
+- RViz is launched using ROS 1 `rviz`

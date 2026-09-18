@@ -1,48 +1,34 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.0.2)
 project(bunker_description)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
+find_package(catkin REQUIRED COMPONENTS
+  robot_state_publisher
+  joint_state_publisher
+  joint_state_publisher_gui
+)
 
-# find dependencies
-find_package(ament_cmake REQUIRED)
-find_package(ament_cmake_python REQUIRED)
+catkin_package()
 
-# Include directories
-include_directories(include)
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
 
-ament_python_install_package(${PROJECT_NAME})
+install(DIRECTORY launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
-# Install launch files
-install(DIRECTORY launch/
-  DESTINATION share/${PROJECT_NAME}/launch/)
+install(DIRECTORY urdf
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
-# Install URDF files
-install(DIRECTORY urdf/
-  DESTINATION share/${PROJECT_NAME}/urdf/)
+install(DIRECTORY config
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
-# Install config files
-install(DIRECTORY config/
-  DESTINATION share/${PROJECT_NAME}/config/)
+install(DIRECTORY meshes
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
-# Install mesh files
-install(DIRECTORY meshes/
-  DESTINATION share/${PROJECT_NAME}/meshes/)
-
-# Install sensors mesh files
-#install(DIRECTORY meshes/
-#  DESTINATION share/${PROJECT_NAME}/meshes/sensors/)
-
-# Install rviz files
-install(DIRECTORY rviz/
-  DESTINATION share/${PROJECT_NAME}/rviz/)
-
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  set(ament_cmake_copyright_FOUND TRUE)
-  set(ament_cmake_cpplint_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
-endif()
-
-ament_package()
+install(DIRECTORY rviz
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
