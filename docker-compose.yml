@@ -1,6 +1,6 @@
 include:
-  - path: .docker/docker-compose.yml
-  - path: .ext/hmr_localisation/docker-compose.yml
+  - path: ./docker/docker-compose.yml
+  - path: ./ext/hmr_localisation/docker-compose.yml
 
 # Service overrides
 services:
