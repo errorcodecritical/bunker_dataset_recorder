@@ -17,7 +17,7 @@ services:
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -44,7 +44,7 @@ services:
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -75,7 +75,7 @@ services:
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -102,7 +102,7 @@ services:
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-    #   - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+    #   #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -127,7 +127,7 @@ services:
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -169,7 +169,7 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=all
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -257,7 +257,7 @@ services:
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
     command: /shared/recorder-launch.sh
 
   visualizer:
@@ -293,5 +293,5 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=all
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
     command: /shared/visualizer-launch.sh
