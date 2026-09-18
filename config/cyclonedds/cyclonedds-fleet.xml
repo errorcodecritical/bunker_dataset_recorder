@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  FLEET (multi-robot) domain — ROS_DOMAIN_ID=31
+
+  Only the fleet_bridge container should ever participate on this domain.
+  It is bound to the real network interface and lists the other robots as
+  explicit unicast peers instead of relying on multicast discovery, which
+  is usually more reliable across many robots on the same LAN/WiFi.
+
+  *** ROBOT-SPECIFIC: fill in before deploying to a given robot ***
+  - <NetworkInterface name="..."/>  -> the real NIC on this robot (eth0, wlan0,
+    a bonded interface, etc.) Confirm with `ip -brief link` on the robot.
+  - <Peer Address="..."/> entries   -> the IPs/hostnames of every OTHER robot
+    in the fleet (not this robot's own address).
+-->
+<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+  <Domain Id="31">
+    <General>
+      <Interfaces>
+        <NetworkInterface autodetermine="false" name="CHANGE_ME_eth0" priority="default" multicast="true" />
+      </Interfaces>
+      <AllowMulticast>spdp</AllowMulticast>
+      <MaxMessageSize>65500B</MaxMessageSize>
+    </General>
+    <Discovery>
+      <ParticipantIndex>auto</ParticipantIndex>
+      <Peers>
+        <Peer Address="10.1.14.24" /> <!-- CHANGE_ME: robot 1 -->
+        <Peer Address="10.1.14.25" /> <!-- CHANGE_ME: robot 2 -->
+        <!-- add one <Peer Address="..."/> per additional robot -->
+      </Peers>
+    </Discovery>
+    <Internal>
+      <Watermarks>
+        <WhcHigh>500kB</WhcHigh>
+      </Watermarks>
+    </Internal>
+  </Domain>
+</CycloneDDS>

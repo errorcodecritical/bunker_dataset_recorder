@@ -1,0 +1,44 @@
+# domain_bridge config
+#
+# Only topics listed here ever leave the robot's local domain (30) onto the
+# fleet domain (31). Everything else — raw lidar, raw camera, IMU at full
+# rate, etc. — stays on-robot over iceoryx shared memory and never touches
+# the network. Add one entry per topic you actually need shared fleet-wide.
+#
+# *** ROBOT-SPECIFIC: edit this list for what your fleet coordination
+#     actually needs. The entries below are a reasonable starting set
+#     given the drivers in docker-compose.yml. ***
+
+name: fleet_bridge
+from_domain: 30
+to_domain: 31
+
+topics:
+  /bunker_odom:
+    type: nav_msgs/msg/Odometry
+    qos:
+      reliability: reliable
+      history: keep_last
+      depth: 10
+
+  /tf:
+    type: tf2_msgs/msg/TFMessage
+    qos:
+      reliability: reliable
+      history: keep_last
+      depth: 100
+
+  /robot_status:
+    type: std_msgs/msg/String
+    qos:
+      reliability: reliable
+      history: keep_last
+      depth: 1
+
+  /fix:
+    # from the emlid GNSS driver — useful fleet-wide for coarse positioning
+    type: sensor_msgs/msg/NavSatFix
+    qos:
+      reliability: best_effort
+      history: keep_last
+      depth: 5

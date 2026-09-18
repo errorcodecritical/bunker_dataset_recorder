@@ -1,0 +1,40 @@
+# iceoryx RouDi config
+#
+# One RouDi instance per robot (host), shared by every driver container via
+# `ipc: host` + the shared /dev/shm mount in docker-compose.yml.
+#
+# Mempool sizing rule of thumb: each pool needs (payload size + ~128B header),
+# rounded up, with enough `count` for your worst-case in-flight sample count
+# across every publisher/subscriber pair using that size class.
+#
+# *** ROBOT-SPECIFIC: retune against your actual message sizes ***
+# - Hesai point clouds and OAK-D frames are the largest payloads here; check
+#   real serialized size with `ros2 topic bw <topic>` / `ros2 topic hz` and
+#   adjust the 1 MiB / 8 MiB pools below if they're bigger (e.g. high-res
+#   RGB or multiple point cloud fields pushes well past 8 MiB).
+# - If RouDi logs "no more chunks available" for a topic, bump that pool's
+#   `count` (or size) rather than the others.
+
+[general]
+version = 1
+
+[[segment]]
+  # small control/status messages (odom, imu, joint states, tf)
+  [[segment.mempool]]
+  size = 1024
+  count = 5000
+
+  # mid-size messages (compressed images, small point clouds, laser scans)
+  [[segment.mempool]]
+  size = 65536
+  count = 2000
+
+  # large messages (raw camera frames, medium point clouds)
+  [[segment.mempool]]
+  size = 1048576
+  count = 200
+
+  # largest messages (full Hesai point clouds, uncompressed high-res frames)
+  [[segment.mempool]]
+  size = 8388608
+  count = 50
