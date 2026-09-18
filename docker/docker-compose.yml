@@ -17,7 +17,11 @@ services:
       - ../ros2_ws:/ros2_ws
       - ../config/iceoryx/roudi_config.toml:/roudi_config.toml
     command:
-      - echo '=== Starting RouDi ===' && exec iox-roudi -c /roudi_config.toml"
+      - bash
+      - -c
+      - | 
+        echo '=== Starting RouDi ==='
+        iox-roudi -c /roudi_config.toml
 
   xsens_driver:
     build:
