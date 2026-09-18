@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ros-jazzy-image-transport-plugins \
         ros-jazzy-image-proc \
         ros-jazzy-rosbag2-storage-mcap \
-        ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
+        ros-jazzy-rmw-cyclonedds-cpp \
         ros-jazzy-ament-cmake-clang-tidy \
         libgtkmm-3.0-dev \
         # Hugin D1 GUI:

@@ -11,7 +11,7 @@
         <MaxAutoParticipantIndex>100</MaxAutoParticipantIndex>
     </Discovery>
     <Internal>
-      <SocketReceiveBufferSize min="10MB" />
+      <!-- <SocketReceiveBufferSize min="10MB" /> -->
       <Watermarks>
         <WhcHigh>500kB</WhcHigh>
       </Watermarks>

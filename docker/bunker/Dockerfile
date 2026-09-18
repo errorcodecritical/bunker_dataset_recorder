@@ -13,15 +13,15 @@ RUN apt update && apt install -y \
 
 #Install ROS Packages
 RUN apt update && apt install -y \
-    ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
-    ros-$ROS_DISTRO-robot-state-publisher \
-    ros-$ROS_DISTRO-joint-state-publisher \
-    ros-$ROS_DISTRO-joint-state-publisher-gui \
-    ros-$ROS_DISTRO-xacro \
-    ros-$ROS_DISTRO-teleop-twist-joy \
-    ros-$ROS_DISTRO-teleop-twist-keyboard \
-    ros-$ROS_DISTRO-twist-mux \
-    ros-$ROS_DISTRO-ros2-control \
+    ros-jazzy-rmw-cyclonedds-cpp \
+    ros-jazzy-robot-state-publisher \
+    ros-jazzy-joint-state-publisher \
+    ros-jazzy-joint-state-publisher-gui \
+    ros-jazzy-xacro \
+    ros-jazzy-teleop-twist-joy \
+    ros-jazzy-teleop-twist-keyboard \
+    ros-jazzy-twist-mux \
+    ros-jazzy-ros2-control \
     can-utils \
     iproute2
 

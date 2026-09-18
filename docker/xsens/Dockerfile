@@ -14,9 +14,9 @@ RUN apt update \
 
 #Install ROS Packages
 RUN apt install -y \
-    ros-$ROS_DISTRO-tf-transformations \
-    ros-$ROS_DISTRO-imu-tools \
-    ros-$ROS_DISTRO-rmw-cyclonedds-cpp
+    ros-jazzy-tf-transformations \
+    ros-jazzy-imu-tools \
+    ros-jazzy-rmw-cyclonedds-cpp
 
 RUN apt-get clean
 

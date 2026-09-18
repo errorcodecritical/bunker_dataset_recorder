@@ -20,17 +20,18 @@ RUN apt update \
     libyaml-cpp-dev
 
 #Install ros2 pkg
-RUN apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
-    ros-$ROS_DISTRO-rosbag2-storage-mcap \
-    ros-$ROS_DISTRO-cv-bridge \
-    ros-$ROS_DISTRO-image-transport \
-    ros-$ROS_DISTRO-diagnostic-updater \
-    ros-$ROS_DISTRO-angles \
-    ros-$ROS_DISTRO-topic-tools \
-    ros-$ROS_DISTRO-sensor-msgs \
-    ros-$ROS_DISTRO-std-msgs \
-    ros-$ROS_DISTRO-backward-ros \
-    ros-$ROS_DISTRO-vision-msgs
+RUN apt install -y ros-jazzy-rmw-cyclonedds-cpp \
+    ros-jazzy-rosbag2-storage-mcap \
+    ros-jazzy-cv-bridge \
+    ros-jazzy-image-transport \
+    ros-jazzy-diagnostic-updater \
+    ros-jazzy-angles \
+    ros-jazzy-topic-tools \
+    ros-jazzy-sensor-msgs \
+    ros-jazzy-std-msgs \
+    ros-jazzy-backward-ros \
+    ros-jazzy-vision-msgs \
+    ros-jazzy-rviz2
 
 # Clone dependencies repos
 WORKDIR /tmp/HesaiLidar_ROS_2.0

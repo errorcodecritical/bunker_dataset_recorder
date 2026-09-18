@@ -19,10 +19,10 @@ RUN apt-get -y install \
 
 #Install ROS Packages
 RUN apt-get update \
-    && apt-get install -y ros-$ROS_DISTRO-depthai-ros \
-    ros-$ROS_DISTRO-rmw-cyclonedds-cpp
+    && apt-get install -y ros-jazzy-depthai-ros \
+    ros-jazzy-rmw-cyclonedds-cpp
     #Depthai-V3
-    #ros-$ROS_DISTRO-depthai-ros-v3
+    #ros-jazzy-depthai-ros-v3
 
 RUN apt-get clean
 

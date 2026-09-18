@@ -14,7 +14,7 @@ RUN apt update \
     libyaml-cpp-dev
 
 #Install ros2 pkg
-RUN apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp
+RUN apt install -y ros-jazzy-rmw-cyclonedds-cpp
 
 RUN apt-get clean
 

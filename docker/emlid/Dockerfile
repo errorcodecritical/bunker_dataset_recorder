@@ -13,8 +13,8 @@ RUN apt update \
     python3-serial
 
 #Install ROS Packages
-RUN apt install -y ros-$ROS_DISTRO-tf-transformations \
-    ros-$ROS_DISTRO-rmw-cyclonedds-cpp
+RUN apt install -y ros-jazzy-tf-transformations \
+    ros-jazzy-rmw-cyclonedds-cpp
 
 RUN apt-get clean
 

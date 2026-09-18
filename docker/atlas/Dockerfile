@@ -21,14 +21,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 #Install ros2 pkg
 RUN apt update \
-    && apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
-    ros-$ROS_DISTRO-sensor-msgs \
-    ros-$ROS_DISTRO-std-msgs \
-    ros-$ROS_DISTRO-nav-msgs \
-    ros-$ROS_DISTRO-tf2-msgs \
-    ros-$ROS_DISTRO-visualization-msgs \
-    ros-$ROS_DISTRO-geometry-msgs \
-    ros-$ROS_DISTRO-vision-msgs
+    && apt install -y ros-jazzy-rmw-cyclonedds-cpp \
+    ros-jazzy-sensor-msgs \
+    ros-jazzy-std-msgs \
+    ros-jazzy-nav-msgs \
+    ros-jazzy-tf2-msgs \
+    ros-jazzy-visualization-msgs \
+    ros-jazzy-geometry-msgs \
+    ros-jazzy-vision-msgs
 
 
 # dpkg -i /shared/atlas/Atlas_AevaCLI_4_0_0_GA_aarch64.deb
