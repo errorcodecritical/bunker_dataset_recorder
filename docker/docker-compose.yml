@@ -32,8 +32,7 @@ services:
     privileged: true
     network_mode: host
     ipc: host
-    depends_on:
-      - roudi
+    
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
@@ -67,8 +66,7 @@ services:
     privileged: true
     network_mode: host
     ipc: host
-    depends_on:
-      - roudi
+    
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
@@ -101,8 +99,7 @@ services:
     privileged: true
     network_mode: host
     ipc: host
-    depends_on:
-      - roudi
+    
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
@@ -134,8 +131,7 @@ services:
     privileged: true
     network_mode: host
     ipc: host
-    depends_on:
-      - roudi
+    
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
@@ -167,8 +163,7 @@ services:
     privileged: true
     network_mode: host
     ipc: host
-    depends_on:
-      - roudi
+    
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
@@ -206,8 +201,7 @@ services:
               capabilities: [gpu]
     network_mode: host
     ipc: host
-    depends_on:
-      - roudi
+    
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
@@ -246,8 +240,7 @@ services:
     network_mode: host
     ipc: host
     restart: unless-stopped
-    depends_on:
-      - roudi
+    
     volumes:
       - /dev:/dev
       - ../ros2_ws:/ros2_ws
@@ -306,8 +299,7 @@ services:
     privileged: true
     network_mode: host
     ipc: host
-    depends_on:
-      - roudi
+    
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
@@ -336,8 +328,7 @@ services:
     network_mode: host
     ipc: host
     restart: unless-stopped
-    depends_on:
-      - roudi
+    
     volumes:
       - ../config/cyclonedds/cyclonedds-bridge.xml:/cyclonedds-config.xml
       - ../config/bridge/fleet_bridge.yaml:/bridge_config.yaml
