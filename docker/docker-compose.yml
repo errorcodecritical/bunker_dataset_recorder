@@ -13,8 +13,9 @@ services:
     ipc: host
     restart: unless-stopped
     volumes:
-      - ../config/iceoryx/roudi_config.toml:/roudi_config.toml
       - /dev/shm:/dev/shm
+      - ../ros2_ws:/ros2_ws
+      - ../config/iceoryx/roudi_config.toml:/roudi_config.toml
     command:
       - echo '=== Starting RouDi ===' && exec iox-roudi -c /roudi_config.toml"
 
