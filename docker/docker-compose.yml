@@ -1,5 +1,5 @@
 services:
-  xsens:
+  xsens_driver:
     build:
      context: ..
      dockerfile: docker/xsens/Dockerfile
@@ -27,7 +27,7 @@ services:
         source /ros2_ws/install/setup.bash
         ros2 launch xsens_driver xsens_driver.launch.xml
 
-  emlid:
+  emlid_driver:
     build:
       context: ..
       dockerfile: docker/emlid/Dockerfile
@@ -54,7 +54,7 @@ services:
         source /ros2_ws/install/setup.bash
         ros2 run nmea_navsat_driver nmea_serial_driver
 
-  oakd:
+  oakd_driver:
     build:
       context: ..
       dockerfile: docker/oakd/Dockerfile
@@ -84,7 +84,7 @@ services:
         source /ros2_ws/install/setup.bash
         ros2 launch depthai_ros_driver camera.launch.py
 
-  hesai:
+  hesai_driver:
     build:
      context: ..
      dockerfile: docker/hesai/Dockerfile
@@ -98,6 +98,7 @@ services:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
       - ../shared/:/shared/
+      - ../config/hesai/config.yaml:/ros2_ws/src/HesaiLidar_ROS_2.0/config/config.yaml
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
@@ -111,7 +112,7 @@ services:
         source /ros2_ws/install/setup.bash
         ros2 run hesai_ros_driver hesai_ros_driver_node
 
-  atlas:
+  atlas_driver:
     build:
      context: ..
      dockerfile: docker/atlas/Dockerfile
@@ -136,7 +137,7 @@ services:
         source /ros2_ws/install/setup.bash
         ros2 run ros2_aeva_publisher ros2_aeva_publisher 10.1.14.24 ATLAS
 
-  hugin:
+  hugin_driver:
     build:
      context: ..
      dockerfile: docker/hugin/Dockerfile
