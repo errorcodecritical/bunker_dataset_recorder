@@ -1,46 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!--
-  Config for the fleet_bridge container ONLY.
-
-  domain_bridge opens one participant per domain ID inside a single
-  process, and CycloneDDS lets one file define multiple <Domain> blocks,
-  each picked up by the participant with the matching domain ID. So this
-  file is just the local (30) and fleet (31) blocks concatenated —
-  keep it in sync with cyclonedds-local.xml / cyclonedds-fleet.xml if you
-  change either.
-
-  *** ROBOT-SPECIFIC: same NetworkInterface/Peer edits as cyclonedds-fleet.xml ***
--->
-<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
-
-  <!-- LOCAL side: subscribes to the topics named in fleet_bridge.yaml on this robot -->
-  <Domain Id="30">
-    <General>
-      <Interfaces>
-        <NetworkInterface name="lo" priority="default" multicast="false" />
-        <PubSubMessageExchange name="iox" library="psmx_iox" config="LOG_LEVEL=INFO;" />
-      </Interfaces>
-      <AllowMulticast>false</AllowMulticast>
-      <MaxMessageSize>65500B</MaxMessageSize>
-    </General>
-  </Domain>
-
-  <!-- FLEET side: republishes those topics out over the real network -->
+<CycloneDDS xmlns="https://cdds.io/config">
   <Domain Id="31">
     <General>
       <Interfaces>
-        <NetworkInterface autodetermine="false" name="CHANGE_ME_eth0" priority="default" multicast="true" />
+        <!-- Allow multicast on Wi-Fi interface -->
+        <NetworkInterface name="wlan0" priority="default" multicast="true" />
       </Interfaces>
-      <AllowMulticast>spdp</AllowMulticast>
-      <MaxMessageSize>65500B</MaxMessageSize>
+      <AllowMulticast>true</AllowMulticast>
     </General>
     <Discovery>
-      <Peers>
-        <Peer Address="10.1.14.24" /> <!-- CHANGE_ME: robot 1 -->
-        <Peer Address="10.1.14.25" /> <!-- CHANGE_ME: robot 2 -->
-      </Peers>
+      <ParticipantIndex>auto</ParticipantIndex>
     </Discovery>
+    <SharedMemory>
+      <Enable>true</Enable>
+    </SharedMemory>
   </Domain>
-
 </CycloneDDS>

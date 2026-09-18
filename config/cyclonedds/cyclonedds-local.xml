@@ -1,50 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-  LOCAL (per-robot) domain — ROS_DOMAIN_ID=30
-
-  Used by every sensor/actuator driver container on a single robot.
-  Bound to loopback only + multicast disabled, so this domain cannot
-  physically reach another robot even though every container runs with
-  network_mode: host. Discovery/control traffic uses loopback; actual
-  sample payloads between co-located pub/sub pairs go through iceoryx
-  shared memory via the PSMX interface plugin (psmx_iox) instead.
-
-  NOTE: newer CycloneDDS builds made the old <SharedMemory><Enable> block
-  a vestigial no-op (its XSD type is now empty) — shared memory is
-  configured entirely through General/Interfaces/PubSubMessageExchange
-  below. If cvc-complex-type.2.1 errors mentioning SharedMemory show up
-  again, it means the installed core reverted to (or still uses) the
-  older embedded-SHM API; see the note at the bottom of this file.
-
-  Requires: the `roudi` container running on the same host with the
-  matching config/iceoryx/roudi_config.toml, and every driver container
-  started with `ipc: host` so they share iceoryx's POSIX shm segments,
-  plus the psmx_iox shared library actually present in the image (it
-  ships alongside ros-jazzy-cyclonedds / ros-jazzy-iceoryx-binding-c).
--->
-<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<CycloneDDS xmlns="https://cdds.io/config" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
             xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
   <Domain Id="30">
+    
     <General>
+      <!-- Enable multicast EXCLUSIVELY for SPDP auto-detection -->
+      <AllowMulticast>spdp</AllowMulticast>
+
+      <!-- Replaces NetworkInterfaceAddress -->
       <Interfaces>
-        <NetworkInterface name="lo" priority="default" multicast="false" />
-        <!-- iceoryx shared-memory data path (PSMX). Discovery/control still
-             goes over loopback above; the actual sample payload for any
-             pub/sub pair that's co-located goes through this instead. -->
-        <PubSubMessageExchange type="iox" library="psmx_iox" config="LOG_LEVEL=INFO;" />
+        <NetworkInterface name="wlan0" priority="default" multicast="default"/>
       </Interfaces>
-      <AllowMulticast>false</AllowMulticast>
-      <MaxMessageSize>65500B</MaxMessageSize>
     </General>
+
     <Discovery>
-      <MaxAutoParticipantIndex>100</MaxAutoParticipantIndex>
-      <ParticipantIndex>auto</ParticipantIndex>
+      <SPDPMulticastAddress>239.255.0.1</SPDPMulticastAddress>
+      <Peers>
+        <Peer Address="239.255.0.1"/>
+      </Peers>
     </Discovery>
+
     <Internal>
-      <!-- <SocketReceiveBufferSize min="10MB" /> -->
-      <Watermarks>
-        <WhcHigh>500kB</WhcHigh>
-      </Watermarks>
+      <SocketReceiveBufferSize min="10MB"/>
     </Internal>
+
+    <SharedMemory/>
+
   </Domain>
 </CycloneDDS>
