@@ -10,14 +10,14 @@ services:
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
-      - ../shared/:/shared/
-      - ../config/xsens/mtdevice.py:/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtdevice.py:rw
-      - ../config/xsens/mtnode.py:/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtnode.py:rw
-      - ../config/xsens/xsens_driver.launch.xml:/ros2_ws/src/norlab_xsens_driver/launch/xsens_driver.launch.xml:rw
+      - ../config/cyclonedds/cyclonedds-config.xml/:/cyclonedds-config.xml
+      - ../config/xsens/mtdevice.py:/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtdevice.py
+      - ../config/xsens/mtnode.py:/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtnode.py
+      - ../config/xsens/xsens_driver.launch.xml:/ros2_ws/src/norlab_xsens_driver/launch/xsens_driver.launch.xml
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -38,13 +38,13 @@ services:
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
-      - ../shared/:/shared/
-      - ../config/emlid/nmea_serial_driver.py:/ros2_ws/src/nmea_navsat_driver/src/libnmea_navsat_driver/nodes/nmea_serial_driver.py:rw
-      - ../config/emlid/nmea_serial_driver.yaml:/ros2_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml:rw
+      - ../config/cyclonedds/cyclonedds-config.xml/:/cyclonedds-config.xml
+      - ../config/emlid/nmea_serial_driver.py:/ros2_ws/src/nmea_navsat_driver/src/libnmea_navsat_driver/nodes/nmea_serial_driver.py
+      - ../config/emlid/nmea_serial_driver.yaml:/ros2_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -65,17 +65,13 @@ services:
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
-      - ../shared/:/shared/
-      #Depthai ROS config
+      - ../config/cyclonedds/cyclonedds-config.xml/:/cyclonedds-config.xml
       - ../config/oakd/depthai_ros_driver/config:/opt/ros/jazzy/share/depthai_ros_driver/config
       - ../config/oakd/depthai_ros_driver/launch:/opt/ros/jazzy/share/depthai_ros_driver/launch
-      #Depthai ROS V3 config
-      #- ../config/oakd/depthai_ros_driver/config/:/opt/ros/jazzy/share/depthai_ros_driver_v3/config/
-      #- ../config/oakd/depthai_ros_driver/launch/:/opt/ros/jazzy/share/depthai_ros_driver_v3/launch/
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -92,17 +88,15 @@ services:
     container_name: hesai
     privileged: true
     network_mode: host
-    # ports:
-    #   - "2368:2368/udp"
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
-      - ../shared/:/shared/
+      - ../config/cyclonedds/cyclonedds-config.xml/:/cyclonedds-config.xml
       - ../config/hesai/config.yaml:/ros2_ws/src/HesaiLidar_ROS_2.0/config/config.yaml
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-    #   #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -123,11 +117,11 @@ services:
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
-      - ../shared/:/shared/
+      - ../config/cyclonedds/cyclonedds-config.xml/:/cyclonedds-config.xml
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -152,24 +146,15 @@ services:
             - driver: nvidia
               capabilities: [gpu]
     network_mode: host
-    # ports:
-    #   - "6001:6001/udp"
-    #   - "6003:6003/udp"
-    #   - "6007:6007/udp"
-    #   - "6010:6010/udp"
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
-      - ../shared/:/shared/
+      - ../config/cyclonedds/cyclonedds-config.xml/:/cyclonedds-config.xml
       - ../shared/hugin/ros2/src/:/opt/ros/overlay_ws/src/
-      - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
-      - DISPLAY=$DISPLAY
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=all
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -195,13 +180,14 @@ services:
     network_mode: host
     restart: unless-stopped
     volumes:
+      - /dev:/dev
       - ../ros2_ws:/ros2_ws
-      - ../shared/:/shared/
+      - ../config/cyclonedds/cyclonedds-config.xml/:/cyclonedds-config.xml
       - ../config/bunker:/config/bunker
-      - /dev:/dev:rw,rslave
     environment:
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
     command:
       - bash
       - -c
@@ -249,41 +235,12 @@ services:
     volumes:
       - /dev/:/dev/
       - ../ros2_ws:/ros2_ws
-      - ../shared/:/shared/
+      - ../config/cyclonedds/cyclonedds-config.xml/:/cyclonedds-config.xml
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
       - DISPLAY=$DISPLAY
       - QT_X11_NO_MITSHM=1
       - ROS_DOMAIN_ID=30
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
     command: /shared/recorder-launch.sh
-
-  visualizer:
-    build:
-      context: ..
-      dockerfile: docker/visualizer/Dockerfile
-    image: ros2_visualizer:latest
-    container_name: visualizer
-    privileged: true
-    runtime: nvidia
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [gpu]
-    network_mode: host
-    volumes:
-      - /dev/:/dev/
-      - ../../rosbags/:/rosbags/
-      - ../ros2_ws:/ros2_ws
-      - ../shared/:/shared/
-      - /tmp/.X11-unix:/tmp/.X11-unix
-    environment:
-      - DISPLAY=$DISPLAY
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=all
-      - ROS_DOMAIN_ID=30
-      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      #- CYCLONEDDS_URI=file:///shared/cyclonedds-config.xml
-    command: /shared/visualizer-launch.sh
