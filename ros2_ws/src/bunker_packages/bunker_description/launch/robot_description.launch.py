@@ -1,52 +1,50 @@
-import os
 from launch import LaunchDescription
-from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
+from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
-    # Find package
-    pkg_share = FindPackageShare(package='bunker_description').find('bunker_description')
-    
-    # Arguments
-    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    simulation = LaunchConfiguration('simulation', default='false')
-    
-    # Path to URDF file
+    pkg_share = FindPackageShare('bunker_description')
+
+    use_sim_time = LaunchConfiguration('use_sim_time')
+    simulation = LaunchConfiguration('simulation')
+
     urdf_file = PathJoinSubstitution([pkg_share, 'urdf', 'bunker.urdf.xacro'])
-    
-    # Launch description
-    ld = LaunchDescription()
-    
-    # Declare launch arguments
-    ld.add_action(DeclareLaunchArgument('use_sim_time', default_value='false'))
-    ld.add_action(DeclareLaunchArgument('simulation', default_value='false'))
-    
-    # Node: robot_state_publisher
+
+    robot_description_content = ParameterValue(
+        Command([
+            'xacro ', urdf_file,
+            ' use_sim_time:=', use_sim_time,
+            ' simulation:=', simulation,
+        ]),
+        value_type=str,
+    )
+
+    declare_use_sim_time = DeclareLaunchArgument(
+        'use_sim_time', default_value='false',
+        description='Use simulation (Gazebo) clock if true',
+    )
+    declare_simulation = DeclareLaunchArgument(
+        'simulation', default_value='false',
+        description='Pass simulation mode through to the xacro model',
+    )
+
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
+        name='robot_state_publisher',
         output='screen',
-        parameters=[
-            {'use_sim_time': use_sim_time},
-            {'robot_description': urdf_file},
-        ],
+        parameters=[{
+            'use_sim_time': use_sim_time,
+            'robot_description': robot_description_content,
+        }],
     )
-    
-    # Node: joint_state_publisher
-    joint_state_publisher_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher',
-        output='screen',
-        parameters=[
-            {'use_sim_time': use_sim_time},
-        ],
-    )
-    
-    ld.add_action(robot_state_publisher_node)
-    ld.add_action(joint_state_publisher_node)
-    
-    return ld
+
+    return LaunchDescription([
+        declare_use_sim_time,
+        declare_simulation,
+        robot_state_publisher_node,
+    ])
