@@ -1,0 +1,15 @@
+name: bunker_network_bridge
+from_domain: 0 # Internal RouDi domain
+to_domain: 1324  # External multi-robot domain
+
+topics:
+  /imu/data:
+    type: sensor_msgs/msg/Imu
+    remap: /bunker/imu/data
+
+  # # Reverse direction: Allow external /robot_1/cmd_vel -> internal /cmd_vel
+  # /robot_1/cmd_vel:
+  #   type: geometry_msgs/msg/Twist
+  #   remap: /cmd_vel
+  #   from_domain: 42
+  #   to_domain: 0

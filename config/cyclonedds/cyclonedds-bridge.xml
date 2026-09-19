@@ -1,17 +1,29 @@
-<CycloneDDS xmlns="https://cdds.io/config">
-  <Domain Id="31">
+<?xml version="1.0" encoding="UTF-8" ?>
+<CycloneDDS xmlns="https://cdds.io/config" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+  <Domain Id="30">
+    
     <General>
+      <!-- Enable multicast EXCLUSIVELY for SPDP auto-detection -->
+      <AllowMulticast>spdp</AllowMulticast>
+      <MaxMessageSize>62kB</MaxMessageSize>
+
+      <!-- Replaces NetworkInterfaceAddress -->
       <Interfaces>
-        <!-- Allow multicast on Wi-Fi interface -->
-        <NetworkInterface name="wlan0" priority="default" multicast="true" />
+        <NetworkInterface name="wlo1" priority="default" multicast="default"/>
       </Interfaces>
-      <AllowMulticast>true</AllowMulticast>
     </General>
+
     <Discovery>
       <ParticipantIndex>auto</ParticipantIndex>
     </Discovery>
-    <SharedMemory>
-      <Enable>true</Enable>
-    </SharedMemory>
+
+    <Internal>
+      <SocketReceiveBufferSize min="1MB"/>
+    </Internal>
+
+    <SharedMemory/>
+
   </Domain>
 </CycloneDDS>

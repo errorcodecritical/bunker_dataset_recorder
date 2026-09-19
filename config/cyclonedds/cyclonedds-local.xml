@@ -3,29 +3,8 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
             xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
   <Domain Id="30">
-    
-    <General>
-      <!-- Enable multicast EXCLUSIVELY for SPDP auto-detection -->
-      <AllowMulticast>spdp</AllowMulticast>
 
-      <!-- Replaces NetworkInterfaceAddress -->
-      <Interfaces>
-        <NetworkInterface name="wlo1" priority="default" multicast="default"/>
-      </Interfaces>
-    </General>
-
-    <Discovery>
-      <SPDPMulticastAddress>239.255.0.1</SPDPMulticastAddress>
-      <Peers>
-        <Peer Address="239.255.0.1"/>
-      </Peers>
-    </Discovery>
-
-    <Internal>
-      <SocketReceiveBufferSize min="1MB"/>
-    </Internal>
-
-    <!-- <SharedMemory/> -->
+    <SharedMemory/>
 
   </Domain>
 </CycloneDDS>

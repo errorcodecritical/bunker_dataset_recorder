@@ -340,3 +340,30 @@ services:
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
     command: /shared/recorder-launch.sh
+
+  network_bridge:
+    build:
+      context: ..
+      dockerfile: docker/roudi/Dockerfile
+    image: ros2_roudi:latest
+    container_name: network_bridge
+    privileged: true
+    user: "0:0"
+    network_mode: host
+    ipc: host
+    volumes:
+      - /dev/:/dev/
+      - /tmp:/tmp
+      - ../ros2_ws:/ros2_ws
+      - ../config/cyclonedds/cyclonedds-bridge.xml:/cyclonedds-config.xml
+      - ../config/bridge/brisge_config.yaml:/bridge_config.yaml
+    environment:
+      - ROS_DOMAIN_ID=30
+      - IOX_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
+    command:
+      - bash
+      - -c
+      - |
+        ros2 run domain_bridge domain_bridge /bridge_config.yaml
