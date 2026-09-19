@@ -358,7 +358,7 @@ services:
       - ../config/cyclonedds/cyclonedds-bridge.xml:/cyclonedds-config.xml
       - ../config/bridge/bridge_config.yaml:/bridge_config.yaml
     environment:
-      - ROS_DOMAIN_ID=133
+      - ROS_DOMAIN_ID=0
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
@@ -367,5 +367,6 @@ services:
       - -c
       - |
         ros2 run domain_bridge domain_bridge /bridge_config.yaml &
-        ros2 run image_transport republish raw in:=/oak/rgb/image_raw out:=/oak/rgb/image_raw_compressed &
-        ros2 run point_cloud_transport republish raw in:=/hesai/points draco out:=/hesai/points_compressed
+        ros2 run topic_tools throttle messages /hesai/points 1.0 /hesai/points_compressed
+        # ros2 run point_cloud_transport republish raw in:=/hesai/points draco out:=/hesai/points_compressed
+        # ros2 run image_transport republish raw in:=/oak/rgb/image_raw out:=/oak/rgb/image_raw &

@@ -14,13 +14,13 @@
       i_sensor_img_orientation: ROTATE_180_DEG
       i_resolution: 1080P
       i_fps: 30.0
-      i_publish_compressed: false
-      i_rgb_low_bandwidth: false
+      i_publish_compressed: true
+      i_rgb_low_bandwidth: true
       i_rgb_bandwidth_bitrate: 0
       i_rgb_bandwidth_ffmpeg_encoder: libx264
-      i_rgb_bandwidth_frame_freq: 30
+      i_rgb_bandwidth_frame_freq: 10
       i_rgb_bandwidth_profile: 4
-      i_rgb_bandwidth_quality: 50
+      i_rgb_bandwidth_quality: 10
 
     stereo:
       i_publish_topic: false

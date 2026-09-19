@@ -2,30 +2,26 @@
 <CycloneDDS xmlns="https://cdds.io/config" 
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
             xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
-  <!-- Domain 0: Local-only via loopback and shared memory -->
+  
+  <!-- Domain 0: Local-only transport -->
   <Domain id="0">
     <General>
-      <!-- Disable network multicast discovery across interfaces -->
       <AllowMulticast>false</AllowMulticast>
-      
-      <!-- Bind network traffic strictly to loopback -->
       <Interfaces>
-        <NetworkInterface name="lo" multicast="false"/>
+        <NetworkInterface address="127.0.0.1"/>
       </Interfaces>
     </General>
-
-    <!-- Enforce Iceoryx shared memory zero-copy transport -->
-    <SharedMemory/>
+    <SharedMemory>
+      <Enable>true</Enable>
+    </SharedMemory>
   </Domain>
 
-  <!-- Domain 133: Inter-Robot Wi-Fi Exchange Bus -->
+  <!-- Domain 133: Inter-Robot Wi-Fi Exchange -->
   <Domain id="133">
     <General>
       <AllowMulticast>spdp</AllowMulticast>
-      <MaxMessageSize>62kB</MaxMessageSize>
       <Interfaces>
-        <!-- Ensure interface name matches physical network card (e.g. wlo1, wlP1p1s0) -->
-        <NetworkInterface name="wlP1p1s0" priority="default" multicast="default"/>
+        <NetworkInterface name="wlo1" priority="default" multicast="default"/>
       </Interfaces>
     </General>
     <Discovery>
@@ -33,14 +29,17 @@
       <SPDPMulticastAddress>239.255.0.1</SPDPMulticastAddress>
       <Peers>
         <Peer Address="239.255.0.1"/>
-        <!-- Optional: Add static peer IP if multicast is blocked on your router -->
-        <!-- <Peer Address="192.168.1.105"/> -->
       </Peers>
     </Discovery>
+    <SharedMemory>
+      <Enable>false</Enable> <!-- Disables zero-copy across Wi-Fi -->
+    </SharedMemory>
     <Internal>
-      <SocketReceiveBufferSize min="1MB"/>
+      <SocketReceiveBufferSize min="100MB"/>
+      <SocketSendBufferSize min="100MB"/>
+      <Watermarks>
+        <WhcHigh>100MB</WhcHigh>
+      </Watermarks>
     </Internal>
-    <SharedMemory/>
   </Domain>
-
 </CycloneDDS>
