@@ -7,3 +7,16 @@ services:
   ros:
     volumes:
       - ./config/hmr_localisation/config:/ws/config
+      - ../config/cyclonedds/cyclonedds-bridge.xml:/cyclonedds-config.xml
+      - ../config/bridge/bridge_config.yaml:/bridge_config.yaml
+      - ../run_localization_bunker_hesai.sh:/start.sh
+    environment:
+      - ROS_DOMAIN_ID=0
+      - IOX_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///cyclonedds-config.xml
+    command:
+      - bash
+      - -c
+      - |
+        /start.sh
