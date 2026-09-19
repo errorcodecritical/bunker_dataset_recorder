@@ -366,4 +366,6 @@ services:
       - bash
       - -c
       - |
-        ros2 run domain_bridge domain_bridge /bridge_config.yaml
+        ros2 run domain_bridge domain_bridge /bridge_config.yaml &
+        ros2 run image_transport republish raw in:=/oak/rgb/image_raw out:=/oak/rgb/image_raw_compressed &
+        ros2 run point_cloud_transport republish raw in:=/hesai/points draco out:=/hesai/points_compressed
