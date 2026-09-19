@@ -2,10 +2,10 @@
   ros__parameters:
     camera:
       i_nn_type: none
-      i_pipeline_type: RGBStereo
+      i_pipeline_type: RGB
     right:
-      i_publish_topic: true
+      i_publish_topic: false
     left:
-      i_publish_topic: true
+      i_publish_topic: false
     rgb: 
       i_set_isp_scale: false

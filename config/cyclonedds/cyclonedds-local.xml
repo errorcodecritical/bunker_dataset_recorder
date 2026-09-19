@@ -10,7 +10,7 @@
 
       <!-- Replaces NetworkInterfaceAddress -->
       <Interfaces>
-        <NetworkInterface name="wlan0" priority="default" multicast="default"/>
+        <NetworkInterface name="wlo1" priority="default" multicast="default"/>
       </Interfaces>
     </General>
 
@@ -22,10 +22,10 @@
     </Discovery>
 
     <Internal>
-      <SocketReceiveBufferSize min="10MB"/>
+      <SocketReceiveBufferSize min="1MB"/>
     </Internal>
 
-    <SharedMemory/>
+    <!-- <SharedMemory/> -->
 
   </Domain>
 </CycloneDDS>
