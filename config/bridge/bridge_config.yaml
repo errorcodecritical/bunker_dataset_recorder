@@ -7,9 +7,8 @@ topics:
     type: sensor_msgs/msg/Imu
     remap: /bunker/imu/data
 
-  # # Reverse direction: Allow external /robot_1/cmd_vel -> internal /cmd_vel
-  # /robot_1/cmd_vel:
-  #   type: geometry_msgs/msg/Twist
-  #   remap: /cmd_vel
-  #   from_domain: 42
+  # Reverse direction: Allow external /robot_1/cmd_vel -> internal /cmd_vel
+  # /bunker/imu/data:
+  #   type: sensor_msgs/msg/Imu
+  #   from_domain: 133
   #   to_domain: 0

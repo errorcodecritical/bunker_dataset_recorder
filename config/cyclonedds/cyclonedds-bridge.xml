@@ -24,7 +24,7 @@
       <AllowMulticast>spdp</AllowMulticast>
       <MaxMessageSize>62kB</MaxMessageSize>
       <Interfaces>
-        <!-- Ensure interface name matches physical network card (e.g. wlan0, wlP1p1s0) -->
+        <!-- Ensure interface name matches physical network card (e.g. wlo1, wlP1p1s0) -->
         <NetworkInterface name="wlP1p1s0" priority="default" multicast="default"/>
       </Interfaces>
     </General>
