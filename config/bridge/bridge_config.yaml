@@ -1,6 +1,6 @@
 name: bunker_network_bridge
 from_domain: 0 # Internal RouDi domain
-to_domain: 1324  # External multi-robot domain
+to_domain: 133  # External multi-robot domain
 
 topics:
   /imu/data:

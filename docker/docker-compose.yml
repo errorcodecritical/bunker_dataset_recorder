@@ -10,7 +10,7 @@ services:
     container_name: roudi
     privileged: true
     user: "0:0"
-    network_mode: host
+    network_mode: none
     ipc: host
     restart: unless-stopped
     volumes:
@@ -48,7 +48,7 @@ services:
       - ../config/xsens/mtnode.py:/ros2_ws/src/norlab_xsens_driver/xsens_driver/mtnode.py
       - ../config/xsens/xsens_driver.launch.xml:/ros2_ws/src/norlab_xsens_driver/launch/xsens_driver.launch.xml
     environment:
-      - ROS_DOMAIN_ID=30
+      - ROS_DOMAIN_ID=0
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
@@ -84,7 +84,7 @@ services:
       - ../config/emlid/nmea_serial_driver.py:/ros2_ws/src/nmea_navsat_driver/src/libnmea_navsat_driver/nodes/nmea_serial_driver.py
       - ../config/emlid/nmea_serial_driver.yaml:/ros2_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml
     environment:
-      - ROS_DOMAIN_ID=30
+      - ROS_DOMAIN_ID=0
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
@@ -120,7 +120,7 @@ services:
       - ../config/oakd/depthai_ros_driver/config:/opt/ros/jazzy/share/depthai_ros_driver/config
       - ../config/oakd/depthai_ros_driver/launch:/opt/ros/jazzy/share/depthai_ros_driver/launch
     environment:
-      - ROS_DOMAIN_ID=30
+      - ROS_DOMAIN_ID=0
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
@@ -154,7 +154,7 @@ services:
       - ../config/cyclonedds/cyclonedds-local.xml:/cyclonedds-config.xml
       - ../config/hesai/config.yaml:/ros2_ws/src/HesaiLidar_ROS_2.0/config/config.yaml
     environment:
-      - ROS_DOMAIN_ID=30
+      - ROS_DOMAIN_ID=0
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
@@ -188,7 +188,7 @@ services:
       - ../ros2_ws:/ros2_ws
       - ../config/cyclonedds/cyclonedds-local.xml:/cyclonedds-config.xml
     environment:
-      - ROS_DOMAIN_ID=30
+      - ROS_DOMAIN_ID=0
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
@@ -230,7 +230,7 @@ services:
       - ../config/cyclonedds/cyclonedds-local.xml:/cyclonedds-config.xml
       - ../shared/hugin/ros2/src/:/opt/ros/overlay_ws/src/
     environment:
-      - ROS_DOMAIN_ID=30
+      - ROS_DOMAIN_ID=0
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
@@ -272,7 +272,7 @@ services:
       - ../config/cyclonedds/cyclonedds-local.xml:/cyclonedds-config.xml
       - ../config/bunker:/config/bunker
     environment:
-      - ROS_DOMAIN_ID=30
+      - ROS_DOMAIN_ID=0
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
@@ -335,7 +335,7 @@ services:
     environment:
       - DISPLAY=$DISPLAY
       - QT_X11_NO_MITSHM=1
-      - ROS_DOMAIN_ID=30
+      - ROS_DOMAIN_ID=0
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
@@ -356,9 +356,9 @@ services:
       - /tmp:/tmp
       - ../ros2_ws:/ros2_ws
       - ../config/cyclonedds/cyclonedds-bridge.xml:/cyclonedds-config.xml
-      - ../config/bridge/brisge_config.yaml:/bridge_config.yaml
+      - ../config/bridge/bridge_config.yaml:/bridge_config.yaml
     environment:
-      - ROS_DOMAIN_ID=30
+      - ROS_DOMAIN_ID=133
       - IOX_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///cyclonedds-config.xml
